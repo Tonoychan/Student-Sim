@@ -8,5 +8,8 @@ public enum SimulatorSubjects
     Subject3,
     Subject4,
     Subject5,
-    Subject6
+    Subject6,
+    SubjectSleep,
+    SubjectJob,
+    SubjectExercise,
 }

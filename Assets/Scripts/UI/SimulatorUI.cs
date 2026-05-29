@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SimlulatorUI : MonoBehaviour
+public class SimulatorUI : MonoBehaviour
 {
     [Header("Subject References")]
     [SerializeField]
@@ -37,8 +37,21 @@ public class SimlulatorUI : MonoBehaviour
     [SerializeField] 
     private Image StaminaFillImage;
     
+    [Header("Goals References")]
+    [SerializeField]
+    private TextMeshProUGUI goalText;
+    [SerializeField] 
+    private TextMeshProUGUI goalScoreText;
+    [SerializeField] 
+    private TextMeshProUGUI goalDayText;
+    
     //------MANAGER REFERENCES--------------
     SimulatorManager simulatorManager;
+    
+    //---------SO REFERENCES---------------
+    [SerializeField] 
+    private SubjectsData[] subjectsData;
+    
     
     
     //--------------EVENTS--------------
@@ -67,6 +80,8 @@ public class SimlulatorUI : MonoBehaviour
         SimulatorManager.UpdateScoreUI += UpdateSubjectScore;
         SimulatorManager.UpdateInteractionUI += UpdateTheNumberOfInteraction;
         SimulatorManager.UpdateStaminaUI += UpdateStamina;
+        SimulatorManager.UpdateDayUI += UpdateDay;
+        SimulatorManager.UpdateGoalUI += UpdateGoal;
         
         simulatorManager = GetComponent<SimulatorManager>();
         UpdateAllSubjectsScore();
@@ -89,19 +104,40 @@ public class SimlulatorUI : MonoBehaviour
             var reference = subjectButtons[i].GetComponent<SubjectReferenceOnButton>();
             if (reference != null)
             {
+                reference.subjectID = obj[i].subjectID;
                 subjectButtonsText[i].text = obj[i].subjectName;
                 reference.subjectID = obj[i].subjectID;
-                reference.Level = 0;
-                reference.amountOfStaminaReduced = 15;
-                reference.amountScoreToBeAdded = 20;
-                reference.interactionToBeDeducted = 1;
+                
+                foreach (var data in subjectsData)
+                {
+                    foreach (var subData in data.subjects)
+                    {
+                        if (subData.subjectID != reference.subjectID) 
+                            continue;
+                        
+                        reference.Level = subData.Level;
+                        reference.amountOfStaminaReduced = subData.amountOfStaminaReduced;
+                        reference.amountScoreToBeAdded = subData.amountScoreToBeAdded;
+                        reference.interactionToBeDeducted = subData.interactionToBeDeducted;
+                    }
+                }
             }
         }
         Debug.Log("New Subjects Setting done");
     }
 
-    void StartNewDay()
+    void UpdateGoal(IndividualGoal newGoal)
     {
+        goalText.text = newGoal.subjectID.ToString();
+        goalScoreText.text = newGoal.subGoalScore.ToString();
+        goalDayText.text = newGoal.subGoalDay.ToString();
+    }
+
+    void UpdateDay(int nextDayValue)
+    {
+        dayValueText.text = $"Day :{nextDayValue}";
+        numberOfInteractionsTexts.text = $"0/12";
+        //Start New Day 
         for (int i = 0; i < DayInteractionImages.Length; i++)
         {
             DayInteractionImages[i].color = NotInteractedColor;
@@ -144,7 +180,7 @@ public class SimlulatorUI : MonoBehaviour
     
     private void UpdateStamina(int value)
     {
-        StaminaText.text = value.ToString();
+        StaminaText.text = $"{value}%";
         var staminaFillValue = (float)value / 100;
         UpdateStaminaGraphics(staminaFillValue);
     }
