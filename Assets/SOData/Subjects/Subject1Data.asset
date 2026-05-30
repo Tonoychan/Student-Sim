@@ -18,3 +18,8 @@ MonoBehaviour:
     amountScoreToBeAdded: 10
     interactionToBeDeducted: 1
     amountOfStaminaReduced: 10
+  - subjectID: 1
+    Level: 2
+    amountScoreToBeAdded: 20
+    interactionToBeDeducted: 1
+    amountOfStaminaReduced: 15

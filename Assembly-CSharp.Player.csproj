@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\UI\SubjectScoreTextReferenceOnText.cs" />
     <Compile Include="Assets\Scripts\UI\SubjectReferenceOnButton.cs" />
+    <Compile Include="Assets\Scripts\UI\SubjectUIReferenceOnButton.cs" />
     <Compile Include="Assets\Scripts\UI\SimulatorUI.cs" />
     <Compile Include="Assets\Scripts\SO\GoalData.cs" />
     <Compile Include="Assets\Scripts\SO\SubjectsData.cs" />

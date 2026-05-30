@@ -7,18 +7,21 @@ using UnityEngine.UI;
 
 public class SimulatorManager : MonoBehaviour
 {
+    //-------------Public Variable to Inspect-----------------
     public int currentStamina = 100;
     public int maxNumberOfInteractions = 12;
     public int numberOfInteractionsDone = 0;
     public Subject[] subjects;
     public int currentDay;
 
+    //-----------PRIVATE------------------
     [SerializeField]
     private GoalData goalsData;
     [SerializeField]
     IndividualGoal goal = new IndividualGoal();
     public int numberOfGoalsCompleted = 0;
 
+    //----------------EVENTS ACTION------------------
     public static event Action<Subject> UpdateScoreUI;
     public static event Action<int,int> UpdateInteractionUI;
     public static event Action<List<Subject>> SubjectsOnNewDayUI;
@@ -26,16 +29,18 @@ public class SimulatorManager : MonoBehaviour
     public static event Action<int> UpdateDayUI;
     public static event Action<IndividualGoal> UpdateGoalUI;
     
+    //----------ON ENABLE----------------
     
     private void OnEnable()
     {
         SimulatorUI.OnAnyButtonPressed += ButtonPressedTasks;
     }
+    //-----------AWAKE--------------------
+    
+    //-----------------START-------------------
 
     private void Start()
     {
-        Debug.Log("Starting SimulatorManager Calling On Start");
-        Debug.Log("Game Logged In Lets Set the Subjects On For 1st time");
         currentDay = 1;
         RandomizeSubjectsToShowOnButton();
         SetGoal();
@@ -45,8 +50,6 @@ public class SimulatorManager : MonoBehaviour
     {
         //Check The Button Component And Update the Following
         //1. Update Score
-        Debug.Log("ButtonPressedTasks in SimulatorManager");
-        Debug.Log("ButtonPressedTasks 1 Update Score in SimulatorManager");
 
         foreach (var subject in subjects)
         {
@@ -56,12 +59,15 @@ public class SimulatorManager : MonoBehaviour
             if (subject.subjectID == obj.subjectID)
             {
                 AddScoreToSubject(subject,obj.amountScoreToBeAdded);
+                //Check if the subject Level Should rise?
+                CheckSubjectForNextLevel(subject);
                 UpdateScoreUI?.Invoke(subject);
             }
         }
         
+        
+        
         //2. Update Interaction
-        Debug.Log("ButtonPressedTasks 2 Update Interaction Value in SimulatorManager");
         numberOfInteractionsDone++;
         if (maxNumberOfInteractions >= numberOfInteractionsDone)
         {
@@ -89,17 +95,14 @@ public class SimulatorManager : MonoBehaviour
             }
         }
         
-        Debug.Log("ButtonPressedTasks 3 Update Next Subject Value in SimulatorManager");
         //4.Next Items to show on Buttons
         RandomizeSubjectsToShowOnButton();
     }
-
 
     void RandomizeSubjectsToShowOnButton()
     {
         List<Subject> choosenSubjects = new List<Subject>(4);
         choosenSubjects= subjects.OrderBy(x => Guid.NewGuid()).Take(4).ToList();
-        Debug.Log($"List Of chosen Subjects: {choosenSubjects[0].subjectName}, {choosenSubjects[1].subjectName}, {choosenSubjects[2].subjectName}, {choosenSubjects[3].subjectName}]");
         SubjectsOnNewDayUI?.Invoke(choosenSubjects);
     }
 
@@ -182,6 +185,23 @@ public class SimulatorManager : MonoBehaviour
         goal = goalsData.subGoals[numberOfGoalsCompleted];
         UpdateGoalUI?.Invoke(goal);
     }
+
+    void CheckSubjectForNextLevel(Subject subject)
+    {
+        Debug.Log($"Check for Subject Level: {subject.subjectName}, {subject.subjectID}");
+        Debug.Log($"Subject Level: {subject.subjectID} Current Interactions: {subject.currentInteractionsWithLevel} Next Interactions: {subject.interactionsForNextLevel}");
+        if (subject.currentInteractionsWithLevel >= subject.interactionsForNextLevel)
+        {
+            Debug.Log("Subject Level Achieved Interaction for NextLevel Reset");
+            subject.currentLevel++;
+            subject.currentInteractionsWithLevel = 0;
+        }
+        else
+        {
+            Debug.Log("Subject Level Not Achieved increased Interaction for NextLevel");
+            subject.currentInteractionsWithLevel++;
+        }
+    }
 }
 
 [System.Serializable]
@@ -190,6 +210,9 @@ public class Subject
     public SimulatorSubjects subjectID = SimulatorSubjects.None;
     public string subjectName = nameof(SimulatorSubjects.None);
     public int score = 0;
+    public int currentLevel = 0;
+    public int currentInteractionsWithLevel = 0;
+    public int interactionsForNextLevel = 0;
 }
 
 

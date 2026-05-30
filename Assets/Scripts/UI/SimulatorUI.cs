@@ -11,7 +11,7 @@ public class SimulatorUI : MonoBehaviour
     [SerializeField]
     private Button[] subjectButtons;
     [SerializeField]
-    private TextMeshProUGUI[] subjectButtonsText;
+    private SubjectUIReferenceOnButton[] subjectButtonUIReferences;
 
     [Header("Interaction References")]
     [SerializeField] 
@@ -60,7 +60,6 @@ public class SimulatorUI : MonoBehaviour
     //-----------AWAKE----------------
     private void Awake()
     {
-        Debug.Log("Game Start Awake in SimulatorUI");
         foreach (var button in subjectButtons)
         {
             SubjectReferenceOnButton capturedButton = button.GetComponent<SubjectReferenceOnButton>();
@@ -86,7 +85,6 @@ public class SimulatorUI : MonoBehaviour
         simulatorManager = GetComponent<SimulatorManager>();
         UpdateAllSubjectsScore();
         
-        Debug.Log("Game Start Start in SimulatorUI");
     }
 
     //---------------START----------------------------
@@ -98,14 +96,12 @@ public class SimulatorUI : MonoBehaviour
 
     private void UpdateButtonUIForSubjectAssignment(List<Subject> obj)
     {
-        Debug.Log("New Subjects Received Setting them Up");
+       
         for (int i = 0; i < subjectButtons.Length; i++)
         {
             var reference = subjectButtons[i].GetComponent<SubjectReferenceOnButton>();
             if (reference != null)
             {
-                reference.subjectID = obj[i].subjectID;
-                subjectButtonsText[i].text = obj[i].subjectName;
                 reference.subjectID = obj[i].subjectID;
                 
                 foreach (var data in subjectsData)
@@ -114,16 +110,29 @@ public class SimulatorUI : MonoBehaviour
                     {
                         if (subData.subjectID != reference.subjectID) 
                             continue;
-                        
-                        reference.Level = subData.Level;
-                        reference.amountOfStaminaReduced = subData.amountOfStaminaReduced;
-                        reference.amountScoreToBeAdded = subData.amountScoreToBeAdded;
-                        reference.interactionToBeDeducted = subData.interactionToBeDeducted;
+                       
+                        if (subData.Level == obj[i].currentLevel)
+                        {
+                            reference.Level = subData.Level;
+                            reference.amountOfStaminaReduced = subData.amountOfStaminaReduced;
+                            reference.amountScoreToBeAdded = subData.amountScoreToBeAdded;
+                            reference.interactionToBeDeducted = subData.interactionToBeDeducted;
+                            SetButtonUIVisuals(subData , i);
+                        }
                     }
                 }
             }
         }
-        Debug.Log("New Subjects Setting done");
+       
+    }
+
+    private void SetButtonUIVisuals(SubjectLevelData subData, int index)
+    {
+        subjectButtonUIReferences[index].subjectID = subData.subjectID;
+        subjectButtonUIReferences[index].subjectNameText.text = subData.subjectID.ToString();
+        subjectButtonUIReferences[index].subjectLevelText.text = subData.Level.ToString();
+        subjectButtonUIReferences[index].subjectScoreText.text = subData.amountScoreToBeAdded.ToString();
+        subjectButtonUIReferences[index].subjectStaminaText.text = subData.amountOfStaminaReduced.ToString();
     }
 
     void UpdateGoal(IndividualGoal newGoal)
@@ -155,7 +164,6 @@ public class SimulatorUI : MonoBehaviour
 
     void SubjectButtonPress(SubjectReferenceOnButton button)
     {
-        Debug.Log("A Subject Button Pressed in SimulatorUI");
         OnAnyButtonPressed?.Invoke(button);
     }
 
