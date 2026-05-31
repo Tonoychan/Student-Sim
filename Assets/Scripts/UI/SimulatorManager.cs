@@ -13,6 +13,10 @@ public class SimulatorManager : MonoBehaviour
     public int numberOfInteractionsDone = 0;
     public Subject[] subjects;
     public int currentDay;
+    public int currentSelectedAnswer;
+    public SelectAnswer[] answersOption;
+    public Button answerButton;
+    
 
     //-----------PRIVATE------------------
     [SerializeField]
@@ -34,9 +38,12 @@ public class SimulatorManager : MonoBehaviour
     private void OnEnable()
     {
         SimulatorUI.OnAnyButtonPressed += ButtonPressedTasks;
+        SelectAnswer.AnAnswerOptionSelected += AnyAnswerSelected;
     }
+
+   
     //-----------AWAKE--------------------
-    
+   
     //-----------------START-------------------
 
     private void Start()
@@ -44,6 +51,33 @@ public class SimulatorManager : MonoBehaviour
         currentDay = 1;
         RandomizeSubjectsToShowOnButton();
         SetGoal();
+        answerButton.onClick.AddListener(() =>
+            TermAnswerSelectButtonClick());
+    }
+
+    private void TermAnswerSelectButtonClick()
+    {
+        var answerIsCorrect = GetComponent<SimulatorUI>()._mainExamData
+            .CheckAnswerIsCorrect(SimulatorSubjects.Math, 0, currentSelectedAnswer);
+        if (answerIsCorrect)
+        {
+            Debug.Log("Correct!");
+        }
+        else
+        {
+            Debug.Log("Incorrect!");
+        }
+        
+    }
+
+    private void AnyAnswerSelected(int obj)
+    {
+        foreach (var answer in answersOption)
+        {
+            answer.ChangeSelectionStatus(false);
+        }
+        answersOption[obj].ChangeSelectionStatus(true);
+        currentSelectedAnswer = obj;
     }
 
     private void ButtonPressedTasks(SubjectReferenceOnButton obj)
@@ -64,8 +98,6 @@ public class SimulatorManager : MonoBehaviour
                 UpdateScoreUI?.Invoke(subject);
             }
         }
-        
-        
         
         //2. Update Interaction
         numberOfInteractionsDone++;
@@ -151,11 +183,23 @@ public class SimulatorManager : MonoBehaviour
 
     private void ResetValueForNextDay()
     {
+        CheckIfTermExamDay();
         currentStamina = 100;
         numberOfInteractionsDone = 0;
         SetGoal();
         UpdateStaminaUI?.Invoke(currentStamina);
         UpdateInteractionUI?.Invoke(numberOfInteractionsDone,maxNumberOfInteractions);
+    }
+
+    private void CheckIfTermExamDay()
+    {
+        if (currentDay == 2)
+        {
+            //True Its Exam Day
+            //Open the Term Exam Page
+            //Populate UI with Exam Data
+            GetComponent<SimulatorUI>().OpenTermExam();
+        }
     }
 
     private void CheckGoalAchieved()

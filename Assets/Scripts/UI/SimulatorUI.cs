@@ -44,6 +44,24 @@ public class SimulatorUI : MonoBehaviour
     private TextMeshProUGUI goalScoreText;
     [SerializeField] 
     private TextMeshProUGUI goalDayText;
+
+    [Header("Term Exam References")] 
+    [SerializeField]
+    private GameObject termExamPanel;
+    [SerializeField]
+    private TextMeshProUGUI termExamSubjectText;
+    [SerializeField]
+    private TextMeshProUGUI termExamText;
+    [SerializeField]
+    private TextMeshProUGUI termExamAnswerOption1Text;
+    [SerializeField]
+    private TextMeshProUGUI termExamAnswerOption2Text;
+    [SerializeField]
+    private TextMeshProUGUI termExamAnswerOption3Text;
+    [SerializeField]
+    private TextMeshProUGUI termExamAnswerOption4Text;
+    [SerializeField]
+    private Button termExamAnswerButton;
     
     //------MANAGER REFERENCES--------------
     SimulatorManager simulatorManager;
@@ -51,6 +69,8 @@ public class SimulatorUI : MonoBehaviour
     //---------SO REFERENCES---------------
     [SerializeField] 
     private SubjectsData[] subjectsData;
+    
+    public MainExamData _mainExamData;
     
     
     
@@ -204,5 +224,22 @@ public class SimulatorUI : MonoBehaviour
         {
             DayInteractionImages[i].color = InteractedColor;
         }
+    }
+
+    public void OpenTermExam()
+    {
+        termExamPanel.SetActive(true);
+        PopulateTermExamData();
+    }
+
+    private void PopulateTermExamData(SimulatorSubjects subject=SimulatorSubjects.Math)
+    {
+        var data= _mainExamData.GetQuestionFor(subject,1);
+        termExamSubjectText.text = data.subject.ToString();
+        termExamText.text = data.Question;
+        termExamAnswerOption1Text.text = data.AnswersOptions[0].ToString();
+        termExamAnswerOption2Text.text = data.AnswersOptions[1].ToString();
+        termExamAnswerOption3Text.text = data.AnswersOptions[2].ToString();
+        termExamAnswerOption4Text.text = data.AnswersOptions[3].ToString();
     }
 }
