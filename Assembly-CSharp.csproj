@@ -47,16 +47,43 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.10f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\UI\SubjectScoreTextReferenceOnText.cs" />
-    <Compile Include="Assets\Scripts\UI\SubjectReferenceOnButton.cs" />
-    <Compile Include="Assets\Scripts\SO\MainExamData.cs" />
-    <Compile Include="Assets\Scripts\UI\SubjectUIReferenceOnButton.cs" />
-    <Compile Include="Assets\Scripts\UI\SimulatorUI.cs" />
-    <Compile Include="Assets\Scripts\SO\GoalData.cs" />
-    <Compile Include="Assets\Scripts\UI\SelectAnswer.cs" />
-    <Compile Include="Assets\Scripts\SO\SubjectsData.cs" />
-    <Compile Include="Assets\Scripts\UI\SimulatorEnums.cs" />
-    <Compile Include="Assets\Scripts\UI\SimulatorManager.cs" />
+    <Compile Include="Assets\Scripts\Saving\CloudSaveProvider.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\ExamAnswerOptionView.cs" />
+    <Compile Include="Assets\Scripts\DataLoader\SubjectDataLoader.cs" />
+    <Compile Include="Assets\Legacy\SO\SubjectsData.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\SubjectButtonView.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\PlayerStatsUI.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\SubjectScoreUI.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\ExamPanelUI.cs" />
+    <Compile Include="Assets\Legacy\UI\SubjectScoreTextReferenceOnText.cs" />
+    <Compile Include="Assets\Scripts\GameEvents.cs" />
+    <Compile Include="Assets\Legacy\SO\MainExamData.cs" />
+    <Compile Include="Assets\Legacy\SO\GameConfigSO.cs" />
+    <Compile Include="Assets\Scripts\Saving\ISaveProvider.cs" />
+    <Compile Include="Assets\Scripts\Saving\PlayerPrefsSaveProvider.cs" />
+    <Compile Include="Assets\Legacy\SO\GoalData.cs" />
+    <Compile Include="Assets\Legacy\UI\SubjectReferenceOnButton.cs" />
+    <Compile Include="Assets\Scripts\Services\PlayerStateService.cs" />
+    <Compile Include="Assets\Scripts\Services\PlayerSaveService.cs" />
+    <Compile Include="Assets\Scripts\GameEnums.cs" />
+    <Compile Include="Assets\Scripts\Saving\PlayerSaveData.cs" />
+    <Compile Include="Assets\Scripts\Services\SubjectService.cs" />
+    <Compile Include="Assets\Scripts\Services\DayCycleService.cs" />
+    <Compile Include="Assets\Legacy\UI\SimulatorUI.cs" />
+    <Compile Include="Assets\ScriptableObjects\Subjects\SubjectsDataSingle.cs" />
+    <Compile Include="Assets\Scripts\Controller\GameController.cs" />
+    <Compile Include="Assets\Legacy\UI\SubjectUIReferenceOnButton.cs" />
+    <Compile Include="Assets\Scripts\Services\SubjectSelectionService.cs" />
+    <Compile Include="Assets\Legacy\UI\SelectAnswer.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\SubjectSelectionUI.cs" />
+    <Compile Include="Assets\Legacy\UI\SimulatorManager.cs" />
+    <Compile Include="Assets\Scripts\DataLoader\Interface\ISubjectDataLoader.cs" />
+    <Compile Include="Assets\Legacy\UI\SimulatorEnums.cs" />
+    <Compile Include="Assets\ScriptableObjects\Exam\MainExam.cs" />
+    <Compile Include="Assets\Scripts\Services\ExamService.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\DaySummaryUI.cs" />
+    <Compile Include="Assets\Scripts\DaySummaryData.cs" />
+    <Compile Include="Assets\Scripts\Services\SubjectInteractionService.cs" />
     <None Include="Library\PackageCache\com.unity.modules.subsystems\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.universal@37e0d4fc2503\package.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -76,6 +103,7 @@
     <None Include="Library\PackageCache\com.unity.2d.tilemap@f011712243ad\package.json" />
     <None Include="Library\PackageCache\com.unity.ext.nunit@d8c07649098d\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.universal-config@8dc1aab4af1d\package.json" />
+    <None Include="Library\PackageCache\com.cysharp.unitask@360e370345b9\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.assetbundle\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.core@04ab0eefa0c3\Shaders\CoreCopy.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -1128,6 +1156,10 @@
       <Project>{ed6e773a-193b-f212-9557-16b54f806d50}</Project>
       <Name>Unity.2D.SpriteShape.Runtime</Name>
     </ProjectReference>
+    <ProjectReference Include="UniTask.TextMeshPro.csproj">
+      <Project>{e6a73b92-b36f-2949-d567-3c7286bf976d}</Project>
+      <Name>UniTask.TextMeshPro</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
       <Project>{bcb352fe-adf4-1a8c-f027-a6b2cdd6d04d}</Project>
       <Name>Unity.VisualStudio.Editor</Name>
@@ -1135,6 +1167,10 @@
     <ProjectReference Include="Unity.2D.Tilemap.Editor.csproj">
       <Project>{fb1159eb-f190-e565-9e0b-792d382cb021}</Project>
       <Name>Unity.2D.Tilemap.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.DOTween.csproj">
+      <Project>{2d0a38bf-4ad4-059a-2e81-c1f4dba18be4}</Project>
+      <Name>UniTask.DOTween</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.2D.Common.Runtime.csproj">
       <Project>{931af2af-65b6-1210-b1aa-2397d0120dc2}</Project>
@@ -1204,6 +1240,10 @@
       <Project>{59f63f4d-6e2b-d4f0-98fd-0bf439df9793}</Project>
       <Name>Unity.RenderPipelines.Universal.Config.Runtime</Name>
     </ProjectReference>
+    <ProjectReference Include="UniTask.Linq.csproj">
+      <Project>{e506bc5f-95e0-bc78-61c8-5273f1242a1e}</Project>
+      <Name>UniTask.Linq</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.RenderPipeline.Universal.ShaderLibrary.csproj">
       <Project>{9588014e-f4a4-9dec-bd3f-f44c39d900d4}</Project>
       <Name>Unity.RenderPipeline.Universal.ShaderLibrary</Name>
@@ -1211,6 +1251,10 @@
     <ProjectReference Include="Unity.Collections.Editor.csproj">
       <Project>{e18d1c4b-40db-04d8-2d30-511bf6a09878}</Project>
       <Name>Unity.Collections.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.Addressables.csproj">
+      <Project>{869536b0-b245-7174-9e75-c293100cf7b2}</Project>
+      <Name>UniTask.Addressables</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.ShaderGraph.Editor.csproj">
       <Project>{a8172ddc-cd25-6831-5f80-8acb58c38289}</Project>
@@ -1231,6 +1275,10 @@
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{2968a355-6484-3708-63fd-213d183aa8a4}</Project>
       <Name>UnityEditor.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.csproj">
+      <Project>{11b015e0-5717-0712-66b6-6dc25f98552b}</Project>
+      <Name>UniTask</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

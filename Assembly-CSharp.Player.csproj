@@ -47,16 +47,43 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.10f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\UI\SubjectScoreTextReferenceOnText.cs" />
-    <Compile Include="Assets\Scripts\UI\SubjectReferenceOnButton.cs" />
-    <Compile Include="Assets\Scripts\SO\MainExamData.cs" />
-    <Compile Include="Assets\Scripts\UI\SubjectUIReferenceOnButton.cs" />
-    <Compile Include="Assets\Scripts\UI\SimulatorUI.cs" />
-    <Compile Include="Assets\Scripts\SO\GoalData.cs" />
-    <Compile Include="Assets\Scripts\UI\SelectAnswer.cs" />
-    <Compile Include="Assets\Scripts\SO\SubjectsData.cs" />
-    <Compile Include="Assets\Scripts\UI\SimulatorEnums.cs" />
-    <Compile Include="Assets\Scripts\UI\SimulatorManager.cs" />
+    <Compile Include="Assets\Scripts\Saving\CloudSaveProvider.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\ExamAnswerOptionView.cs" />
+    <Compile Include="Assets\Scripts\DataLoader\SubjectDataLoader.cs" />
+    <Compile Include="Assets\Legacy\SO\SubjectsData.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\SubjectButtonView.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\PlayerStatsUI.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\SubjectScoreUI.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\ExamPanelUI.cs" />
+    <Compile Include="Assets\Legacy\UI\SubjectScoreTextReferenceOnText.cs" />
+    <Compile Include="Assets\Scripts\GameEvents.cs" />
+    <Compile Include="Assets\Legacy\SO\MainExamData.cs" />
+    <Compile Include="Assets\Legacy\SO\GameConfigSO.cs" />
+    <Compile Include="Assets\Scripts\Saving\ISaveProvider.cs" />
+    <Compile Include="Assets\Scripts\Saving\PlayerPrefsSaveProvider.cs" />
+    <Compile Include="Assets\Legacy\SO\GoalData.cs" />
+    <Compile Include="Assets\Legacy\UI\SubjectReferenceOnButton.cs" />
+    <Compile Include="Assets\Scripts\Services\PlayerStateService.cs" />
+    <Compile Include="Assets\Scripts\Services\PlayerSaveService.cs" />
+    <Compile Include="Assets\Scripts\GameEnums.cs" />
+    <Compile Include="Assets\Scripts\Saving\PlayerSaveData.cs" />
+    <Compile Include="Assets\Scripts\Services\SubjectService.cs" />
+    <Compile Include="Assets\Scripts\Services\DayCycleService.cs" />
+    <Compile Include="Assets\Legacy\UI\SimulatorUI.cs" />
+    <Compile Include="Assets\ScriptableObjects\Subjects\SubjectsDataSingle.cs" />
+    <Compile Include="Assets\Scripts\Controller\GameController.cs" />
+    <Compile Include="Assets\Legacy\UI\SubjectUIReferenceOnButton.cs" />
+    <Compile Include="Assets\Scripts\Services\SubjectSelectionService.cs" />
+    <Compile Include="Assets\Legacy\UI\SelectAnswer.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\SubjectSelectionUI.cs" />
+    <Compile Include="Assets\Legacy\UI\SimulatorManager.cs" />
+    <Compile Include="Assets\Scripts\DataLoader\Interface\ISubjectDataLoader.cs" />
+    <Compile Include="Assets\Legacy\UI\SimulatorEnums.cs" />
+    <Compile Include="Assets\ScriptableObjects\Exam\MainExam.cs" />
+    <Compile Include="Assets\Scripts\Services\ExamService.cs" />
+    <Compile Include="Assets\Scripts\AdvanceUI\DaySummaryUI.cs" />
+    <Compile Include="Assets\Scripts\DaySummaryData.cs" />
+    <Compile Include="Assets\Scripts\Services\SubjectInteractionService.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.3.10f1\Editor\Data\PlaybackEngines\AndroidPlayer\Variations\il2cpp\Managed\UnityEngine.dll</HintPath>
     </Reference>
@@ -728,6 +755,14 @@
       <Project>{3dfef9a7-a448-8e9a-49f8-03a57c65258d}</Project>
       <Name>Unity.2D.SpriteShape.Runtime.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="UniTask.TextMeshPro.Player.csproj">
+      <Project>{b8d77e2a-e5fa-02b1-a537-5824e1b0a276}</Project>
+      <Name>UniTask.TextMeshPro.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.DOTween.Player.csproj">
+      <Project>{202e70d7-1022-4f2d-e032-ea4f5eb0fcc7}</Project>
+      <Name>UniTask.DOTween.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.2D.Common.Runtime.Player.csproj">
       <Project>{7c07a665-fcd7-1f30-4a97-6c91f360082b}</Project>
       <Name>Unity.2D.Common.Runtime.Player</Name>
@@ -780,13 +815,25 @@
       <Project>{044084ce-b7a1-55f8-22e9-7fc728446ab3}</Project>
       <Name>Unity.RenderPipelines.Universal.Config.Runtime.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="UniTask.Linq.Player.csproj">
+      <Project>{9e732a02-6a2d-993c-f703-5f2a1c8dbb49}</Project>
+      <Name>UniTask.Linq.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.RenderPipeline.Universal.ShaderLibrary.Player.csproj">
       <Project>{7ec44e48-3203-d3d0-d596-4941d6da2aec}</Project>
       <Name>Unity.RenderPipeline.Universal.ShaderLibrary.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="UniTask.Addressables.Player.csproj">
+      <Project>{6876e178-47ac-df9a-394e-7b70bbd3d437}</Project>
+      <Name>UniTask.Addressables.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.InputSystem.Player.csproj">
       <Project>{69f6b7f8-b145-e2f6-bae5-f354ab8b2c02}</Project>
       <Name>Unity.InputSystem.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.Player.csproj">
+      <Project>{426cd6e1-6fd4-3166-3b6c-9fef485cdbf0}</Project>
+      <Name>UniTask.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
