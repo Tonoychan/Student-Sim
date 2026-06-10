@@ -1,0 +1,61 @@
+name: Unity Android Build And App Distribute
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Checkout ──────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # full history (needed by some Unity packages)
+          lfs: true               # pull Git LFS assets if you use them
+
+      # ── 2. Cache Library folder (speeds up subsequent builds enormously) ─────
+      - name: Cache Unity Library
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-Android-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-Android-
+            Library-
+
+      # ── 3. Build with GameCI ─────────────────────────────────────────────────
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL:   ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: Android
+          androidExportType: androidPackage   # outputs .apk
+          # androidExportType: androidAppBundle  # use this for Play Store (.aab)
+          buildName: StudentSim
+          buildsPath: Builds
+          # Uncomment and set if your project needs a specific Unity version:
+          # unityVersion: 2022.3.20f1
+
+      # ── 4. Upload the APK as a build artifact ────────────────────────────────
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: StudentSim-Android
+          path: Builds/Android/*.apk
+          retention-days: 14
+
+      # ── 5. Distribute via Firebase App Distribution ──────────────────────────
+      - name: Distribute to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: testers
+          file: Builds/Android/StudentSim.apk
+          releaseNotes: "Build from commit ${{ github.sha }}"
