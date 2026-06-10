@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "423878191450",
+    "project_id": "student-sim",
+    "storage_bucket": "student-sim.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423878191450:android:8e93fcebb810fa7726ab63",
+        "android_client_info": {
+          "package_name": "com.Tonoy.IndianStudentSim"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByOfVroHSqIsBZskIdfrhdh53y71jZAuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
