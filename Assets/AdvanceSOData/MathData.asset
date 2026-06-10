@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4f1c1a8d246b844e9f54c67972baa2c, type: 3}
+  m_Name: MathData
+  m_EditorClassIdentifier: Assembly-CSharp::SubjectsDataSingle
+  subjectName: Math
+  Data:
+  - subjectID: 1
+    subjectClassName: Level 1 - Class
+    subjectLevel: 1
+    staminaDeducted: 25
+    staminaRestored: 0
+    subjectScore: 8
+    subjectScoreMultiplier: 0
+    interactionDeducted: 1
+  - subjectID: 1
+    subjectClassName: Level 2 - Class
+    subjectLevel: 2
+    staminaDeducted: 22
+    staminaRestored: 0
+    subjectScore: 14
+    subjectScoreMultiplier: 0
+    interactionDeducted: 1
+  - subjectID: 1
+    subjectClassName: Level 3 - Class
+    subjectLevel: 3
+    staminaDeducted: 20
+    staminaRestored: 0
+    subjectScore: 18
+    subjectScoreMultiplier: 0
+    interactionDeducted: 1
+  - subjectID: 1
+    subjectClassName: Level 4 - Class
+    subjectLevel: 4
+    staminaDeducted: 15
+    staminaRestored: 0
+    subjectScore: 25
+    subjectScoreMultiplier: 0
+    interactionDeducted: 1
+  - subjectID: 1
+    subjectClassName: Level 5 - Class
+    subjectLevel: 5
+    staminaDeducted: 12
+    staminaRestored: 0
+    subjectScore: 30
+    subjectScoreMultiplier: 0
+    interactionDeducted: 1

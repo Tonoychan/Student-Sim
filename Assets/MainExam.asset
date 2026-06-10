@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b39a13647b28c943b8ca725cbc8c971, type: 3}
+  m_Name: MainExam
+  m_EditorClassIdentifier: Assembly-CSharp::MainExam
+  MathQuestions:
+  - subject: 1
+    Question: What is 1+1?
+    AnswersOptions:
+    - 1
+    - 2
+    - 3
+    - 4
+    correctAnswerFromOptions: 2
+    questionLevel: 1
+  ScienceQuestions:
+  - subject: 3
+    Question: What is the study of Physical Force called?
+    AnswersOptions:
+    - Physics
+    - Biology
+    - Chemistry
+    - Zoology
+    correctAnswerFromOptions: 1
+    questionLevel: 1
+  HistoryQuestions:
+  - subject: 2
+    Question: Which year India got independence?
+    AnswersOptions:
+    - 1950
+    - 1945
+    - 1948
+    - 1947
+    correctAnswerFromOptions: 4
+    questionLevel: 1
+  ArtsQuestions:
+  - subject: 5
+    Question: What can be ART question(answer 1)
+    AnswersOptions:
+    - 1
+    - 2
+    - 3
+    - 4
+    correctAnswerFromOptions: 1
+    questionLevel: 1
+  GeographyQuestions:
+  - subject: 4
+    Question: Which Country has the most population?
+    AnswersOptions:
+    - China
+    - Russia
+    - India
+    - United Kingdom
+    correctAnswerFromOptions: 3
+    questionLevel: 1
+  ComputerQuestions:
+  - subject: 6
+    Question: What does RAM stands for?
+    AnswersOptions:
+    - Random Access Memory
+    - Ready Access Memory
+    - Random Accessory Memory
+    - Ready Assesable Memory
+    correctAnswerFromOptions: 1
+    questionLevel: 1
