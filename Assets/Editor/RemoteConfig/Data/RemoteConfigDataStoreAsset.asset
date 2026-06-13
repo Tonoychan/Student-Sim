@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
+  m_Name: RemoteConfigDataStoreAsset
+  m_EditorClassIdentifier: Unity.RemoteConfig.Editor::Unity.RemoteConfig.Editor.RemoteConfigDataStore
+  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"b97b30d2-b19b-4808-a2ce-ab365e1ca4d2\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"exam_days\",\r\n      \"type\": \"string\",\r\n     
+    \"value\": \"7,14,21\"\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"679abd69-986e-450a-9152-0c07f5262207\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"develop_test\",\r\n      \"type\": \"int\",\r\n      \"value\":
+    45\r\n    }\r\n  }\r\n]"
+  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"b97b30d2-b19b-4808-a2ce-ab365e1ca4d2\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"exam_days\",\r\n      \"type\": \"string\",\r\n     
+    \"value\": \"7,14,21\"\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"679abd69-986e-450a-9152-0c07f5262207\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"develop_test\",\r\n      \"type\": \"int\",\r\n      \"value\":
+    45\r\n    }\r\n  }\r\n]"
+  _environments: "[\r\n  {\r\n    \"projectId\": \"44e53309-89ee-4d7a-88ce-488e2e97233e\",\r\n   
+    \"name\": \"production\",\r\n    \"id\": \"659cb9d2-798c-4c6b-a080-13dedcc510a8\",\r\n   
+    \"isDefault\": true,\r\n    \"createdAt\": \"2026-06-11T10:11:34Z\",\r\n    \"updatedAt\":
+    \"2026-06-11T10:11:34Z\"\r\n  },\r\n  {\r\n    \"projectId\": \"44e53309-89ee-4d7a-88ce-488e2e97233e\",\r\n   
+    \"name\": \"development\",\r\n    \"id\": \"362ddb4d-6ced-4fff-a75f-e699a477cf90\",\r\n   
+    \"isDefault\": false,\r\n    \"createdAt\": \"2026-06-11T11:19:08Z\",\r\n   
+    \"updatedAt\": \"2026-06-11T11:19:08Z\"\r\n  },\r\n  {\r\n    \"projectId\":
+    \"44e53309-89ee-4d7a-88ce-488e2e97233e\",\r\n    \"name\": \"staging\",\r\n   
+    \"id\": \"c1af5fea-dc77-40f0-9959-1fec835c2d61\",\r\n    \"isDefault\": false,\r\n   
+    \"createdAt\": \"2026-06-11T19:47:19Z\",\r\n    \"updatedAt\": \"2026-06-11T19:47:19Z\"\r\n 
+    }\r\n]"

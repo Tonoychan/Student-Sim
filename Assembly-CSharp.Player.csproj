@@ -50,6 +50,7 @@
     <Compile Include="Assets\Scripts\Saving\CloudSaveProvider.cs" />
     <Compile Include="Assets\Scripts\AdvanceUI\ExamAnswerOptionView.cs" />
     <Compile Include="Assets\Scripts\DataLoader\SubjectDataLoader.cs" />
+    <Compile Include="Assets\Scripts\UGS\PlayerAuthenticationService.cs" />
     <Compile Include="Assets\Legacy\SO\SubjectsData.cs" />
     <Compile Include="Assets\Scripts\AdvanceUI\SubjectButtonView.cs" />
     <Compile Include="Assets\Scripts\AdvanceUI\PlayerStatsUI.cs" />
@@ -58,14 +59,19 @@
     <Compile Include="Assets\Legacy\UI\SubjectScoreTextReferenceOnText.cs" />
     <Compile Include="Assets\Scripts\GameEvents.cs" />
     <Compile Include="Assets\Legacy\SO\MainExamData.cs" />
+    <Compile Include="Assets\Scripts\UGS\UnityRemoteConfigService.cs" />
     <Compile Include="Assets\Legacy\SO\GameConfigSO.cs" />
     <Compile Include="Assets\Scripts\Saving\ISaveProvider.cs" />
     <Compile Include="Assets\Scripts\Saving\PlayerPrefsSaveProvider.cs" />
     <Compile Include="Assets\Legacy\SO\GoalData.cs" />
     <Compile Include="Assets\Legacy\UI\SubjectReferenceOnButton.cs" />
+    <Compile Include="Assets\TestScripts\RemoteConfigManager.cs" />
     <Compile Include="Assets\Scripts\Services\PlayerStateService.cs" />
     <Compile Include="Assets\Scripts\Services\PlayerSaveService.cs" />
+    <Compile Include="Assets\Scripts\UGS\GameAnalyticsService.cs" />
     <Compile Include="Assets\Scripts\GameEnums.cs" />
+    <Compile Include="Assets\TestScripts\InitializeUnityServices.cs" />
+    <Compile Include="Assets\Scripts\Bootstrap\UnityService.cs" />
     <Compile Include="Assets\Scripts\Saving\PlayerSaveData.cs" />
     <Compile Include="Assets\Scripts\Services\SubjectService.cs" />
     <Compile Include="Assets\Scripts\Services\DayCycleService.cs" />
@@ -77,6 +83,7 @@
     <Compile Include="Assets\Legacy\UI\SelectAnswer.cs" />
     <Compile Include="Assets\Scripts\AdvanceUI\SubjectSelectionUI.cs" />
     <Compile Include="Assets\Legacy\UI\SimulatorManager.cs" />
+    <Compile Include="Assets\TestScripts\AnalyticsManager.cs" />
     <Compile Include="Assets\Scripts\DataLoader\Interface\ISubjectDataLoader.cs" />
     <Compile Include="Assets\Legacy\UI\SimulatorEnums.cs" />
     <Compile Include="Assets\ScriptableObjects\Exam\MainExam.cs" />
@@ -323,6 +330,9 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>D:\Unity\Learning\Indian-Student-Sim\Library\PackageCache\com.unity.visualscripting@191c0d7e3b69\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>D:\Unity\Learning\Indian-Student-Sim\Library\PackageCache\com.unity.nuget.newtonsoft-json@4dfd81071c64\Runtime\AOT\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>D:\Unity\Learning\Indian-Student-Sim\Library\PackageCache\com.unity.collections@aea9d3bd5e19\Unity.Collections.Tests\System.Runtime.CompilerServices.Unsafe\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -703,6 +713,10 @@
       <Project>{2eac5fd0-6279-1fbb-bbd2-2deb13d60c09}</Project>
       <Name>Unity.TextMeshPro.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Services.Core.Player.csproj">
+      <Project>{059f7790-7ad5-2acf-27d2-4eb479535bb6}</Project>
+      <Name>Unity.Services.Core.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Core.ShaderLibrary.Player.csproj">
       <Project>{9d55da80-9f75-5024-46e4-484ed9008e36}</Project>
       <Name>Unity.RenderPipelines.Core.ShaderLibrary.Player</Name>
@@ -731,13 +745,25 @@
       <Project>{4079f637-9a91-11ff-0f2d-733fe4d8a419}</Project>
       <Name>Unity.VisualScripting.Core.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Services.Core.Components.Player.csproj">
+      <Project>{25afd5e2-e244-317d-ac5f-a1d562002004}</Project>
+      <Name>Unity.Services.Core.Components.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.UnifiedRayTracing.Runtime.Player.csproj">
       <Project>{2de5bd6e-9016-11b1-15dd-68795d580d47}</Project>
       <Name>Unity.UnifiedRayTracing.Runtime.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.RenderPipelines.Core.Runtime.Player.csproj">
-      <Project>{4d25c5e9-fc38-f65a-c778-7a8633b7a99b}</Project>
-      <Name>Unity.RenderPipelines.Core.Runtime.Player</Name>
+    <ProjectReference Include="Unity.Services.RemoteConfig.Player.csproj">
+      <Project>{4f62bc5f-2e52-b7e6-7016-f608485985f0}</Project>
+      <Name>Unity.Services.RemoteConfig.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Authentication.Player.csproj">
+      <Project>{d9994c1c-86a1-29c4-1ea2-182eb6b8271b}</Project>
+      <Name>Unity.Services.Authentication.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Core.Analytics.Player.csproj">
+      <Project>{d4247ae9-fb13-e97d-aad4-768d032c9bce}</Project>
+      <Name>Unity.Services.Core.Analytics.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.Flow.Player.csproj">
       <Project>{c3a71eda-3907-77bf-9338-efaceff6a55e}</Project>
@@ -746,6 +772,10 @@
     <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.Player.csproj">
       <Project>{aaaea445-3a43-4b21-dc4a-ff1f8e81bc00}</Project>
       <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Authentication.PlayerAccounts.Player.csproj">
+      <Project>{69a5f302-7953-06fe-4c96-1c127e64b306}</Project>
+      <Name>Unity.Services.Authentication.PlayerAccounts.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.2D.Tilemap.Extras.Player.csproj">
       <Project>{3f9c834c-45f5-f342-6888-82afa4067339}</Project>
@@ -758,6 +788,10 @@
     <ProjectReference Include="UniTask.TextMeshPro.Player.csproj">
       <Project>{b8d77e2a-e5fa-02b1-a537-5824e1b0a276}</Project>
       <Name>UniTask.TextMeshPro.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Core.Runtime.Player.csproj">
+      <Project>{4d25c5e9-fc38-f65a-c778-7a8633b7a99b}</Project>
+      <Name>Unity.RenderPipelines.Core.Runtime.Player</Name>
     </ProjectReference>
     <ProjectReference Include="UniTask.DOTween.Player.csproj">
       <Project>{202e70d7-1022-4f2d-e032-ea4f5eb0fcc7}</Project>
@@ -783,6 +817,10 @@
       <Project>{9d2bdbfe-1fdd-4ed2-8247-e6e16b539fe8}</Project>
       <Name>Unity.Mathematics.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.RemoteConfig.Editor.Core.Player.csproj">
+      <Project>{b6fcb156-3f3b-3de7-ccbf-55fa094ed4d0}</Project>
+      <Name>Unity.RemoteConfig.Editor.Core.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Universal.Shaders.Player.csproj">
       <Project>{843bd1fe-0f7f-b461-fa35-84671dacacd2}</Project>
       <Name>Unity.RenderPipelines.Universal.Shaders.Player</Name>
@@ -794,6 +832,10 @@
     <ProjectReference Include="Unity.Multiplayer.Center.Common.Player.csproj">
       <Project>{40d000da-4d0f-3544-a3dc-bf2aa3f39b78}</Project>
       <Name>Unity.Multiplayer.Center.Common.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Core.Environments.Player.csproj">
+      <Project>{7fddf672-4f20-2f7e-d136-79953df1fb4a}</Project>
+      <Name>Unity.Services.Core.Environments.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Burst.Player.csproj">
       <Project>{574bfed5-8ce0-da9f-1bb3-7324308329c9}</Project>
@@ -834,6 +876,10 @@
     <ProjectReference Include="UniTask.Player.csproj">
       <Project>{426cd6e1-6fd4-3166-3b6c-9fef485cdbf0}</Project>
       <Name>UniTask.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Analytics.Player.csproj">
+      <Project>{0a0d512d-1f2e-ad8c-cbec-823e33e088a8}</Project>
+      <Name>Unity.Services.Analytics.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
