@@ -17,4 +17,16 @@ public class GameEnums
         Work,
         Exercise,
     }
+    
+    public enum CurrencyType
+    {
+        Gold=0
+    }
+    
+    public enum QuestStatus
+    {
+        Active,
+        Completed,
+        Failed   // deadline passed, score not met
+    }
 }

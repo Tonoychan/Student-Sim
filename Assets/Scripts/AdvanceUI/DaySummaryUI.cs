@@ -9,6 +9,7 @@ public class DaySummaryUI : MonoBehaviour
     public class SubjectGainEntry
     {
         public GameEnums.MainSubjects subject;
+        public TextMeshProUGUI subjectNameText;
         public TextMeshProUGUI gainText;   // shows "+8"
     }
     
@@ -36,8 +37,12 @@ public class DaySummaryUI : MonoBehaviour
     {
         _summaryPanel.SetActive(true);
         _dayCompletedText.text = $"Day {summary.completedDay} Completed";
+        
         foreach (var uiEntry in _subjectGainEntries)
         {
+            if (uiEntry.subjectNameText != null)
+                uiEntry.subjectNameText.text = uiEntry.subject.ToString();
+            
             int gain = 0;
             foreach (var dataEntry in summary.subjectGains)
             {

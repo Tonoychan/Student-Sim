@@ -9,6 +9,7 @@ public class DayCycleService
     private readonly PlayerStateService _playerState;
     private readonly SubjectSelectionService _selectionService;
     private readonly ExamService _examService;
+    private readonly QuestService _questService;
     
     private bool _isEndingDay;
     public int CurrentDay { get; private set; } = 1;
@@ -17,11 +18,13 @@ public class DayCycleService
     public DayCycleService(
         PlayerStateService playerState,
         SubjectSelectionService selectionService,
-        ExamService examService)
+        ExamService examService,
+        QuestService questService)
     {
         _playerState = playerState;
         _selectionService = selectionService;
         _examService = examService;
+        _questService = questService;
     }
     /// <summary>
     /// Called when player uses all daily interactions (12/12).
@@ -66,6 +69,9 @@ public class DayCycleService
         if (_isEndingDay)
             return;
         _isEndingDay = true;
+        
+        _questService.EvaluateActiveQuestAtDayEnd(CurrentDay);
+       
         Debug.Log($"Day {CurrentDay} ended: {reason}");
         GameEvents.RaiseDayEnded();
         
@@ -89,6 +95,7 @@ public class DayCycleService
     public void CompleteExamDay()
     {
         GameEvents.RaiseExamClosed();
+        _questService.EvaluateActiveQuestAtDayEnd(CurrentDay);
         CurrentDay++;
         StartDay(resetDailyStats: true);
     }

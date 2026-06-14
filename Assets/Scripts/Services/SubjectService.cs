@@ -48,6 +48,16 @@ public class SubjectService
     {
         return _loaders[subject].Icon; // or from a visual config dictionary
     }
+    
+    public int GetMaxLevel(GameEnums.MainSubjects subject)
+    {
+        var levels = _loaders[subject].GetAllLevels();
+        if (levels == null || levels.Count == 0) return 1;
+        int max = 1;
+        foreach (var d in levels)
+            if (d.subjectLevel > max) max = d.subjectLevel;
+        return max;
+    }
 
     #endregion
     

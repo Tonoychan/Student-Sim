@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     
     [SerializeField] private MainExam _mainExamData;
     [SerializeField] private GameConfigSO _gameConfig;
+    [SerializeField] private QuestData _questData;
     
     /// <summary>
     /// Lets think this class contains Data Holder for Subject and its SO Data for development / Failsafe
@@ -37,6 +38,8 @@ public class GameController : MonoBehaviour
     private DayCycleService _dayCycleService;
     private PlayerSaveService _saveService;
     private ExamService _examService;
+    private PlayerCurrencyService _currencyService;
+    private QuestService _questService;
 
     private void OnEnable()
     {
@@ -75,19 +78,24 @@ public class GameController : MonoBehaviour
     
     private async UniTask InitializeDataAsync(CancellationToken ct)
     {
+        var saveProvider = new PlayerPrefsSaveProvider();
+        
         _subjectService = new SubjectService();
         _playerState = new PlayerStateService();
+        _currencyService = new PlayerCurrencyService();
         _selectionService = new SubjectSelectionService(_subjectService, _playerState);
         _examService = new ExamService(_mainExamData, _playerState, _gameConfig);
-        _dayCycleService = new DayCycleService(_playerState, _selectionService, _examService);
-        var saveProvider = new PlayerPrefsSaveProvider();
-        _saveService = new PlayerSaveService(saveProvider, _playerState, _dayCycleService);
+        _questService = new QuestService(_questData, _playerState, _currencyService);
+        _dayCycleService = new DayCycleService(_playerState, _selectionService, _examService,_questService);
+        
+        _saveService = new PlayerSaveService(saveProvider, _playerState, _dayCycleService,_questService,_currencyService);
         _interactionService = new SubjectInteractionService(
             _playerState,
             _dayCycleService,
             _selectionService,
             _saveService,
-            _examService);
+            _examService,
+            _subjectService);
         
         foreach (var entry in subjectAssets)
         {
@@ -96,7 +104,8 @@ public class GameController : MonoBehaviour
         }
         await _subjectService.InitializeAsync().AttachExternalCancellation(ct);
         
-        _saveService.LoadOrCreateNew();
+        // _saveService.LoadOrCreateNew();
+        // _questService.Initialize();
         
         if (_startAsNew)
         {
@@ -110,6 +119,9 @@ public class GameController : MonoBehaviour
         }
         
         RaiseAllSubjectScores();
+        GameEvents.RaiseCurrencyChanged(
+            GameEnums.CurrencyType.Gold,
+            _currencyService.GetBalance(GameEnums.CurrencyType.Gold));
     }
     
     private void RaiseAllSubjectScores()

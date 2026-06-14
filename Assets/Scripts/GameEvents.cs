@@ -34,6 +34,17 @@ public class GameEvents
     public static event Action OnExamClosed;
     public static event Action<int> OnExamAnswerSubmitted;
     
+    //------------------QUESTS------------------------------
+    public static event Action<QuestEntry> OnActiveQuestChanged;
+    public static event Action<QuestEntry, int> OnQuestCompleted;  // quest + gold earned
+    public static event Action<QuestEntry> OnQuestFailed;
+    
+    //------------------CURRENCY------------------------
+    public static event Action<GameEnums.CurrencyType, int> OnCurrencyChanged;
+    
+    //------------------------SUBJECT LEVELS------------------
+    public static event Action<GameEnums.MainSubjects, int> OnSubjectLevelChanged;
+    
     
     //-------------------STATIC FUNC CALLING THE EVENTS------------------------------
     public static void RaiseDailySubjectsReady(IReadOnlyList<SubjectDisplayData> subjects)
@@ -72,6 +83,21 @@ public class GameEvents
     
     public static void RaiseExamAnswerSubmitted(int option) 
         => OnExamAnswerSubmitted?.Invoke(option);
+    
+    public static void RaiseCurrencyChanged(GameEnums.CurrencyType type, int newBalance)
+        => OnCurrencyChanged?.Invoke(type, newBalance);
+    
+    public static void RaiseActiveQuestChanged(QuestEntry quest)
+        => OnActiveQuestChanged?.Invoke(quest);
+    
+    public static void RaiseQuestCompleted(QuestEntry quest, int goldEarned)
+        => OnQuestCompleted?.Invoke(quest, goldEarned);
+    
+    public static void RaiseQuestFailed(QuestEntry quest)
+        => OnQuestFailed?.Invoke(quest);
+    
+    public static void RaiseSubjectLevelChanged(GameEnums.MainSubjects subject, int newLevel)
+        => OnSubjectLevelChanged?.Invoke(subject, newLevel);
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStaticState()
@@ -86,5 +112,10 @@ public class GameEvents
         OnDaySummaryReady = null;
         OnContinueToNextDay = null;
         OnDaySummaryClosed = null;
+        OnCurrencyChanged = null;
+        OnActiveQuestChanged = null;
+        OnQuestCompleted = null;
+        OnQuestFailed = null;
+        OnSubjectLevelChanged = null;
     }
 }

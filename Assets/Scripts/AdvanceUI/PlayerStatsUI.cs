@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerStatsUI : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI _goldText;
     [SerializeField] private TextMeshProUGUI _dayText;
     [SerializeField] private TextMeshProUGUI _staminaText;
     [SerializeField] private Image _staminaFill;
@@ -19,12 +20,14 @@ public class PlayerStatsUI : MonoBehaviour
         GameEvents.OnStaminaChanged += UpdateStamina;
         GameEvents.OnInteractionsChanged += UpdateInteractions;
         GameEvents.OnDayChanged += UpdateDay;
+        GameEvents.OnCurrencyChanged += UpdateGold;
     }
     private void OnDisable()
     {
         GameEvents.OnStaminaChanged -= UpdateStamina;
         GameEvents.OnInteractionsChanged -= UpdateInteractions;
         GameEvents.OnDayChanged -= UpdateDay;
+        GameEvents.OnCurrencyChanged -= UpdateGold;
     }
     private void UpdateStamina(int current, int max)
     {
@@ -58,5 +61,12 @@ public class PlayerStatsUI : MonoBehaviour
     {
         if (_dayText != null)
             _dayText.text = $"Day {day}";
+    }
+    
+    private void UpdateGold(GameEnums.CurrencyType type, int balance)
+    {
+        if (type != GameEnums.CurrencyType.Gold || _goldText == null)
+            return;
+        _goldText.text = balance.ToString();
     }
 }

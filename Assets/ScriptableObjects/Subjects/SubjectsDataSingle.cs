@@ -19,4 +19,5 @@ public class SubjectData
     public int subjectScore;
     public int subjectScoreMultiplier;
     public int interactionDeducted;
+    public int interactionsToUnlockNextLevel;
 }

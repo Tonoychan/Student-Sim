@@ -22,6 +22,7 @@ MonoBehaviour:
     subjectScore: 8
     subjectScoreMultiplier: 0
     interactionDeducted: 1
+    interactionsToUnlockNextLevel: 10
   - subjectID: 1
     subjectClassName: Level 2 - Class
     subjectLevel: 2
@@ -30,6 +31,7 @@ MonoBehaviour:
     subjectScore: 14
     subjectScoreMultiplier: 0
     interactionDeducted: 1
+    interactionsToUnlockNextLevel: 10
   - subjectID: 1
     subjectClassName: Level 3 - Class
     subjectLevel: 3
@@ -38,6 +40,7 @@ MonoBehaviour:
     subjectScore: 18
     subjectScoreMultiplier: 0
     interactionDeducted: 1
+    interactionsToUnlockNextLevel: 10
   - subjectID: 1
     subjectClassName: Level 4 - Class
     subjectLevel: 4
@@ -46,6 +49,7 @@ MonoBehaviour:
     subjectScore: 25
     subjectScoreMultiplier: 0
     interactionDeducted: 1
+    interactionsToUnlockNextLevel: 0
   - subjectID: 1
     subjectClassName: Level 5 - Class
     subjectLevel: 5
@@ -54,3 +58,4 @@ MonoBehaviour:
     subjectScore: 30
     subjectScoreMultiplier: 0
     interactionDeducted: 1
+    interactionsToUnlockNextLevel: 0

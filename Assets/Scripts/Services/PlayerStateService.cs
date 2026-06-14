@@ -11,6 +11,10 @@ public class PlayerStateService
     private readonly Dictionary<GameEnums.MainSubjects, int> _subjectScores = new();
     private readonly Dictionary<GameEnums.MainSubjects, int> _subjectLevels = new();
     private readonly Dictionary<GameEnums.MainSubjects, int> _dailyScoreGains = new();
+    private readonly Dictionary<GameEnums.MainSubjects, int> _interactionsAtCurrentLevel = new();
+    
+    public int GetInteractionsAtCurrentLevel(GameEnums.MainSubjects subject)
+        => _interactionsAtCurrentLevel.TryGetValue(subject, out int count) ? count : 0;
     
     public int GetSubjectScore(GameEnums.MainSubjects subject)
     {
@@ -126,5 +130,26 @@ public class PlayerStateService
             });
         }
         return summary;
+    }
+    
+    /// <summary>
+    /// Call after each successful subject click. Returns true if level increased.
+    /// </summary>
+    public bool RegisterSubjectInteraction(
+        GameEnums.MainSubjects subject,
+        int interactionsRequiredForNextLevel,
+        int maxLevel)
+    {
+        int currentLevel = GetSubjectLevel(subject);
+        if (interactionsRequiredForNextLevel <= 0 || currentLevel >= maxLevel)
+            return false;
+        
+        int count = GetInteractionsAtCurrentLevel(subject) + 1;
+        _interactionsAtCurrentLevel[subject] = count;
+        if (count < interactionsRequiredForNextLevel)
+            return false;
+        _subjectLevels[subject] = currentLevel + 1;
+        _interactionsAtCurrentLevel[subject] = 0;
+        return true;
     }
 }
