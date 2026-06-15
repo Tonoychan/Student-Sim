@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerPrefsSaveProvider : ISaveProvider
 {
-    private const string SaveKey = "player_save_v1";
+    private const string SaveKey = "player_term_save_v1";
     public void Save(PlayerSaveData data)
     {
         string json = JsonUtility.ToJson(data);

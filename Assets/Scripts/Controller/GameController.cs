@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    [Header("Debug / New Game")]
-    [SerializeField] private bool _startAsNew;
-    
     [SerializeField] private MainExam _mainExamData;
     [SerializeField] private GameConfigSO _gameConfig;
     [SerializeField] private QuestData _questData;
@@ -47,6 +44,7 @@ public class GameController : MonoBehaviour
         GameEvents.OnContinueToNextDay += HandleContinueToNextDay;
         GameEvents.OnExamAnswerSubmitted += HandleExamAnswerSubmitted;
         GameEvents.OnExamCompleted += HandleExamCompleted;
+        GameEvents.OnCurrencyChanged += HandleCurrencyChanged;
     }
     
     private void OnDisable()
@@ -55,6 +53,7 @@ public class GameController : MonoBehaviour
         GameEvents.OnContinueToNextDay -= HandleContinueToNextDay;
         GameEvents.OnExamAnswerSubmitted -= HandleExamAnswerSubmitted;
         GameEvents.OnExamCompleted -= HandleExamCompleted;
+        GameEvents.OnCurrencyChanged -= HandleCurrencyChanged;
     }
 
     void Start()
@@ -70,8 +69,15 @@ public class GameController : MonoBehaviour
     
     private async void HandleExamCompleted(int correctCount)
     {
+        _playerState.AddExamResult(correctCount);
         await UniTask.Delay(500);
         Debug.Log($"Exam finished. Correct: {correctCount}/6"); // internal only, no UI
+        if (_gameConfig.IsFinalDay(_dayCycleService.CurrentDay))
+        {
+            _dayCycleService.CompleteTerm(_playerState);
+            _saveService.Save();
+            return;
+        }
         _dayCycleService.CompleteExamDay();
         _saveService.Save();
     }
@@ -80,15 +86,26 @@ public class GameController : MonoBehaviour
     {
         var saveProvider = new PlayerPrefsSaveProvider();
         
+        bool continueGame = GameSessionContext.Mode == GameSessionContext.StartMode.Continue
+                            && SaveContinueHelper.CanContinue(saveProvider);
+        
+        PlayerSaveData existingSave = continueGame ? saveProvider.Load() : null;
+        
+        int maxDays = continueGame
+            ? (existingSave.maxDays > 0 ? existingSave.maxDays : 30)
+            : GameSessionContext.SelectedMaxDays;
+        
+        GameConfigLoader.ApplyTerm(_gameConfig, maxDays);
+        
         _subjectService = new SubjectService();
         _playerState = new PlayerStateService();
         _currencyService = new PlayerCurrencyService();
         _selectionService = new SubjectSelectionService(_subjectService, _playerState);
         _examService = new ExamService(_mainExamData, _playerState, _gameConfig);
         _questService = new QuestService(_questData, _playerState, _currencyService);
-        _dayCycleService = new DayCycleService(_playerState, _selectionService, _examService,_questService);
-        
+        _dayCycleService = new DayCycleService(_playerState, _selectionService, _examService,_questService,_gameConfig);
         _saveService = new PlayerSaveService(saveProvider, _playerState, _dayCycleService,_questService,_currencyService);
+        _saveService.SyncAccount(_currencyService);
         _interactionService = new SubjectInteractionService(
             _playerState,
             _dayCycleService,
@@ -104,18 +121,15 @@ public class GameController : MonoBehaviour
         }
         await _subjectService.InitializeAsync().AttachExternalCancellation(ct);
         
-        // _saveService.LoadOrCreateNew();
-        // _questService.Initialize();
-        
-        if (_startAsNew)
+        if (continueGame)
         {
-            _saveService.StartFresh();                    // delete save + apply defaults
-            _dayCycleService.StartDay(resetDailyStats: true);
+            _saveService.LoadOrCreateNew();
+            _dayCycleService.StartDay(resetDailyStats: false);
         }
         else
         {
-            _saveService.LoadOrCreateNew();
-            _dayCycleService.StartDay(resetDailyStats: false); // keep loaded mid-day state
+            _saveService.StartFresh(maxDays);
+            _dayCycleService.StartDay(resetDailyStats: true);
         }
         
         RaiseAllSubjectScores();
@@ -150,7 +164,14 @@ public class GameController : MonoBehaviour
     private void HandleContinueToNextDay()
     {
         _dayCycleService.ContinueToNextDay();
-        _saveService.Save(); // save here if you remove it from DayCycleService
+        _saveService.Save();
+    }
+    
+    private void HandleCurrencyChanged(GameEnums.CurrencyType type, int balance)
+    {
+        if (type != GameEnums.CurrencyType.Gold || _saveService == null)
+            return;
+        _saveService.SaveAccount();
     }
     
 }

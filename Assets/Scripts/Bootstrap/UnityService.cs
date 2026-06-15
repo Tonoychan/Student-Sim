@@ -5,9 +5,11 @@ using Unity.Services.Core;
 using Unity.Services.Core.Environments;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UnityService : MonoBehaviour
 {
+    private const string SelectionSceneName = "SelectionScene";
     [Header("Settings")]
     [SerializeField] private string environment = "development";
     [SerializeField] private string environmentID = "362ddb4d-6ced-4fff-a75f-e699a477cf90";
@@ -69,18 +71,61 @@ public class UnityService : MonoBehaviour
         _gameAnalyticsService = new GameAnalyticsService();
         _gameAnalyticsService.InitAnalytics();
         _gameAnalyticsService.SendEvent("Game_Started");
-        _gameAnalyticsService.SendEvent("newPlayer");
-        _gameAnalyticsService.SendEvent("Game_Authenticated",new Dictionary<string, object>
-        {
-            {"player_ID",_playerAuthenticationService.GetPlayerID()},
-            {"Environment",environment}
-        });
         _gameAnalyticsService.Flush();
+        
+        TryAutoLoginOrShowGuestButton().Forget();
     }
     
     private void OnServicesFailed(Exception e)
     {
         // Handle failure gracefully, e.g. show offline mode UI
         Debug.LogError($"[UGS] Falling back to offline mode. Reason: {e.Message}");
+    }
+    
+    private async UniTaskVoid TryAutoLoginOrShowGuestButton()
+    {
+        if (_playerAuthenticationService.HasStoredSession)
+        {
+            bool restored = await _playerAuthenticationService.TryRestoreSessionAsync();
+            if (restored)
+            {
+                SendAuthenticatedAnalytics();
+                LoadSelectionScene();
+                return;
+            }
+        }
+        _guestLoginButton.onClick.AddListener(OnGuestLoginClicked);
+    }
+    
+    private void OnGuestLoginClicked()
+    {
+        GuestLoginAndProceed().Forget();
+    }
+    private async UniTaskVoid GuestLoginAndProceed()
+    {
+        _guestLoginButton.interactable = false;
+        bool success = await _playerAuthenticationService.SignInAnonymouslyAsync();
+        if (success)
+        {
+            SendAuthenticatedAnalytics();
+            LoadSelectionScene();
+        }
+        else
+        {
+            _guestLoginButton.interactable = true;
+        }
+    }
+    private void SendAuthenticatedAnalytics()
+    {
+        _gameAnalyticsService.SendEvent("Game_Authenticated", new Dictionary<string, object>
+        {
+            { "player_ID", _playerAuthenticationService.GetPlayerID() },
+            { "Environment", environment }
+        });
+        _gameAnalyticsService.Flush();
+    }
+    private static void LoadSelectionScene()
+    {
+        SceneManager.LoadScene(SelectionSceneName);
     }
 }

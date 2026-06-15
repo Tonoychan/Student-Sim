@@ -5,9 +5,44 @@ using UnityEngine;
 
 public class PlayerAuthenticationService
 {
+    public bool HasStoredSession =>
+        AuthenticationService.Instance.SessionTokenExists;
+    public bool IsSignedIn =>
+        AuthenticationService.Instance.IsSignedIn;
+    
     public void GuestLogin()
     {
         SignUpAnonymouslyAsync().Forget();
+    }
+    
+    public async UniTask<bool> TryRestoreSessionAsync()
+    {
+        if (!AuthenticationService.Instance.SessionTokenExists)
+            return false;
+        return await SignInAnonymouslyAsync();
+    }
+    
+    public async UniTask<bool> SignInAnonymouslyAsync()
+    {
+        try
+        {
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            Debug.Log(AuthenticationService.Instance.SessionTokenExists
+                ? "Resumed existing session."
+                : "Created new anonymous account.");
+            Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
+            return AuthenticationService.Instance.IsSignedIn;
+        }
+        catch (AuthenticationException ex)
+        {
+            Debug.LogException(ex);
+            return false;
+        }
+        catch (RequestFailedException ex)
+        {
+            Debug.LogException(ex);
+            return false;
+        }
     }
     
     async UniTask SignUpAnonymouslyAsync()
@@ -46,6 +81,8 @@ public class PlayerAuthenticationService
     
     public string GetPlayerID()
     {
-        return AuthenticationService.Instance.PlayerId;
+        return AuthenticationService.Instance.IsSignedIn
+            ? AuthenticationService.Instance.PlayerId
+            : string.Empty;
     }
 }

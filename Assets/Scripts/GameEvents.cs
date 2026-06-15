@@ -45,6 +45,9 @@ public class GameEvents
     //------------------------SUBJECT LEVELS------------------
     public static event Action<GameEnums.MainSubjects, int> OnSubjectLevelChanged;
     
+    // ---------- TERM RESULTS ----------
+    public static event Action<TermResultData> OnTermResultsReady;
+    
     
     //-------------------STATIC FUNC CALLING THE EVENTS------------------------------
     public static void RaiseDailySubjectsReady(IReadOnlyList<SubjectDisplayData> subjects)
@@ -98,6 +101,9 @@ public class GameEvents
     
     public static void RaiseSubjectLevelChanged(GameEnums.MainSubjects subject, int newLevel)
         => OnSubjectLevelChanged?.Invoke(subject, newLevel);
+    
+    public static void RaiseTermResultsReady(TermResultData result)
+        => OnTermResultsReady?.Invoke(result);
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStaticState()
@@ -117,5 +123,6 @@ public class GameEvents
         OnQuestCompleted = null;
         OnQuestFailed = null;
         OnSubjectLevelChanged = null;
+        OnTermResultsReady = null;
     }
 }

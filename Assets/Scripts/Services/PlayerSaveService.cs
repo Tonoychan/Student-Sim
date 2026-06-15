@@ -7,6 +7,7 @@ public class PlayerSaveService
     private readonly DayCycleService _dayCycleService;
     private readonly QuestService _questService;
     private readonly PlayerCurrencyService _currencyService;
+    private readonly PlayerAccountService _accountService = new();
     
     public PlayerSaveService(
         ISaveProvider saveProvider,
@@ -40,15 +41,27 @@ public class PlayerSaveService
         data.currencies = _currencyService.ToSaveEntries();
         data.questProgress = _questService.ToSaveData();
         _saveProvider.Save(data);
+        _accountService.SaveFrom(_currencyService);
     }
-    public void StartFresh()
+    public void StartFresh(int maxDays)
     {
+        _playerState.ResetTermProgress();
+        _playerState.SetTermMaxDays(maxDays);
         _saveProvider.DeleteSave();
-        PlayerSaveData data = new PlayerSaveData();
+        PlayerSaveData data = new PlayerSaveData { maxDays = maxDays };
         _playerState.ApplySaveData(data);
-        _currencyService.ApplySaveEntries(data.currencies);  // empty → 0 gold
-        _questService.ApplySaveData(data.questProgress);     // index 0
+        _questService.ApplySaveData(data.questProgress);
         _dayCycleService.SetCurrentDay(data.currentDay);
-        _questService.Initialize(); // show first quest + fire UI event
+        _questService.Initialize();
+        Save();
+    }
+    
+    public void SyncAccount(PlayerCurrencyService currency)
+    {
+        _accountService.SyncAndApply(currency);
+    }
+    public void SaveAccount()
+    {
+        _accountService.SaveFrom(_currencyService);
     }
 }

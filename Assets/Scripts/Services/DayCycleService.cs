@@ -6,6 +6,8 @@ using UnityEngine;
 /// </summary>
 public class DayCycleService
 {
+    private readonly GameConfigSO _gameConfig;
+    
     private readonly PlayerStateService _playerState;
     private readonly SubjectSelectionService _selectionService;
     private readonly ExamService _examService;
@@ -19,12 +21,14 @@ public class DayCycleService
         PlayerStateService playerState,
         SubjectSelectionService selectionService,
         ExamService examService,
-        QuestService questService)
+        QuestService questService,
+        GameConfigSO gameConfig)
     {
         _playerState = playerState;
         _selectionService = selectionService;
         _examService = examService;
         _questService = questService;
+        _gameConfig = gameConfig;
     }
     /// <summary>
     /// Called when player uses all daily interactions (12/12).
@@ -81,6 +85,9 @@ public class DayCycleService
     
     public void ContinueToNextDay()
     {
+        if (_gameConfig.IsFinalDay(CurrentDay))
+            return;
+        
         CurrentDay++;
         StartDay(resetDailyStats: true);
         _isEndingDay = false;
@@ -98,5 +105,14 @@ public class DayCycleService
         _questService.EvaluateActiveQuestAtDayEnd(CurrentDay);
         CurrentDay++;
         StartDay(resetDailyStats: true);
+    }
+    
+    public void CompleteTerm(PlayerStateService playerState)
+    {
+        GameEvents.RaiseExamClosed();
+        _questService.EvaluateActiveQuestAtDayEnd(CurrentDay);
+        TermResultData result = TermScoreCalculator.Build(playerState, _gameConfig);
+        playerState.SetTermCompleted(true);
+        GameEvents.RaiseTermResultsReady(result);
     }
 }

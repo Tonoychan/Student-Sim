@@ -6,6 +6,9 @@ public class PlayerSaveData
     public int currentDay = 1;
     public int currentStamina = 100;
     public int interactionsUsed = 0;
+    public int totalExamCorrect = 0;
+    public bool termCompleted = false; 
+    public int maxDays = 30;
     public List<CurrencyEntry> currencies = new();
     public QuestSaveData questProgress = new();
     public List<SubjectProgressEntry> subjectProgress = new();

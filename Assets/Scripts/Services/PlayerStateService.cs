@@ -13,12 +13,25 @@ public class PlayerStateService
     private readonly Dictionary<GameEnums.MainSubjects, int> _dailyScoreGains = new();
     private readonly Dictionary<GameEnums.MainSubjects, int> _interactionsAtCurrentLevel = new();
     
+    private int _totalExamCorrect;
+    private bool _termCompleted;
+    private int _termMaxDays = 30;
+    
+    public int TotalExamCorrect => _totalExamCorrect;
+    public bool TermCompleted => _termCompleted;
+    public int TermMaxDays => _termMaxDays;
+    
     public int GetInteractionsAtCurrentLevel(GameEnums.MainSubjects subject)
         => _interactionsAtCurrentLevel.TryGetValue(subject, out int count) ? count : 0;
     
     public int GetSubjectScore(GameEnums.MainSubjects subject)
     {
         return _subjectScores.TryGetValue(subject, out int score) ? score : 0;
+    }
+    
+    public void SetTermMaxDays(int maxDays)
+    {
+        _termMaxDays = maxDays;
     }
     
     public int GetSubjectLevel(GameEnums.MainSubjects subject)
@@ -66,6 +79,9 @@ public class PlayerStateService
             currentDay = currentDay,
             currentStamina = CurrentStamina,
             interactionsUsed = InteractionsUsed,
+            totalExamCorrect = _totalExamCorrect,
+            termCompleted = _termCompleted, 
+            maxDays = _termMaxDays,
             subjectProgress = new List<SubjectProgressEntry>()
         };
         foreach (var subject in System.Enum.GetValues(typeof(GameEnums.MainSubjects)))
@@ -89,6 +105,9 @@ public class PlayerStateService
         
         CurrentStamina = data.currentStamina;
         InteractionsUsed = data.interactionsUsed;
+        _totalExamCorrect = data.totalExamCorrect;  
+        _termCompleted = data.termCompleted;  
+        _termMaxDays = data.maxDays > 0 ? data.maxDays : 30;
         _subjectScores.Clear();
         _subjectLevels.Clear();
         foreach (var entry in data.subjectProgress)
@@ -151,5 +170,24 @@ public class PlayerStateService
         _subjectLevels[subject] = currentLevel + 1;
         _interactionsAtCurrentLevel[subject] = 0;
         return true;
+    }
+    
+    public void AddExamResult(int correctThisExam)
+    {
+        _totalExamCorrect += correctThisExam;
+    }
+    public void SetTermCompleted(bool completed)
+    {
+        _termCompleted = completed;
+    }
+    
+    public void ResetTermProgress()
+    {
+        _totalExamCorrect = 0;
+        _termMaxDays = 30;
+        _termCompleted = false;
+        _subjectScores.Clear();
+        _subjectLevels.Clear();
+        _interactionsAtCurrentLevel.Clear();
     }
 }
