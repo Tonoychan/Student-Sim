@@ -16,35 +16,39 @@
 
 ## 🎓 About The Game
 
-**Indian Student Sim** is a Unity-based simulator that puts you in the shoes of an Indian student navigating the pressure-cooker world of exams, subjects, and academic goals. Manage your subjects, answer exam questions, track your scores, and chase your academic dreams — all while surviving the grind.
+**Indian Student Sim** is a Unity-based term simulator that puts you in the shoes of an Indian student navigating exams, subjects, stamina, and academic goals across a full school term.
 
-> *Study hard. Score high. Make the family proud.*
+Each day you pick subjects, manage limited interactions and stamina, sit scheduled exams, complete quests, and build scores across six core subjects. Finish the term to see your final grade — boosted by exam performance.
+
+> *Study hard. Manage your energy. Score high. Make the family proud.*
 
 ---
 
 ## 🎮 Gameplay Overview
 
 ```
-📚 Pick your Subjects
+🔐 Login (guest or restored session)
         ↓
-🎯 Set your Goals
+📋 Choose term length or Continue saved game
         ↓
-📝 Sit the Exam
+📅 Daily loop — pick subjects, spend stamina & interactions
         ↓
-✅ Select your Answers
+📝 Exam days — multiple-choice exams (6 questions each)
         ↓
-📊 See your Score
+📊 Day summary → next day until term ends
         ↓
-🔁 Repeat until you top the class
+🏆 Term result — subject scores + exam multiplier
 ```
 
 | Feature | Description |
 |---|---|
-| 📖 **Subject System** | Choose from multiple subjects, each with their own question banks |
-| 🎯 **Goal Tracking** | Set academic goals and track progress toward them |
-| 📝 **Exam Engine** | Multiple-choice exam flow with scored results |
-| 📊 **Score Board** | Per-subject score tracking and performance feedback |
-| 🌟 **Custom Shaders** | Hand-crafted URP shaders and HLSL visual effects |
+| 📖 **Subject System** | Six academic subjects (Math, History, Science, Geography, Arts, Computer) plus Rest — each driven by ScriptableObject data |
+| ⚡ **Stamina & Interactions** | 100 stamina and 12 daily interactions; the day ends when either runs out |
+| 📝 **Exam Engine** | Scheduled exam days with multiple-choice questions and per-exam scoring |
+| 🎯 **Quest System** | Deadline-based quests with score targets and gold rewards |
+| 📊 **Term Scoring** | Academic base score multiplied by overall exam performance at term end |
+| 💾 **Save / Continue** | Progress persisted locally (PlayerPrefs); cloud save provider scaffolded |
+| ☁️ **Unity Gaming Services** | Guest authentication, analytics, and remote config integration |
 
 ---
 
@@ -52,25 +56,41 @@
 
 ```
 Assets/
+├── Scenes/
+│   ├── LoginScene.unity          # UGS init + guest login
+│   ├── SelectionScene.unity      # New game / continue
+│   └── SampleScene.unity         # Main gameplay loop
+├── ScriptableObjectsData/        # GameConfig, subjects, exams, quests
 ├── Scripts/
-│   ├── UI/
-│   │   ├── SimulatorManager.cs         # Core game loop controller
-│   │   ├── SimulatorUI.cs              # UI state management
-│   │   ├── SelectAnswer.cs             # Answer selection logic
-│   │   ├── SubjectReferenceOnButton.cs # Subject button binding
-│   │   ├── SubjectUIReferenceOnButton.cs
-│   │   └── SubjectScoreTextReferenceOnText.cs  # Score display
-│   └── SO/  (ScriptableObjects)
-│       ├── MainExamData.cs             # Exam question data asset
-│       ├── SubjectsData.cs             # Subject configuration asset
-│       └── GoalData.cs                 # Player goal data asset
-└── Shaders/                            # Custom URP / HLSL shaders
+│   ├── Bootstrap/
+│   │   ├── UnityService.cs           # UGS initialization & login flow
+│   │   └── GameSessionContext.cs     # New game / continue session state
+│   ├── Controller/
+│   │   └── GameController.cs           # Wires services + event handlers
+│   ├── Services/
+│   │   ├── DayCycleService.cs          # Day start/end, exam days, term completion
+│   │   ├── ExamService.cs              # Exam question flow
+│   │   ├── PlayerStateService.cs       # Stamina, scores, levels, interactions
+│   │   ├── PlayerSaveService.cs        # Save/load orchestration
+│   │   ├── QuestService.cs             # Quest evaluation & rewards
+│   │   ├── SubjectService.cs           # Subject data access
+│   │   ├── SubjectSelectionService.cs  # Daily subject picks
+│   │   ├── TermScoreCalculator.cs      # Final term grade formula
+│   │   └── ...                         # Currency, interaction, config loaders
+│   ├── UI/ & AdvanceUI/                # Scene & gameplay UI (exam, stats, quests, results)
+│   ├── Saving/                         # PlayerSaveData, ISaveProvider, providers
+│   ├── ScriptableObjectScripts/        # GameConfigSO, MainExam, SubjectsDataSingle, QuestData
+│   ├── UGS/                            # Auth, analytics, remote config
+│   └── GameEvents.cs                   # Static event bus between services & UI
+└── Art/                                # UI textures & sprites
 ```
 
 ### Design Patterns Used
-- **ScriptableObject architecture** — data-driven exam/subject/goal configuration
-- **MVC-style UI separation** — `SimulatorManager` (logic) ↔ `SimulatorUI` (view)
-- **Component binding pattern** — UI elements reference data via typed reference scripts
+- **Service-oriented architecture** — gameplay logic split into focused services, orchestrated by `GameController`
+- **ScriptableObject data** — subjects, exams, quests, and term config are asset-driven
+- **Event-driven UI** — `GameEvents` decouples services from UI presenters
+- **Save provider abstraction** — `ISaveProvider` with local and cloud implementations
+- **Async with UniTask** — UGS init, login, and scene transitions
 
 ---
 
@@ -81,10 +101,11 @@ Assets/
 | Engine | Unity 6 (6000.3.10f1) |
 | Language | C# 9.0 |
 | Render Pipeline | Universal Render Pipeline (URP) |
-| Shaders | ShaderLab · HLSL |
 | UI | Unity uGUI · TextMesh Pro |
 | Input | Unity Input System |
-| IDE | JetBrains Rider |
+| Async | UniTask (Cysharp) |
+| Backend | Unity Gaming Services — Authentication, Analytics, Remote Config |
+| IDE | JetBrains Rider · Visual Studio |
 | Target Platform | Android |
 
 ---
@@ -95,7 +116,8 @@ Assets/
 
 - [Unity Hub](https://unity.com/download) installed
 - Unity Editor **6000.3.10f1** (exact version recommended)
-- Android Build Support module installed
+- Android Build Support module (for mobile builds)
+- Unity Gaming Services project linked (for auth, analytics, and remote config in `LoginScene`)
 
 ### Setup
 
@@ -109,47 +131,56 @@ git clone https://github.com/Tonoychan/Student-Sim.git
 
 # 4. Let Unity import all packages (first open may take a few minutes)
 
-# 5. Open the main scene from Assets/Scenes/ and hit Play ▶
+# 5. Open LoginScene (first scene in Build Settings) and hit Play ▶
 ```
 
-> ⚠️ **Note:** Make sure you open with the correct Unity version. Using a different version may cause URP shader compatibility issues.
+**Scene flow:** `LoginScene` → `SelectionScene` → `SampleScene`
+
+> ⚠️ **Note:** Use Unity **6000.3.10f1** to avoid package and URP mismatches. UGS features require a configured Unity project; the game falls back gracefully if services fail to initialize.
 
 ---
 
 ## 📦 Packages & Dependencies
 
-All packages are managed via Unity Package Manager and will resolve automatically on first open.
+All packages resolve via Unity Package Manager on first open.
 
 | Package | Purpose |
 |---|---|
-| Universal RP | Custom shader rendering |
-| Shader Graph | Visual shader authoring |
+| Universal RP | Rendering pipeline |
 | Input System | Touch & button input |
-| TextMesh Pro | Crisp UI text rendering |
-| Localization | Multi-language support |
-| Timeline | Cutscene / sequence support |
-| Visual Scripting | Rapid prototyping |
-| 2D Sprite / Animation | Character & UI sprites |
+| TextMesh Pro | UI text |
+| UniTask | Async/await for services and scene flow |
+| Unity Authentication | Guest login & session restore |
+| Unity Analytics | Gameplay event tracking |
+| Unity Remote Config | Live term/exam configuration |
+| Timeline | Sequence support |
+| Visual Scripting | Prototyping |
+| 2D Sprite / Animation | UI & sprite assets |
 
 ---
 
 ## 🗺️ Roadmap
 
 - [x] Core exam question flow
-- [x] Subject selection system
-- [x] Score tracking per subject
-- [x] Goal data architecture
-- [ ] Main menu & scene transitions
+- [x] Subject selection & daily interaction loop
+- [x] Stamina, levels, and per-subject score tracking
+- [x] Quest system with deadlines and rewards
+- [x] Day cycle with scheduled exam days
+- [x] Term scoring and result screen
+- [x] Login, selection, and scene transitions
+- [x] Save / continue (local persistence)
+- [x] Unity Gaming Services integration (auth, analytics, remote config)
 - [ ] Sound effects & background music
-- [ ] Save/load system for progress
-- [ ] Multiple difficulty levels
+- [ ] Longer term lengths (120 / 360 days)
+- [ ] Cloud save fully wired to gameplay
 - [ ] Leaderboard / high score system
+- [ ] Localization
 
 ---
 
 ## 🤝 Contributing
 
-This is a personal learning project but contributions and suggestions are welcome!
+This is a personal learning project, but contributions and suggestions are welcome!
 
 1. Fork the repo
 2. Create a feature branch: `git checkout -b feature/your-feature`
