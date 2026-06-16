@@ -63,7 +63,6 @@ public class UnityService : MonoBehaviour
         // AuthenticationService.Instance.SignInAnonymouslyAsync();
         Debug.Log("[UGS] Services are ready to use.");
         _playerAuthenticationService = new PlayerAuthenticationService();
-        _guestLoginButton.onClick.AddListener(_playerAuthenticationService.GuestLogin);
         
         _unityRemoteConfigService = new UnityRemoteConfigService();
         _unityRemoteConfigService.InitializeAndFetchAsync(environmentID).Forget();
@@ -80,6 +79,14 @@ public class UnityService : MonoBehaviour
     {
         // Handle failure gracefully, e.g. show offline mode UI
         Debug.LogError($"[UGS] Falling back to offline mode. Reason: {e.Message}");
+        if (_guestLoginButton != null)
+            _guestLoginButton.onClick.AddListener(OnGuestLoginOfflineFallback);
+    }
+    
+    private void OnGuestLoginOfflineFallback()
+    {
+        Debug.LogWarning("[UGS] Offline fallback → SelectionScene");
+        LoadSelectionScene();
     }
     
     private async UniTaskVoid TryAutoLoginOrShowGuestButton()
