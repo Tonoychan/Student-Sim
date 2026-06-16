@@ -23,6 +23,7 @@ public static class TermScoreCalculator
             academicBase += score;
             breakdown.Add(new SubjectScoreEntry { subject = subject, score = score });
         }
+        
         int totalExamCorrect = player.TotalExamCorrect;
         int maxExamCorrect = config.MaxPossibleExamCorrect;
         float multiplier = 1f + 0.5f * totalExamCorrect / maxExamCorrect;
@@ -35,6 +36,7 @@ public static class TermScoreCalculator
             examMultiplier = multiplier,
             finalScore = finalScore,
             subjectScores = breakdown,
+            maxDays = config.maxDays,
         };
     }
 }

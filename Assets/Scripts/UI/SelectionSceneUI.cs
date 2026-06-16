@@ -12,16 +12,22 @@ public class SelectionSceneUI : MonoBehaviour
     [SerializeField] private Button _day120Button;
     [SerializeField] private Button _day360Button;
     
+    [SerializeField] private Button _viewLeaderboardsButton;
+    [SerializeField] private LeaderboardPanelUI _leaderboardPanel;
+    
     private readonly PlayerPrefsSaveProvider _saveProvider = new();
     
     private void Start()
     {
+        
         RefreshContinueButton();
         _continueButton.onClick.AddListener(OnContinueClicked);
         _day5Button.onClick.AddListener(() => OnNewGameClicked(5));
         _day30Button.onClick.AddListener(() => OnNewGameClicked(30));
         _day120Button.onClick.AddListener(() => OnNewGameClicked(120));
         _day360Button.onClick.AddListener(() => OnNewGameClicked(360));
+        if (_viewLeaderboardsButton != null)
+            _viewLeaderboardsButton.onClick.AddListener(OnViewLeaderboardsClicked);
         _day120Button.interactable = false;
         _day360Button.interactable = false;
     }
@@ -38,5 +44,10 @@ public class SelectionSceneUI : MonoBehaviour
     {
         GameSessionContext.StartNewGame(maxDays);
         SceneManager.LoadScene(GameSceneName);
+    }
+    
+    private void OnViewLeaderboardsClicked()
+    {
+        _leaderboardPanel?.Show(5); // default 5-day tab
     }
 }

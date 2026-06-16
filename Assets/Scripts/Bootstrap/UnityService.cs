@@ -6,6 +6,7 @@ using Unity.Services.Core.Environments;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Services.Leaderboards;
 
 public class UnityService : MonoBehaviour
 {
@@ -20,8 +21,9 @@ public class UnityService : MonoBehaviour
     private PlayerAuthenticationService _playerAuthenticationService;
     private UnityRemoteConfigService _unityRemoteConfigService;
     private GameAnalyticsService _gameAnalyticsService;
+    private TermLeaderboardService _leaderboardService;
 
-    private void Awake()
+    private void Start()
     {
         InitializeServices().Forget();
     }
@@ -34,7 +36,6 @@ public class UnityService : MonoBehaviour
 
             var options = new InitializationOptions();
             options.SetEnvironmentName(environment);
-           
             
             await UnityServices.InitializeAsync(options);
             
@@ -61,6 +62,7 @@ public class UnityService : MonoBehaviour
     {
         // Hook in your services here, e.g.:
         // AuthenticationService.Instance.SignInAnonymouslyAsync();
+        
         Debug.Log("[UGS] Services are ready to use.");
         _playerAuthenticationService = new PlayerAuthenticationService();
         
@@ -96,12 +98,13 @@ public class UnityService : MonoBehaviour
             bool restored = await _playerAuthenticationService.TryRestoreSessionAsync();
             if (restored)
             {
-                SendAuthenticatedAnalytics();
+                await OnAuthenticatedAsync();
                 LoadSelectionScene();
                 return;
             }
         }
-        _guestLoginButton.onClick.AddListener(OnGuestLoginClicked);
+        if (_guestLoginButton != null)
+            _guestLoginButton.onClick.AddListener(OnGuestLoginClicked);
     }
     
     private void OnGuestLoginClicked()
@@ -114,7 +117,7 @@ public class UnityService : MonoBehaviour
         bool success = await _playerAuthenticationService.SignInAnonymouslyAsync();
         if (success)
         {
-            SendAuthenticatedAnalytics();
+            await OnAuthenticatedAsync();
             LoadSelectionScene();
         }
         else
@@ -122,6 +125,17 @@ public class UnityService : MonoBehaviour
             _guestLoginButton.interactable = true;
         }
     }
+    
+    private async UniTask OnAuthenticatedAsync()
+    {
+        SendAuthenticatedAnalytics();
+        _leaderboardService = new TermLeaderboardService();
+        await _leaderboardService.EnsurePlayerNameIsIdAsync();
+        bool lbReady = await _leaderboardService.EnsureServiceLoadedAsync();
+        if (!lbReady)
+            Debug.LogWarning("[Leaderboard] Not ready at login; will retry when opening panel or submitting score.");
+    }
+    
     private void SendAuthenticatedAnalytics()
     {
         _gameAnalyticsService.SendEvent("Game_Authenticated", new Dictionary<string, object>

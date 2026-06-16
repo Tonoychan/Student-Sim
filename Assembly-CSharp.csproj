@@ -57,15 +57,18 @@
     <Compile Include="Assets\Scripts\ScriptableObjectScripts\MainExam.cs" />
     <Compile Include="Assets\Scripts\Saving\PlayerAccountSaveProvider.cs" />
     <Compile Include="Assets\Scripts\UI\ExamPanelUI.cs" />
+    <Compile Include="Assets\Scripts\UGS\TermLeaderboardService.cs" />
     <Compile Include="Assets\Scripts\UI\QuestUI.cs" />
     <Compile Include="Assets\Scripts\UI\SubjectSelectionUI.cs" />
     <Compile Include="Assets\Scripts\Services\GameConfigLoader.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjectScripts\QuestData.cs" />
     <Compile Include="Assets\Scripts\Services\TermScheduleBuilder.cs" />
     <Compile Include="Assets\Scripts\GameEvents.cs" />
+    <Compile Include="Assets\Scripts\UGS\TermLeaderboardIds.cs" />
     <Compile Include="Assets\Scripts\UI\TermResultUI.cs" />
     <Compile Include="Assets\Scripts\UGS\UnityRemoteConfigService.cs" />
     <Compile Include="Assets\Scripts\Services\TermScoreCalculator.cs" />
+    <Compile Include="Assets\UltimateSafeArea\Scripts\SafeArea.cs" />
     <Compile Include="Assets\Scripts\Saving\PlayerPrefsSaveProvider.cs" />
     <Compile Include="Assets\Scripts\UI\ExamAnswerOptionView.cs" />
     <Compile Include="Assets\TestScripts\RemoteConfigManager.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Assets\Scripts\Services\DayCycleService.cs" />
     <Compile Include="Assets\Scripts\UI\SubjectScoreUI.cs" />
     <Compile Include="Assets\Scripts\Controller\GameController.cs" />
+    <Compile Include="Assets\Scripts\UI\LeaderboardItemView.cs" />
     <Compile Include="Assets\Scripts\Services\SubjectSelectionService.cs" />
     <Compile Include="Assets\TestScripts\AnalyticsManager.cs" />
     <Compile Include="Assets\Scripts\Services\ExamService.cs" />
@@ -95,6 +99,7 @@
     <Compile Include="Assets\Scripts\ScriptableObjectScripts\SubjectsDataSingle.cs" />
     <Compile Include="Assets\Scripts\Services\TermResultData.cs" />
     <Compile Include="Assets\Scripts\Services\SubjectInteractionService.cs" />
+    <Compile Include="Assets\Scripts\UI\LeaderboardPanelUI.cs" />
     <Compile Include="Assets\Scripts\Services\QuestService.cs" />
     <None Include="Library\PackageCache\com.unity.modules.subsystems\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.universal@37e0d4fc2503\package.json" />
@@ -116,6 +121,7 @@
     <None Include="Library\PackageCache\com.unity.ext.nunit@d8c07649098d\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.universal-config@8dc1aab4af1d\package.json" />
     <None Include="Library\PackageCache\com.cysharp.unitask@360e370345b9\package.json" />
+    <None Include="Library\PackageCache\com.unity.services.leaderboards@4afe9822e038\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.assetbundle\package.json" />
     <None Include="Library\PackageCache\com.unity.services.analytics@cde4e6cf92f9\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.core@04ab0eefa0c3\Shaders\CoreCopy.shader" />
@@ -145,6 +151,7 @@
     <None Include="Library\PackageCache\com.unity.render-pipelines.core@04ab0eefa0c3\package.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Library\PackageCache\com.unity.modules.imageconversion\package.json" />
+    <None Include="Assets\UltimateSafeArea\Documentation.txt" />
     <None Include="Library\PackageCache\com.unity.shadergraph@c8830f61858d\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.unityanalytics\package.json" />
     <None Include="Library\PackageCache\com.unity.ide.rider@4504839d03f7\package.json" />
@@ -178,6 +185,7 @@
     <None Include="Library\PackageCache\com.unity.modules.umbra\package.json" />
     <None Include="Library\PackageCache\com.unity.nuget.newtonsoft-json@4dfd81071c64\package.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Library\PackageCache\com.unity.services.leaderboards@4afe9822e038\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.2d.tilemap.extras@3dde84bf3867\package.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Library\PackageCache\com.unity.inputsystem@57d0e36f6123\ValidationExceptions.json" />
@@ -199,6 +207,7 @@
     <None Include="Library\PackageCache\com.unity.nuget.newtonsoft-json@4dfd81071c64\Runtime\AOT\Newtonsoft.Json.xml" />
     <None Include="Library\PackageCache\com.unity.timeline@7f8b2fb101b6\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.ugui@bb329a87fcdc\Editor Resources\Shaders\TMP_SDF Internal Editor.shader" />
+    <None Include="Library\PackageCache\com.unity.device-simulator.devices@2af643ceec84\package.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Library\PackageCache\com.unity.services.authentication@ea91a087a2b7\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.director\package.json" />
@@ -1287,6 +1296,10 @@
       <Project>{dac8cb68-32be-d853-4fd7-15b2e89e5277}</Project>
       <Name>Unity.VisualScripting.Core.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Services.Leaderboards.Editor.csproj">
+      <Project>{24f27c3f-189f-a7b2-68e7-7303526b10e6}</Project>
+      <Name>Unity.Services.Leaderboards.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.InternalAPIEngineBridge.004.csproj">
       <Project>{0950c9d0-b614-9498-6f6c-c4580a10bad9}</Project>
       <Name>Unity.InternalAPIEngineBridge.004</Name>
@@ -1326,6 +1339,10 @@
     <ProjectReference Include="Unity.ShaderGraph.Editor.csproj">
       <Project>{a8172ddc-cd25-6831-5f80-8acb58c38289}</Project>
       <Name>Unity.ShaderGraph.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Leaderboards.csproj">
+      <Project>{c1330f34-cb62-2c33-9327-117dca944fda}</Project>
+      <Name>Unity.Services.Leaderboards</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Core.Editor.Shared.csproj">
       <Project>{1d62df42-3fc3-5633-03ad-0ff8a76f8898}</Project>

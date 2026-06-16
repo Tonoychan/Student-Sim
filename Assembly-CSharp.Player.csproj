@@ -57,15 +57,18 @@
     <Compile Include="Assets\Scripts\ScriptableObjectScripts\MainExam.cs" />
     <Compile Include="Assets\Scripts\Saving\PlayerAccountSaveProvider.cs" />
     <Compile Include="Assets\Scripts\UI\ExamPanelUI.cs" />
+    <Compile Include="Assets\Scripts\UGS\TermLeaderboardService.cs" />
     <Compile Include="Assets\Scripts\UI\QuestUI.cs" />
     <Compile Include="Assets\Scripts\UI\SubjectSelectionUI.cs" />
     <Compile Include="Assets\Scripts\Services\GameConfigLoader.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjectScripts\QuestData.cs" />
     <Compile Include="Assets\Scripts\Services\TermScheduleBuilder.cs" />
     <Compile Include="Assets\Scripts\GameEvents.cs" />
+    <Compile Include="Assets\Scripts\UGS\TermLeaderboardIds.cs" />
     <Compile Include="Assets\Scripts\UI\TermResultUI.cs" />
     <Compile Include="Assets\Scripts\UGS\UnityRemoteConfigService.cs" />
     <Compile Include="Assets\Scripts\Services\TermScoreCalculator.cs" />
+    <Compile Include="Assets\UltimateSafeArea\Scripts\SafeArea.cs" />
     <Compile Include="Assets\Scripts\Saving\PlayerPrefsSaveProvider.cs" />
     <Compile Include="Assets\Scripts\UI\ExamAnswerOptionView.cs" />
     <Compile Include="Assets\TestScripts\RemoteConfigManager.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Assets\Scripts\Services\DayCycleService.cs" />
     <Compile Include="Assets\Scripts\UI\SubjectScoreUI.cs" />
     <Compile Include="Assets\Scripts\Controller\GameController.cs" />
+    <Compile Include="Assets\Scripts\UI\LeaderboardItemView.cs" />
     <Compile Include="Assets\Scripts\Services\SubjectSelectionService.cs" />
     <Compile Include="Assets\TestScripts\AnalyticsManager.cs" />
     <Compile Include="Assets\Scripts\Services\ExamService.cs" />
@@ -95,6 +99,7 @@
     <Compile Include="Assets\Scripts\ScriptableObjectScripts\SubjectsDataSingle.cs" />
     <Compile Include="Assets\Scripts\Services\TermResultData.cs" />
     <Compile Include="Assets\Scripts\Services\SubjectInteractionService.cs" />
+    <Compile Include="Assets\Scripts\UI\LeaderboardPanelUI.cs" />
     <Compile Include="Assets\Scripts\Services\QuestService.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.3.10f1\Editor\Data\PlaybackEngines\AndroidPlayer\Variations\il2cpp\Managed\UnityEngine.dll</HintPath>
@@ -873,6 +878,10 @@
     <ProjectReference Include="UniTask.Addressables.Player.csproj">
       <Project>{6876e178-47ac-df9a-394e-7b70bbd3d437}</Project>
       <Name>UniTask.Addressables.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Leaderboards.Player.csproj">
+      <Project>{51e7b894-c162-7f27-20cd-d5f97efbd0f7}</Project>
+      <Name>Unity.Services.Leaderboards.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.InputSystem.Player.csproj">
       <Project>{69f6b7f8-b145-e2f6-bae5-f354ab8b2c02}</Project>

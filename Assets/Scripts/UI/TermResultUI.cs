@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class TermResultUI : MonoBehaviour
 {
+    [SerializeField] private LeaderboardPanelUI _leaderboardPanel;
+    
+    private TermResultData _lastResult;
+    
     [Serializable]
     public class SubjectRow
     {
@@ -27,7 +31,7 @@ public class TermResultUI : MonoBehaviour
         if (_panel != null)
             _panel.SetActive(false);
         if (_leaderboardButton != null)
-            _leaderboardButton.interactable = false; // leaderboard later
+            _leaderboardButton.onClick.AddListener(OnLeaderboardClicked);
         if (_playAgainButton != null)
             _playAgainButton.onClick.AddListener(OnPlayAgainClicked);
     }
@@ -37,6 +41,7 @@ public class TermResultUI : MonoBehaviour
     
     private void Show(TermResultData result)
     {
+        _lastResult = result;
         _panel.SetActive(true);
         foreach (var row in _subjectRows)
         {
@@ -61,5 +66,15 @@ public class TermResultUI : MonoBehaviour
     {
         GameSessionContext.Reset();
         SceneManager.LoadScene("SelectionScene");
+    }
+    
+    private void OnLeaderboardClicked()
+    {
+        if (_leaderboardPanel == null || _lastResult == null)
+            return;
+        
+        int maxDays = _lastResult != null ? _lastResult.maxDays : 5;
+        
+        _leaderboardPanel.Show(maxDays);
     }
 }

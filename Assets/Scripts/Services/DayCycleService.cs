@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 /// <summary>
 /// Day Cycle service will be responsible checking if the current day has ended
@@ -7,7 +8,7 @@ using UnityEngine;
 public class DayCycleService
 {
     private readonly GameConfigSO _gameConfig;
-    
+    static readonly TermLeaderboardService _leaderboard = new();
     private readonly PlayerStateService _playerState;
     private readonly SubjectSelectionService _selectionService;
     private readonly ExamService _examService;
@@ -112,7 +113,16 @@ public class DayCycleService
         GameEvents.RaiseExamClosed();
         _questService.EvaluateActiveQuestAtDayEnd(CurrentDay);
         TermResultData result = TermScoreCalculator.Build(playerState, _gameConfig);
+        result.maxDays = _gameConfig.maxDays;
         playerState.SetTermCompleted(true);
         GameEvents.RaiseTermResultsReady(result);
+        SubmitToLeaderboardAsync(result).Forget();
+    }
+    
+    async UniTaskVoid SubmitToLeaderboardAsync(TermResultData result)
+    {
+        if (!TermLeaderboardIds.HasLeaderboard(result.maxDays))
+            return;
+        await _leaderboard.SubmitScoreAsync(result.maxDays, result.finalScore);
     }
 }

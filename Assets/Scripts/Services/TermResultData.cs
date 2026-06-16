@@ -9,6 +9,7 @@ public class TermResultData
     public int maxExamCorrect;
     public float examMultiplier;
     public int finalScore;
+    public int maxDays;
     public List<SubjectScoreEntry> subjectScores = new();
 }
 
