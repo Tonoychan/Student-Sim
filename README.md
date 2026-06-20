@@ -1,14 +1,17 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF6B35,50:F7C59F,100:1A1A2E&height=200&section=header&text=Indian%20Student%20Sim&fontSize=52&fontColor=ffffff&fontAlignY=38&desc=A%20Unity%20Exam%20Simulator%20Experience&descAlignY=58&descSize=18&animation=fadeIn" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF6B35,50:F7C59F,100:1A1A2E&height=200&section=header&text=Student%20Sim&fontSize=52&fontColor=ffffff&fontAlignY=38&desc=A%20Portfolio%20Project&descAlignY=58&descSize=18&animation=fadeIn" width="100%"/>
 
 <br/>
 
-![Unity](https://img.shields.io/badge/Unity-6000.3-000000?style=for-the-badge&logo=unity&logoColor=white)
+![Unity](https://img.shields.io/badge/Unity-6.3-000000?style=for-the-badge&logo=unity&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-9.0-239120?style=for-the-badge&logo=csharp&logoColor=white)
 ![Platform](https://img.shields.io/badge/Platform-Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![WebGL](https://img.shields.io/badge/Platform-WebGL-FF6B35?style=for-the-badge&logo=webgl&logoColor=white)
 ![URP](https://img.shields.io/badge/Render-URP-FF6B35?style=for-the-badge&logo=unity&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-In%20Development-yellow?style=for-the-badge)
+
+### 🎮 [Play in Browser](https://play.unity.com/en/games/0cc2ac5f-1f8f-4d27-8252-b06e62443b78/student-sim)
 
 </div>
 
@@ -16,11 +19,18 @@
 
 ## 🎓 About The Game
 
-**Indian Student Sim** is a Unity-based term simulator that puts you in the shoes of an Indian student navigating exams, subjects, stamina, and academic goals across a full school term.
+**Student Sim** is a simulation that puts you in the shoes of a student, where your choices of action affect subject score, stamina, and exams.
 
-Each day you pick subjects, manage limited interactions and stamina, sit scheduled exams, complete quests, and build scores across six core subjects. Finish the term to see your final grade — boosted by exam performance.
+> *Study hard. Manage your energy. Score high.*
 
-> *Study hard. Manage your energy. Score high. Make the family proud.*
+---
+
+## 🕹️ How to Play
+
+- Each day your stamina refreshes and you get **12 interactions** to spend.
+- Use your interactions wisely — choosing subjects increases your score, but every action costs stamina.
+- Keep an eye on stamina: the day ends as soon as **either stamina or interactions hit 0**.
+- On exam days, answer the questions correctly — your final score is based on your subject score and your number of correct answers.
 
 ---
 
@@ -40,15 +50,25 @@ Each day you pick subjects, manage limited interactions and stamina, sit schedul
 🏆 Term result — subject scores + exam multiplier
 ```
 
-| Feature | Description |
-|---|---|
-| 📖 **Subject System** | Six academic subjects (Math, History, Science, Geography, Arts, Computer) plus Rest — each driven by ScriptableObject data |
-| ⚡ **Stamina & Interactions** | 100 stamina and 12 daily interactions; the day ends when either runs out |
-| 📝 **Exam Engine** | Scheduled exam days with multiple-choice questions and per-exam scoring |
-| 🎯 **Quest System** | Deadline-based quests with score targets and gold rewards |
-| 📊 **Term Scoring** | Academic base score multiplied by overall exam performance at term end |
-| 💾 **Save / Continue** | Progress persisted locally (PlayerPrefs); cloud save provider scaffolded |
-| ☁️ **Unity Gaming Services** | Guest authentication, analytics, and remote config integration |
+| Feature | Description | Done |
+|---|---|---|
+| 📖 **Subject System** | Six academic subjects (Math, History, Science, Geography, Arts, Computer) plus Rest — each driven by ScriptableObject data | ✅ |
+| ⚡ **Stamina & Interactions** | 100 stamina and 12 daily interactions; the day ends when either runs out | ✅ |
+| 📝 **Exam Engine** | Scheduled exam days with multiple-choice questions and per-exam scoring | ✅ |
+| 🎯 **Quest System** | Deadline-based quests with score targets and gold rewards | ✅ |
+| 📊 **Term Scoring** | Academic base score multiplied by overall exam performance at term end | ✅ |
+| 💾 **Save / Continue** | Progress persisted locally (PlayerPrefs); cloud save provider scaffolded | ✅ |
+| ☁️ **Unity Gaming Services** | Guest authentication, analytics, and remote config integration | ✅ |
+| 🛠️ **Remote Config (live tuning)** | Configure term/exam/economy values remotely without a build | ⬜ |
+| 🖼️ **Addressables + CCD** | Subject images and popups delivered via Addressables and Cloud Content Delivery | ⬜ |
+| 🔒 **Cloud Code (server-authoritative gold)** | Gold coin additions validated server-side via Unity Cloud Code | ⬜ |
+| ☁️ **Cloud Save** | Player data synced via Unity Cloud Save | ⬜ |
+| 🏆 **Leaderboard** | Integrated leaderboard for high scores | ⬜ |
+| 📆 **Extended Term Lengths** | 120 / 360-day terms with supporting data | ⬜ |
+| 🤖 **AI Class Standings** | Runtime list of AI players showing class standing each day | ⬜ |
+| 🛍️ **Store + Ads + IAP** | Ads to boost score multiplier; simple IAP for Gold | ⬜ |
+
+> *Done column reflects current progress — will be corrected as features land.*
 
 ---
 
@@ -98,7 +118,7 @@ Assets/
 
 | Area | Technology |
 |---|---|
-| Engine | Unity 6 (6000.3.10f1) |
+| Engine | Unity 6.3 (6000.3.10f1) |
 | Language | C# 9.0 |
 | Render Pipeline | Universal Render Pipeline (URP) |
 | UI | Unity uGUI · TextMesh Pro |
@@ -106,96 +126,44 @@ Assets/
 | Async | UniTask (Cysharp) |
 | Backend | Unity Gaming Services — Authentication, Analytics, Remote Config |
 | IDE | JetBrains Rider · Visual Studio |
-| Target Platform | Android |
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- [Unity Hub](https://unity.com/download) installed
-- Unity Editor **6000.3.10f1** (exact version recommended)
-- Android Build Support module (for mobile builds)
-- Unity Gaming Services project linked (for auth, analytics, and remote config in `LoginScene`)
-
-### Setup
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/Tonoychan/Student-Sim.git
-
-# 2. Open Unity Hub → Add project → Select the cloned folder
-
-# 3. Open with Unity 6000.3.10f1
-
-# 4. Let Unity import all packages (first open may take a few minutes)
-
-# 5. Open LoginScene (first scene in Build Settings) and hit Play ▶
-```
-
-**Scene flow:** `LoginScene` → `SelectionScene` → `SampleScene`
-
-> ⚠️ **Note:** Use Unity **6000.3.10f1** to avoid package and URP mismatches. UGS features require a configured Unity project; the game falls back gracefully if services fail to initialize.
-
----
-
-## 📦 Packages & Dependencies
-
-All packages resolve via Unity Package Manager on first open.
-
-| Package | Purpose |
-|---|---|
-| Universal RP | Rendering pipeline |
-| Input System | Touch & button input |
-| TextMesh Pro | UI text |
-| UniTask | Async/await for services and scene flow |
-| Unity Authentication | Guest login & session restore |
-| Unity Analytics | Gameplay event tracking |
-| Unity Remote Config | Live term/exam configuration |
-| Timeline | Sequence support |
-| Visual Scripting | Prototyping |
-| 2D Sprite / Animation | UI & sprite assets |
+| Target Platforms | Android · WebGL |
 
 ---
 
 ## 🗺️ Roadmap
 
-- [x] Core exam question flow
-- [x] Subject selection & daily interaction loop
-- [x] Stamina, levels, and per-subject score tracking
-- [x] Quest system with deadlines and rewards
-- [x] Day cycle with scheduled exam days
-- [x] Term scoring and result screen
-- [x] Login, selection, and scene transitions
-- [x] Save / continue (local persistence)
-- [x] Unity Gaming Services integration (auth, analytics, remote config)
-- [ ] Sound effects & background music
-- [ ] Longer term lengths (120 / 360 days)
-- [ ] Cloud save fully wired to gameplay
-- [ ] Leaderboard / high score system
-- [ ] Localization
+**MVP**
 
----
+- ✅ Core exam question flow
+- ✅ Subject selection & daily interaction loop
+- ✅ Stamina, levels, and per-subject score tracking
+- ✅ Quest system with deadlines and rewards
+- ✅ Day cycle with scheduled exam days
+- ✅ Term scoring and result screen
+- ✅ Login, selection, and scene transitions
+- ✅ Save / continue (local persistence)
+- ✅ Unity Gaming Services integration (auth, analytics, remote config)
 
-## 🤝 Contributing
+**MVP done — next: Meta Features**
 
-This is a personal learning project, but contributions and suggestions are welcome!
-
-1. Fork the repo
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Commit your changes: `git commit -m 'Add your feature'`
-4. Push to the branch: `git push origin feature/your-feature`
-5. Open a Pull Request
+- ⬜ Unity Remote Config configuration
+- ⬜ Unity Addressables + CCD for subject images and popups
+- ⬜ Unity Cloud Code for server-authoritative gold coin addition
+- ⬜ Unity Cloud Save for player data
+- ⬜ Leaderboard integration
+- ⬜ 120 / 360-day term lengths with supporting data
+- ⬜ Runtime AI player list showing class standing each day
+- ⬜ Store + Ads to boost score multiplier, IAP for Gold
+- ⬜ Sound effects & background music
+- ⬜ Localization
 
 ---
 
 ## 👨‍💻 Author
 
-**Tonoy Chakraborty** — Unity Engineer with 9+ years in mobile game development
+**Tonoy Chakraborty**
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/tonoy-chakraborty)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Tonoychan)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tonoy-chakraborty-9b703097/)
 [![Email](https://img.shields.io/badge/Email-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:tonoychan55@gmail.com)
 
 ---
