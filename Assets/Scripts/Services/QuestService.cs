@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class QuestService
 {
-    private readonly QuestData _questData;
+    private readonly QuestEntry[] _quests;
     private readonly PlayerStateService _playerState;
     private readonly PlayerCurrencyService _currency;
    
@@ -15,11 +15,11 @@ public class QuestService
     public bool HasActiveQuest => ActiveQuest != null;
     
     public QuestService(
-        QuestData questData,
+        QuestEntry[] quests,
         PlayerStateService playerState,
         PlayerCurrencyService currency)
     {
-        _questData = questData;
+        _quests = quests ?? System.Array.Empty<QuestEntry>();
         _playerState = playerState;
         _currency = currency;
     }
@@ -70,13 +70,13 @@ public class QuestService
     
     private void ClampIndex()
     {
-        if (_questData?.quests == null || _questData.quests.Length == 0)
+        if (_quests == null || _quests.Length == 0)
         {
             _activeQuestIndex = -1;
             return;
         }
-        if (_activeQuestIndex >= _questData.quests.Length)
-            _activeQuestIndex = -1; // all quests consumed
+        if (_activeQuestIndex >= _quests.Length)
+            _activeQuestIndex = -1;
     }
     
     private void RaiseQuestUpdated()
@@ -86,9 +86,9 @@ public class QuestService
     
     private QuestEntry GetQuestAt(int index)
     {
-        if (_questData?.quests == null || index < 0 || index >= _questData.quests.Length)
+        if (_quests == null || index < 0 || index >= _quests.Length)
             return null;
-        return _questData.quests[index];
+        return _quests[index];
     }
    
     // ---------- SAVE ----------

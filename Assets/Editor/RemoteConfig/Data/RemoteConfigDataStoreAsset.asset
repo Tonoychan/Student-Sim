@@ -12,18 +12,744 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
   m_Name: RemoteConfigDataStoreAsset
   m_EditorClassIdentifier: Unity.RemoteConfig.Editor::Unity.RemoteConfig.Editor.RemoteConfigDataStore
-  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"b97b30d2-b19b-4808-a2ce-ab365e1ca4d2\"\r\n   
-    },\r\n    \"rs\": {\r\n      \"key\": \"exam_days\",\r\n      \"type\": \"string\",\r\n     
-    \"value\": \"7,14,21\"\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
-    \"entityId\": \"679abd69-986e-450a-9152-0c07f5262207\"\r\n    },\r\n    \"rs\":
-    {\r\n      \"key\": \"develop_test\",\r\n      \"type\": \"int\",\r\n      \"value\":
-    45\r\n    }\r\n  }\r\n]"
-  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"b97b30d2-b19b-4808-a2ce-ab365e1ca4d2\"\r\n   
-    },\r\n    \"rs\": {\r\n      \"key\": \"exam_days\",\r\n      \"type\": \"string\",\r\n     
-    \"value\": \"7,14,21\"\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
-    \"entityId\": \"679abd69-986e-450a-9152-0c07f5262207\"\r\n    },\r\n    \"rs\":
-    {\r\n      \"key\": \"develop_test\",\r\n      \"type\": \"int\",\r\n      \"value\":
-    45\r\n    }\r\n  }\r\n]"
+  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"95e4cde6-fa78-4697-9a67-b76d26202cd2\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"develop_test\",\r\n      \"type\": \"int\",\r\n     
+    \"value\": 45\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"12ae7f1d-d4c6-4674-ac50-68cfc8f968aa\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"exam_days_5\",\r\n      \"type\": \"string\",\r\n      \"value\":
+    \"6\"\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"d07577b5-e422-4d7c-abcf-ce4aa8345724\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"exam_days_30\",\r\n      \"type\": \"string\",\r\n     
+    \"value\": \"15,30\"\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"83857ca8-6f10-4004-8203-276d62cdb463\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"exam_days_120\",\r\n      \"type\": \"string\",\r\n     
+    \"value\": \"30,60,90,120\"\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"f7b26133-5ad0-4ede-8aae-a86dedb2428d\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"exam_days_360\",\r\n      \"type\": \"string\",\r\n     
+    \"value\": \"90,120,270.360\"\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"b9be0ee6-e43e-49c1-aa34-c661307270fb\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"max_stamina\",\r\n      \"type\": \"int\",\r\n      \"value\":
+    110\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"c8e762ab-c2bf-444b-bcb0-0809206704a1\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"max_interactions\",\r\n      \"type\":
+    \"int\",\r\n      \"value\": 12\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"93f0410c-a171-4c13-9797-75c402a94ec2\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"quests_config\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"questId\":
+    \"Q1\",\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n         
+    \"subject\": 1,\r\n          \"requiredScore\": 50,\r\n          \"deadlineDay\":
+    5,\r\n          \"goldReward\": 200\r\n        },\r\n        {\r\n          \"questId\":
+    \"Q2\",\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n         
+    \"subject\": 3,\r\n          \"requiredScore\": 70,\r\n          \"deadlineDay\":
+    10,\r\n          \"goldReward\": 500\r\n        },\r\n        {\r\n         
+    \"questId\": \"Q3\",\r\n          \"title\": \"\",\r\n          \"description\":
+    \"\",\r\n          \"subject\": 6,\r\n          \"requiredScore\": 100,\r\n         
+    \"deadlineDay\": 15,\r\n          \"goldReward\": 750\r\n        },\r\n       
+    {\r\n          \"questId\": \"Q4\",\r\n          \"title\": \"\",\r\n         
+    \"description\": \"\",\r\n          \"subject\": 1,\r\n          \"requiredScore\":
+    120,\r\n          \"deadlineDay\": 17,\r\n          \"goldReward\": 1000\r\n       
+    }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"28f6b49a-70d3-4168-9fb1-f084d759f5c7\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"subject_math\",\r\n      \"type\": \"json\",\r\n      \"schemaId\":
+    null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\": 1,\r\n         
+    \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\": 1,\r\n         
+    \"staminaDeducted\": 25,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\":
+    8,\r\n          \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\":
+    1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n       
+    {\r\n          \"subjectID\": 1,\r\n          \"subjectClassName\": \"Level 2
+    - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    22,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 14,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 1,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 20,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 18,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 1,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    15,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 25,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 1,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 12,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 30,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"3e58a309-6771-4779-8032-160c9ac9b453\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"subject_science\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\":
+    2,\r\n          \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\":
+    1,\r\n          \"staminaDeducted\": 25,\r\n          \"staminaRestored\": 0,\r\n         
+    \"subjectScore\": 8,\r\n          \"subjectScoreMultiplier\": 0,\r\n         
+    \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n       
+    },\r\n        {\r\n          \"subjectID\": 2,\r\n          \"subjectClassName\":
+    \"Level 2 - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    22,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 14,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 2,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 20,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 18,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 2,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    15,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 25,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 2,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 12,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 30,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"70630bc9-1db4-410e-8454-182bf73faed0\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"subject_history\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\":
+    3,\r\n          \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\":
+    1,\r\n          \"staminaDeducted\": 25,\r\n          \"staminaRestored\": 0,\r\n         
+    \"subjectScore\": 8,\r\n          \"subjectScoreMultiplier\": 0,\r\n         
+    \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n       
+    },\r\n        {\r\n          \"subjectID\": 3,\r\n          \"subjectClassName\":
+    \"Level 2 - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    22,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 14,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 3,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 20,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 18,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 3,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    15,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 25,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 3,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 12,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 30,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"39c611a1-4095-4f06-a928-54ea9586d04b\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"subject_geography\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\":
+    4,\r\n          \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\":
+    1,\r\n          \"staminaDeducted\": 25,\r\n          \"staminaRestored\": 0,\r\n         
+    \"subjectScore\": 8,\r\n          \"subjectScoreMultiplier\": 0,\r\n         
+    \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n       
+    },\r\n        {\r\n          \"subjectID\": 4,\r\n          \"subjectClassName\":
+    \"Level 2 - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    22,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 14,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 4,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 20,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 18,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 4,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    15,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 25,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 4,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 12,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 30,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"db9c2733-19a4-4084-9cb5-062a468854f7\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"subject_arts\",\r\n      \"type\": \"json\",\r\n      \"schemaId\":
+    null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\": 5,\r\n         
+    \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\": 1,\r\n         
+    \"staminaDeducted\": 25,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\":
+    8,\r\n          \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\":
+    1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n       
+    {\r\n          \"subjectID\": 5,\r\n          \"subjectClassName\": \"Level 2
+    - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    22,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 14,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 5,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 20,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 18,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 5,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    15,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 25,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 5,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 12,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 30,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"4f93976b-59ab-4ede-a510-d21bb52cf3cb\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"subject_computer\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\":
+    6,\r\n          \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\":
+    1,\r\n          \"staminaDeducted\": 25,\r\n          \"staminaRestored\": 0,\r\n         
+    \"subjectScore\": 8,\r\n          \"subjectScoreMultiplier\": 0,\r\n         
+    \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n       
+    },\r\n        {\r\n          \"subjectID\": 6,\r\n          \"subjectClassName\":
+    \"Level 2 - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    22,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 14,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 6,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 20,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 18,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 6,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    15,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 25,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 6,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 12,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 30,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"11a39a44-7690-4062-b74a-1c21d9d83474\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"subject_rest\",\r\n      \"type\": \"json\",\r\n      \"schemaId\":
+    null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\": 7,\r\n         
+    \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\": 1,\r\n         
+    \"staminaDeducted\": 0,\r\n          \"staminaRestored\": 12,\r\n          \"subjectScore\":
+    0,\r\n          \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\":
+    1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n       
+    {\r\n          \"subjectID\": 7,\r\n          \"subjectClassName\": \"Level 2
+    - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    0,\r\n          \"staminaRestored\": 15,\r\n          \"subjectScore\": 0,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 7,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 0,\r\n          \"staminaRestored\":
+    20,\r\n          \"subjectScore\": 0,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 7,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    0,\r\n          \"staminaRestored\": 25,\r\n          \"subjectScore\": 0,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 7,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 0,\r\n          \"staminaRestored\":
+    30,\r\n          \"subjectScore\": 0,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"e176e8f7-1db4-459a-99b4-fcc763a92d28\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"exam_math\",\r\n      \"type\": \"json\",\r\n      \"schemaId\":
+    null,\r\n      \"value\": [\r\n        {\r\n          \"subject\": 1,\r\n         
+    \"Question\": \"What is 12+12?\",\r\n          \"AnswersOptions\": [\r\n           
+    \"3\",\r\n            \"24\",\r\n            \"5\",\r\n            \"6\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\":
+    1\r\n        },\r\n        {\r\n          \"subject\": 1,\r\n          \"Question\":
+    \"What is 2+2?\",\r\n          \"AnswersOptions\": [\r\n            \"3\",\r\n           
+    \"4\",\r\n            \"5\",\r\n            \"6\"\r\n          ],\r\n         
+    \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\": 2\r\n       
+    },\r\n        {\r\n          \"subject\": 1,\r\n          \"Question\": \"What
+    is 2+2?\",\r\n          \"AnswersOptions\": [\r\n            \"3\",\r\n           
+    \"4\",\r\n            \"5\",\r\n            \"6\"\r\n          ],\r\n         
+    \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\": 3\r\n       
+    },\r\n        {\r\n          \"subject\": 1,\r\n          \"Question\": \"What
+    is 2+2?\",\r\n          \"AnswersOptions\": [\r\n            \"3\",\r\n           
+    \"4\",\r\n            \"5\",\r\n            \"6\"\r\n          ],\r\n         
+    \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\": 4\r\n       
+    },\r\n        {\r\n          \"subject\": 1,\r\n          \"Question\": \"What
+    is 2+2?\",\r\n          \"AnswersOptions\": [\r\n            \"3\",\r\n           
+    \"4\",\r\n            \"5\",\r\n            \"6\"\r\n          ],\r\n         
+    \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\": 5\r\n       
+    }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"41b125db-b971-4113-9c80-1695ece31680\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"exam_science\",\r\n      \"type\": \"json\",\r\n      \"schemaId\":
+    null,\r\n      \"value\": [\r\n        {\r\n          \"subject\": 2,\r\n         
+    \"Question\": \"What is the study of Physical Force called?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Physics\",\r\n            \"Biology\",\r\n            \"Chemistry\",\r\n           
+    \"Zoology\"\r\n          ],\r\n          \"correctAnswerFromOptions\": 1,\r\n         
+    \"questionLevel\": 1\r\n        },\r\n        {\r\n          \"subject\": 2,\r\n         
+    \"Question\": \"What is the study of Physical Force called?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Physics\",\r\n            \"Biology\",\r\n            \"Chemistry\",\r\n           
+    \"Zoology\"\r\n          ],\r\n          \"correctAnswerFromOptions\": 1,\r\n         
+    \"questionLevel\": 2\r\n        },\r\n        {\r\n          \"subject\": 2,\r\n         
+    \"Question\": \"What is the study of Physical Force called?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Physics\",\r\n            \"Biology\",\r\n            \"Chemistry\",\r\n           
+    \"Zoology\"\r\n          ],\r\n          \"correctAnswerFromOptions\": 1,\r\n         
+    \"questionLevel\": 3\r\n        },\r\n        {\r\n          \"subject\": 2,\r\n         
+    \"Question\": \"What is the study of Physical Force called?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Physics\",\r\n            \"Biology\",\r\n            \"Chemistry\",\r\n           
+    \"Zoology\"\r\n          ],\r\n          \"correctAnswerFromOptions\": 1,\r\n         
+    \"questionLevel\": 4\r\n        },\r\n        {\r\n          \"subject\": 2,\r\n         
+    \"Question\": \"What is the study of Physical Force called?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Physics\",\r\n            \"Biology\",\r\n            \"Chemistry\",\r\n           
+    \"Zoology\"\r\n          ],\r\n          \"correctAnswerFromOptions\": 1,\r\n         
+    \"questionLevel\": 5\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"57c6a42e-a3bf-4408-9b75-c8c7ef8627b6\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"exam_history\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subject\":
+    3,\r\n          \"Question\": \"Which year India got independence?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"1950\",\r\n            \"1945\",\r\n           
+    \"1948\",\r\n            \"1947\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 1\r\n        },\r\n        {\r\n         
+    \"subject\": 3,\r\n          \"Question\": \"Which year India got independence?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"1950\",\r\n            \"1945\",\r\n           
+    \"1948\",\r\n            \"1947\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 2\r\n        },\r\n        {\r\n         
+    \"subject\": 3,\r\n          \"Question\": \"Which year India got independence?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"1950\",\r\n            \"1945\",\r\n           
+    \"1948\",\r\n            \"1947\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 3\r\n        },\r\n        {\r\n         
+    \"subject\": 3,\r\n          \"Question\": \"Which year India got independence?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"1950\",\r\n            \"1945\",\r\n           
+    \"1948\",\r\n            \"1947\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 4\r\n        },\r\n        {\r\n         
+    \"subject\": 3,\r\n          \"Question\": \"Which year India got independence?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"1950\",\r\n            \"1945\",\r\n           
+    \"1948\",\r\n            \"1947\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 5\r\n        }\r\n      ]\r\n    }\r\n  },\r\n 
+    {\r\n    \"metadata\": {\r\n      \"entityId\": \"3b6b3e61-ed3b-4ab0-90d0-3767b3dedc7a\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"exam_geography\",\r\n      \"type\":
+    \"json\",\r\n      \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n         
+    \"subject\": 4,\r\n          \"Question\": \"Which Country has the most population?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"China\",\r\n            \"Russia\",\r\n           
+    \"India\",\r\n            \"United Kingdom\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    3,\r\n          \"questionLevel\": 1\r\n        },\r\n        {\r\n         
+    \"subject\": 4,\r\n          \"Question\": \"Which Country has the most population?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"China\",\r\n            \"Russia\",\r\n           
+    \"India\",\r\n            \"United Kingdom\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    3,\r\n          \"questionLevel\": 2\r\n        },\r\n        {\r\n         
+    \"subject\": 4,\r\n          \"Question\": \"Which Country has the most population?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"China\",\r\n            \"Russia\",\r\n           
+    \"India\",\r\n            \"United Kingdom\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    3,\r\n          \"questionLevel\": 3\r\n        },\r\n        {\r\n         
+    \"subject\": 4,\r\n          \"Question\": \"Which Country has the most population?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"China\",\r\n            \"Russia\",\r\n           
+    \"India\",\r\n            \"United Kingdom\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    3,\r\n          \"questionLevel\": 4\r\n        },\r\n        {\r\n         
+    \"subject\": 4,\r\n          \"Question\": \"Which Country has the most population?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"China\",\r\n            \"Russia\",\r\n           
+    \"India\",\r\n            \"United Kingdom\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    3,\r\n          \"questionLevel\": 5\r\n        }\r\n      ]\r\n    }\r\n  },\r\n 
+    {\r\n    \"metadata\": {\r\n      \"entityId\": \"50e35df7-1616-4c88-8a8c-65f715acd4e3\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"exam_arts\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subject\":
+    5,\r\n          \"Question\": \"Who drew Monalisa?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Momuta Di\",\r\n            \"Cristiano Ronaldo\",\r\n           
+    \"A Dolf Hitler\",\r\n            \"Leonardo Vinchi\"\r\n          ],\r\n         
+    \"correctAnswerFromOptions\": 4,\r\n          \"questionLevel\": 1\r\n       
+    },\r\n        {\r\n          \"subject\": 5,\r\n          \"Question\": \"Who
+    drew Monalisa?\",\r\n          \"AnswersOptions\": [\r\n            \"Momuta
+    Di\",\r\n            \"Cristiano Ronaldo\",\r\n            \"A Dolf Hitler\",\r\n           
+    \"Leonardo Vinchi\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 2\r\n        },\r\n        {\r\n         
+    \"subject\": 5,\r\n          \"Question\": \"Who drew Monalisa?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"Momuta Di\",\r\n            \"Cristiano
+    Ronaldo\",\r\n            \"A Dolf Hitler\",\r\n            \"Leonardo Vinchi\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 4,\r\n          \"questionLevel\":
+    3\r\n        },\r\n        {\r\n          \"subject\": 5,\r\n          \"Question\":
+    \"Who drew Monalisa?\",\r\n          \"AnswersOptions\": [\r\n            \"Momuta
+    Di\",\r\n            \"Cristiano Ronaldo\",\r\n            \"A Dolf Hitler\",\r\n           
+    \"Leonardo Vinchi\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 4\r\n        },\r\n        {\r\n         
+    \"subject\": 5,\r\n          \"Question\": \"Who drew Monalisa?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"Momuta Di\",\r\n            \"Cristiano
+    Ronaldo\",\r\n            \"A Dolf Hitler\",\r\n            \"Leonardo Vinchi\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 4,\r\n          \"questionLevel\":
+    5\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"98cd7b0b-8fbc-4ddb-809a-0546e8fd174b\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"exam_computer\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subject\":
+    6,\r\n          \"Question\": \"What does RAM stands for?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Random Access Memory\",\r\n            \"Ready Access Memory\",\r\n           
+    \"Random Accessory Memory\",\r\n            \"Ready Assesable Memory\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\":
+    1\r\n        },\r\n        {\r\n          \"subject\": 6,\r\n          \"Question\":
+    \"What does RAM stands for?\",\r\n          \"AnswersOptions\": [\r\n           
+    \"Random Access Memory\",\r\n            \"Ready Access Memory\",\r\n           
+    \"Random Accessory Memory\",\r\n            \"Ready Assesable Memory\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\":
+    2\r\n        },\r\n        {\r\n          \"subject\": 6,\r\n          \"Question\":
+    \"What does RAM stands for?\",\r\n          \"AnswersOptions\": [\r\n           
+    \"Random Access Memory\",\r\n            \"Ready Access Memory\",\r\n           
+    \"Random Accessory Memory\",\r\n            \"Ready Assesable Memory\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\":
+    3\r\n        },\r\n        {\r\n          \"subject\": 6,\r\n          \"Question\":
+    \"What does RAM stands for?\",\r\n          \"AnswersOptions\": [\r\n           
+    \"Random Access Memory\",\r\n            \"Ready Access Memory\",\r\n           
+    \"Random Accessory Memory\",\r\n            \"Ready Assesable Memory\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\":
+    4\r\n        },\r\n        {\r\n          \"subject\": 6,\r\n          \"Question\":
+    \"What does RAM stands for?\",\r\n          \"AnswersOptions\": [\r\n           
+    \"Random Access Memory\",\r\n            \"Ready Access Memory\",\r\n           
+    \"Random Accessory Memory\",\r\n            \"Ready Assesable Memory\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\":
+    5\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"024340f4-7d65-473e-825f-b1b8b07c601a\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"exam_score_multiplier\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"685ac13b-a9d2-475c-97b0-8cdb8efdf706\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"daily_subject_count\",\r\n      \"type\": \"int\",\r\n      \"value\":
+    4\r\n    }\r\n  }\r\n]"
+  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"95e4cde6-fa78-4697-9a67-b76d26202cd2\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"develop_test\",\r\n      \"type\": \"int\",\r\n     
+    \"value\": 45\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"12ae7f1d-d4c6-4674-ac50-68cfc8f968aa\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"exam_days_5\",\r\n      \"type\": \"string\",\r\n      \"value\":
+    \"6\"\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"d07577b5-e422-4d7c-abcf-ce4aa8345724\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"exam_days_30\",\r\n      \"type\": \"string\",\r\n     
+    \"value\": \"15,30\"\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"83857ca8-6f10-4004-8203-276d62cdb463\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"exam_days_120\",\r\n      \"type\": \"string\",\r\n     
+    \"value\": \"30,60,90,120\"\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"f7b26133-5ad0-4ede-8aae-a86dedb2428d\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"exam_days_360\",\r\n      \"type\": \"string\",\r\n     
+    \"value\": \"90,120,270.360\"\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"b9be0ee6-e43e-49c1-aa34-c661307270fb\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"max_stamina\",\r\n      \"type\": \"int\",\r\n      \"value\":
+    110\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"c8e762ab-c2bf-444b-bcb0-0809206704a1\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"max_interactions\",\r\n      \"type\":
+    \"int\",\r\n      \"value\": 12\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"93f0410c-a171-4c13-9797-75c402a94ec2\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"quests_config\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"questId\":
+    \"Q1\",\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n         
+    \"subject\": 1,\r\n          \"requiredScore\": 50,\r\n          \"deadlineDay\":
+    5,\r\n          \"goldReward\": 200\r\n        },\r\n        {\r\n          \"questId\":
+    \"Q2\",\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n         
+    \"subject\": 3,\r\n          \"requiredScore\": 70,\r\n          \"deadlineDay\":
+    10,\r\n          \"goldReward\": 500\r\n        },\r\n        {\r\n         
+    \"questId\": \"Q3\",\r\n          \"title\": \"\",\r\n          \"description\":
+    \"\",\r\n          \"subject\": 6,\r\n          \"requiredScore\": 100,\r\n         
+    \"deadlineDay\": 15,\r\n          \"goldReward\": 750\r\n        },\r\n       
+    {\r\n          \"questId\": \"Q4\",\r\n          \"title\": \"\",\r\n         
+    \"description\": \"\",\r\n          \"subject\": 1,\r\n          \"requiredScore\":
+    120,\r\n          \"deadlineDay\": 17,\r\n          \"goldReward\": 1000\r\n       
+    }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"28f6b49a-70d3-4168-9fb1-f084d759f5c7\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"subject_math\",\r\n      \"type\": \"json\",\r\n      \"schemaId\":
+    null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\": 1,\r\n         
+    \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\": 1,\r\n         
+    \"staminaDeducted\": 25,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\":
+    8,\r\n          \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\":
+    1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n       
+    {\r\n          \"subjectID\": 1,\r\n          \"subjectClassName\": \"Level 2
+    - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    22,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 14,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 1,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 20,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 18,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 1,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    15,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 25,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 1,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 12,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 30,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"3e58a309-6771-4779-8032-160c9ac9b453\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"subject_science\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\":
+    2,\r\n          \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\":
+    1,\r\n          \"staminaDeducted\": 25,\r\n          \"staminaRestored\": 0,\r\n         
+    \"subjectScore\": 8,\r\n          \"subjectScoreMultiplier\": 0,\r\n         
+    \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n       
+    },\r\n        {\r\n          \"subjectID\": 2,\r\n          \"subjectClassName\":
+    \"Level 2 - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    22,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 14,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 2,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 20,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 18,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 2,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    15,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 25,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 2,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 12,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 30,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"70630bc9-1db4-410e-8454-182bf73faed0\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"subject_history\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\":
+    3,\r\n          \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\":
+    1,\r\n          \"staminaDeducted\": 25,\r\n          \"staminaRestored\": 0,\r\n         
+    \"subjectScore\": 8,\r\n          \"subjectScoreMultiplier\": 0,\r\n         
+    \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n       
+    },\r\n        {\r\n          \"subjectID\": 3,\r\n          \"subjectClassName\":
+    \"Level 2 - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    22,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 14,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 3,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 20,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 18,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 3,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    15,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 25,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 3,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 12,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 30,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"39c611a1-4095-4f06-a928-54ea9586d04b\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"subject_geography\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\":
+    4,\r\n          \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\":
+    1,\r\n          \"staminaDeducted\": 25,\r\n          \"staminaRestored\": 0,\r\n         
+    \"subjectScore\": 8,\r\n          \"subjectScoreMultiplier\": 0,\r\n         
+    \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n       
+    },\r\n        {\r\n          \"subjectID\": 4,\r\n          \"subjectClassName\":
+    \"Level 2 - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    22,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 14,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 4,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 20,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 18,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 4,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    15,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 25,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 4,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 12,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 30,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"db9c2733-19a4-4084-9cb5-062a468854f7\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"subject_arts\",\r\n      \"type\": \"json\",\r\n      \"schemaId\":
+    null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\": 5,\r\n         
+    \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\": 1,\r\n         
+    \"staminaDeducted\": 25,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\":
+    8,\r\n          \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\":
+    1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n       
+    {\r\n          \"subjectID\": 5,\r\n          \"subjectClassName\": \"Level 2
+    - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    22,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 14,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 5,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 20,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 18,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 5,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    15,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 25,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 5,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 12,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 30,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"4f93976b-59ab-4ede-a510-d21bb52cf3cb\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"subject_computer\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\":
+    6,\r\n          \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\":
+    1,\r\n          \"staminaDeducted\": 25,\r\n          \"staminaRestored\": 0,\r\n         
+    \"subjectScore\": 8,\r\n          \"subjectScoreMultiplier\": 0,\r\n         
+    \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n       
+    },\r\n        {\r\n          \"subjectID\": 6,\r\n          \"subjectClassName\":
+    \"Level 2 - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    22,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 14,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 6,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 20,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 18,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 6,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    15,\r\n          \"staminaRestored\": 0,\r\n          \"subjectScore\": 25,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 6,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 12,\r\n          \"staminaRestored\":
+    0,\r\n          \"subjectScore\": 30,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"11a39a44-7690-4062-b74a-1c21d9d83474\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"subject_rest\",\r\n      \"type\": \"json\",\r\n      \"schemaId\":
+    null,\r\n      \"value\": [\r\n        {\r\n          \"subjectID\": 7,\r\n         
+    \"subjectClassName\": \"Level 1 - Class\",\r\n          \"subjectLevel\": 1,\r\n         
+    \"staminaDeducted\": 0,\r\n          \"staminaRestored\": 12,\r\n          \"subjectScore\":
+    0,\r\n          \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\":
+    1,\r\n          \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n       
+    {\r\n          \"subjectID\": 7,\r\n          \"subjectClassName\": \"Level 2
+    - Class\",\r\n          \"subjectLevel\": 2,\r\n          \"staminaDeducted\":
+    0,\r\n          \"staminaRestored\": 15,\r\n          \"subjectScore\": 0,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 10\r\n        },\r\n        {\r\n         
+    \"subjectID\": 7,\r\n          \"subjectClassName\": \"Level 3 - Class\",\r\n         
+    \"subjectLevel\": 3,\r\n          \"staminaDeducted\": 0,\r\n          \"staminaRestored\":
+    20,\r\n          \"subjectScore\": 0,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    10\r\n        },\r\n        {\r\n          \"subjectID\": 7,\r\n          \"subjectClassName\":
+    \"Level 4 - Class\",\r\n          \"subjectLevel\": 4,\r\n          \"staminaDeducted\":
+    0,\r\n          \"staminaRestored\": 25,\r\n          \"subjectScore\": 0,\r\n         
+    \"subjectScoreMultiplier\": 0,\r\n          \"interactionDeducted\": 1,\r\n         
+    \"interactionsToUnlockNextLevel\": 0\r\n        },\r\n        {\r\n         
+    \"subjectID\": 7,\r\n          \"subjectClassName\": \"Level 5 - Class\",\r\n         
+    \"subjectLevel\": 5,\r\n          \"staminaDeducted\": 0,\r\n          \"staminaRestored\":
+    30,\r\n          \"subjectScore\": 0,\r\n          \"subjectScoreMultiplier\":
+    0,\r\n          \"interactionDeducted\": 1,\r\n          \"interactionsToUnlockNextLevel\":
+    0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"e176e8f7-1db4-459a-99b4-fcc763a92d28\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"exam_math\",\r\n      \"type\": \"json\",\r\n      \"schemaId\":
+    null,\r\n      \"value\": [\r\n        {\r\n          \"subject\": 1,\r\n         
+    \"Question\": \"What is 12+12?\",\r\n          \"AnswersOptions\": [\r\n           
+    \"3\",\r\n            \"24\",\r\n            \"5\",\r\n            \"6\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\":
+    1\r\n        },\r\n        {\r\n          \"subject\": 1,\r\n          \"Question\":
+    \"What is 2+2?\",\r\n          \"AnswersOptions\": [\r\n            \"3\",\r\n           
+    \"4\",\r\n            \"5\",\r\n            \"6\"\r\n          ],\r\n         
+    \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\": 2\r\n       
+    },\r\n        {\r\n          \"subject\": 1,\r\n          \"Question\": \"What
+    is 2+2?\",\r\n          \"AnswersOptions\": [\r\n            \"3\",\r\n           
+    \"4\",\r\n            \"5\",\r\n            \"6\"\r\n          ],\r\n         
+    \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\": 3\r\n       
+    },\r\n        {\r\n          \"subject\": 1,\r\n          \"Question\": \"What
+    is 2+2?\",\r\n          \"AnswersOptions\": [\r\n            \"3\",\r\n           
+    \"4\",\r\n            \"5\",\r\n            \"6\"\r\n          ],\r\n         
+    \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\": 4\r\n       
+    },\r\n        {\r\n          \"subject\": 1,\r\n          \"Question\": \"What
+    is 2+2?\",\r\n          \"AnswersOptions\": [\r\n            \"3\",\r\n           
+    \"4\",\r\n            \"5\",\r\n            \"6\"\r\n          ],\r\n         
+    \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\": 5\r\n       
+    }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"41b125db-b971-4113-9c80-1695ece31680\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"exam_science\",\r\n      \"type\": \"json\",\r\n      \"schemaId\":
+    null,\r\n      \"value\": [\r\n        {\r\n          \"subject\": 2,\r\n         
+    \"Question\": \"What is the study of Physical Force called?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Physics\",\r\n            \"Biology\",\r\n            \"Chemistry\",\r\n           
+    \"Zoology\"\r\n          ],\r\n          \"correctAnswerFromOptions\": 1,\r\n         
+    \"questionLevel\": 1\r\n        },\r\n        {\r\n          \"subject\": 2,\r\n         
+    \"Question\": \"What is the study of Physical Force called?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Physics\",\r\n            \"Biology\",\r\n            \"Chemistry\",\r\n           
+    \"Zoology\"\r\n          ],\r\n          \"correctAnswerFromOptions\": 1,\r\n         
+    \"questionLevel\": 2\r\n        },\r\n        {\r\n          \"subject\": 2,\r\n         
+    \"Question\": \"What is the study of Physical Force called?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Physics\",\r\n            \"Biology\",\r\n            \"Chemistry\",\r\n           
+    \"Zoology\"\r\n          ],\r\n          \"correctAnswerFromOptions\": 1,\r\n         
+    \"questionLevel\": 3\r\n        },\r\n        {\r\n          \"subject\": 2,\r\n         
+    \"Question\": \"What is the study of Physical Force called?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Physics\",\r\n            \"Biology\",\r\n            \"Chemistry\",\r\n           
+    \"Zoology\"\r\n          ],\r\n          \"correctAnswerFromOptions\": 1,\r\n         
+    \"questionLevel\": 4\r\n        },\r\n        {\r\n          \"subject\": 2,\r\n         
+    \"Question\": \"What is the study of Physical Force called?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Physics\",\r\n            \"Biology\",\r\n            \"Chemistry\",\r\n           
+    \"Zoology\"\r\n          ],\r\n          \"correctAnswerFromOptions\": 1,\r\n         
+    \"questionLevel\": 5\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"57c6a42e-a3bf-4408-9b75-c8c7ef8627b6\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"exam_history\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subject\":
+    3,\r\n          \"Question\": \"Which year India got independence?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"1950\",\r\n            \"1945\",\r\n           
+    \"1948\",\r\n            \"1947\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 1\r\n        },\r\n        {\r\n         
+    \"subject\": 3,\r\n          \"Question\": \"Which year India got independence?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"1950\",\r\n            \"1945\",\r\n           
+    \"1948\",\r\n            \"1947\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 2\r\n        },\r\n        {\r\n         
+    \"subject\": 3,\r\n          \"Question\": \"Which year India got independence?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"1950\",\r\n            \"1945\",\r\n           
+    \"1948\",\r\n            \"1947\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 3\r\n        },\r\n        {\r\n         
+    \"subject\": 3,\r\n          \"Question\": \"Which year India got independence?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"1950\",\r\n            \"1945\",\r\n           
+    \"1948\",\r\n            \"1947\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 4\r\n        },\r\n        {\r\n         
+    \"subject\": 3,\r\n          \"Question\": \"Which year India got independence?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"1950\",\r\n            \"1945\",\r\n           
+    \"1948\",\r\n            \"1947\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 5\r\n        }\r\n      ]\r\n    }\r\n  },\r\n 
+    {\r\n    \"metadata\": {\r\n      \"entityId\": \"3b6b3e61-ed3b-4ab0-90d0-3767b3dedc7a\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"exam_geography\",\r\n      \"type\":
+    \"json\",\r\n      \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n         
+    \"subject\": 4,\r\n          \"Question\": \"Which Country has the most population?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"China\",\r\n            \"Russia\",\r\n           
+    \"India\",\r\n            \"United Kingdom\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    3,\r\n          \"questionLevel\": 1\r\n        },\r\n        {\r\n         
+    \"subject\": 4,\r\n          \"Question\": \"Which Country has the most population?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"China\",\r\n            \"Russia\",\r\n           
+    \"India\",\r\n            \"United Kingdom\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    3,\r\n          \"questionLevel\": 2\r\n        },\r\n        {\r\n         
+    \"subject\": 4,\r\n          \"Question\": \"Which Country has the most population?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"China\",\r\n            \"Russia\",\r\n           
+    \"India\",\r\n            \"United Kingdom\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    3,\r\n          \"questionLevel\": 3\r\n        },\r\n        {\r\n         
+    \"subject\": 4,\r\n          \"Question\": \"Which Country has the most population?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"China\",\r\n            \"Russia\",\r\n           
+    \"India\",\r\n            \"United Kingdom\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    3,\r\n          \"questionLevel\": 4\r\n        },\r\n        {\r\n         
+    \"subject\": 4,\r\n          \"Question\": \"Which Country has the most population?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"China\",\r\n            \"Russia\",\r\n           
+    \"India\",\r\n            \"United Kingdom\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    3,\r\n          \"questionLevel\": 5\r\n        }\r\n      ]\r\n    }\r\n  },\r\n 
+    {\r\n    \"metadata\": {\r\n      \"entityId\": \"50e35df7-1616-4c88-8a8c-65f715acd4e3\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"exam_arts\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subject\":
+    5,\r\n          \"Question\": \"Who drew Monalisa?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Momuta Di\",\r\n            \"Cristiano Ronaldo\",\r\n           
+    \"A Dolf Hitler\",\r\n            \"Leonardo Vinchi\"\r\n          ],\r\n         
+    \"correctAnswerFromOptions\": 4,\r\n          \"questionLevel\": 1\r\n       
+    },\r\n        {\r\n          \"subject\": 5,\r\n          \"Question\": \"Who
+    drew Monalisa?\",\r\n          \"AnswersOptions\": [\r\n            \"Momuta
+    Di\",\r\n            \"Cristiano Ronaldo\",\r\n            \"A Dolf Hitler\",\r\n           
+    \"Leonardo Vinchi\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 2\r\n        },\r\n        {\r\n         
+    \"subject\": 5,\r\n          \"Question\": \"Who drew Monalisa?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"Momuta Di\",\r\n            \"Cristiano
+    Ronaldo\",\r\n            \"A Dolf Hitler\",\r\n            \"Leonardo Vinchi\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 4,\r\n          \"questionLevel\":
+    3\r\n        },\r\n        {\r\n          \"subject\": 5,\r\n          \"Question\":
+    \"Who drew Monalisa?\",\r\n          \"AnswersOptions\": [\r\n            \"Momuta
+    Di\",\r\n            \"Cristiano Ronaldo\",\r\n            \"A Dolf Hitler\",\r\n           
+    \"Leonardo Vinchi\"\r\n          ],\r\n          \"correctAnswerFromOptions\":
+    4,\r\n          \"questionLevel\": 4\r\n        },\r\n        {\r\n         
+    \"subject\": 5,\r\n          \"Question\": \"Who drew Monalisa?\",\r\n         
+    \"AnswersOptions\": [\r\n            \"Momuta Di\",\r\n            \"Cristiano
+    Ronaldo\",\r\n            \"A Dolf Hitler\",\r\n            \"Leonardo Vinchi\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 4,\r\n          \"questionLevel\":
+    5\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"98cd7b0b-8fbc-4ddb-809a-0546e8fd174b\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"exam_computer\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": [\r\n        {\r\n          \"subject\":
+    6,\r\n          \"Question\": \"What does RAM stands for?\",\r\n          \"AnswersOptions\":
+    [\r\n            \"Random Access Memory\",\r\n            \"Ready Access Memory\",\r\n           
+    \"Random Accessory Memory\",\r\n            \"Ready Assesable Memory\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\":
+    1\r\n        },\r\n        {\r\n          \"subject\": 6,\r\n          \"Question\":
+    \"What does RAM stands for?\",\r\n          \"AnswersOptions\": [\r\n           
+    \"Random Access Memory\",\r\n            \"Ready Access Memory\",\r\n           
+    \"Random Accessory Memory\",\r\n            \"Ready Assesable Memory\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\":
+    2\r\n        },\r\n        {\r\n          \"subject\": 6,\r\n          \"Question\":
+    \"What does RAM stands for?\",\r\n          \"AnswersOptions\": [\r\n           
+    \"Random Access Memory\",\r\n            \"Ready Access Memory\",\r\n           
+    \"Random Accessory Memory\",\r\n            \"Ready Assesable Memory\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\":
+    3\r\n        },\r\n        {\r\n          \"subject\": 6,\r\n          \"Question\":
+    \"What does RAM stands for?\",\r\n          \"AnswersOptions\": [\r\n           
+    \"Random Access Memory\",\r\n            \"Ready Access Memory\",\r\n           
+    \"Random Accessory Memory\",\r\n            \"Ready Assesable Memory\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\":
+    4\r\n        },\r\n        {\r\n          \"subject\": 6,\r\n          \"Question\":
+    \"What does RAM stands for?\",\r\n          \"AnswersOptions\": [\r\n           
+    \"Random Access Memory\",\r\n            \"Ready Access Memory\",\r\n           
+    \"Random Accessory Memory\",\r\n            \"Ready Assesable Memory\"\r\n         
+    ],\r\n          \"correctAnswerFromOptions\": 1,\r\n          \"questionLevel\":
+    5\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n     
+    \"entityId\": \"024340f4-7d65-473e-825f-b1b8b07c601a\"\r\n    },\r\n    \"rs\":
+    {\r\n      \"key\": \"exam_score_multiplier\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"685ac13b-a9d2-475c-97b0-8cdb8efdf706\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"daily_subject_count\",\r\n      \"type\": \"int\",\r\n      \"value\":
+    4\r\n    }\r\n  }\r\n]"
   _environments: "[\r\n  {\r\n    \"projectId\": \"44e53309-89ee-4d7a-88ce-488e2e97233e\",\r\n   
     \"name\": \"production\",\r\n    \"id\": \"659cb9d2-798c-4c6b-a080-13dedcc510a8\",\r\n   
     \"isDefault\": true,\r\n    \"createdAt\": \"2026-06-11T10:11:34Z\",\r\n    \"updatedAt\":

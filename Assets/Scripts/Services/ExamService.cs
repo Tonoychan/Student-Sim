@@ -12,7 +12,7 @@ public class ExamService
         GameEnums.MainSubjects.Computer
     };
     
-    private readonly MainExam _examData;
+    private readonly ExamDataRepository _examData;
     private readonly PlayerStateService _playerState;
     private readonly GameConfigSO _gameConfig;
     private int _currentQuestionIndex;
@@ -20,7 +20,7 @@ public class ExamService
     private int _correctAnswerCount;
     private bool _isExamActive;
     
-    public ExamService(MainExam examData, PlayerStateService playerState, GameConfigSO gameConfig)
+    public ExamService(ExamDataRepository examData, PlayerStateService playerState, GameConfigSO gameConfig)
     {
         _examData = examData;
         _playerState = playerState;

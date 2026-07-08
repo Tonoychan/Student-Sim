@@ -13,6 +13,8 @@ public class DayCycleService
     private readonly SubjectSelectionService _selectionService;
     private readonly ExamService _examService;
     private readonly QuestService _questService;
+    private readonly int _dailySubjectCount;
+    private readonly float _examScoreMultiplier;
     
     private bool _isEndingDay;
     public int CurrentDay { get; private set; } = 1;
@@ -23,13 +25,17 @@ public class DayCycleService
         SubjectSelectionService selectionService,
         ExamService examService,
         QuestService questService,
-        GameConfigSO gameConfig)
+        GameConfigSO gameConfig,
+        int dailySubjectCount,
+        float examScoreMultiplier)
     {
         _playerState = playerState;
         _selectionService = selectionService;
         _examService = examService;
         _questService = questService;
         _gameConfig = gameConfig;
+        _dailySubjectCount = dailySubjectCount;
+        _examScoreMultiplier = examScoreMultiplier;
     }
     /// <summary>
     /// Called when player uses all daily interactions (12/12).
@@ -62,7 +68,7 @@ public class DayCycleService
             return;
         }
         
-        var subjectsToDisplay = _selectionService.PickSubjects(4);
+        var subjectsToDisplay = _selectionService.PickSubjects(_dailySubjectCount);
         GameEvents.RaiseDayChanged(CurrentDay);
         GameEvents.RaiseDailySubjectsReady(subjectsToDisplay);
         GameEvents.RaiseStaminaChanged(_playerState.CurrentStamina, _playerState.MaxStamina);
@@ -112,7 +118,7 @@ public class DayCycleService
     {
         GameEvents.RaiseExamClosed();
         _questService.EvaluateActiveQuestAtDayEnd(CurrentDay);
-        TermResultData result = TermScoreCalculator.Build(playerState, _gameConfig);
+        TermResultData result = TermScoreCalculator.Build(playerState, _gameConfig, _examScoreMultiplier);
         result.maxDays = _gameConfig.maxDays;
         playerState.SetTermCompleted(true);
         GameEvents.RaiseTermResultsReady(result);

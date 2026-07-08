@@ -6,6 +6,7 @@ public class SubjectSelectionService
 {
     private readonly SubjectService _subjectService;
     private readonly PlayerStateService _playerState;
+    private readonly int _dailySubjectCount;
     
     private static readonly GameEnums.MainSubjects[] StudyPool =
     {
@@ -20,14 +21,18 @@ public class SubjectSelectionService
         GameEnums.MainSubjects.Work,
     };
     
-    public SubjectSelectionService(SubjectService subjectService, PlayerStateService playerState)
+    public SubjectSelectionService(SubjectService subjectService, PlayerStateService playerState, int dailySubjectCount)
     {
         _subjectService = subjectService;
         _playerState = playerState;
+        _dailySubjectCount = Mathf.Max(1, dailySubjectCount);
     }
     
-    public IReadOnlyList<SubjectDisplayData> PickSubjects(int count = 4)
+    public IReadOnlyList<SubjectDisplayData> PickSubjects(int count = -1)
     {
+        if (count <= 0)
+            count = _dailySubjectCount;
+        
         var pickedSubjects = StudyPool
             .Where(s => _subjectService.HasSubject(s))
             .OrderBy(_ => Random.value)
@@ -73,7 +78,7 @@ public class SubjectSelectionService
         return _playerState.GetSubjectLevel(subject);
     }
     
-    public IReadOnlyList<SubjectDisplayData> RefreshSubjects(int count = 4)
+    public IReadOnlyList<SubjectDisplayData> RefreshSubjects(int count = -1)
     {
         return PickSubjects(count); // same logic, clearer name
     }

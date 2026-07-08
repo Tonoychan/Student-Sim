@@ -11,6 +11,7 @@ using Unity.Services.Leaderboards;
 public class UnityService : MonoBehaviour
 {
     private const string SelectionSceneName = "SelectionScene";
+    private string _environmentId;
     [Header("Settings")]
     [SerializeField] private string environment = "development";
     [SerializeField] private string environmentID = "362ddb4d-6ced-4fff-a75f-e699a477cf90";
@@ -25,6 +26,7 @@ public class UnityService : MonoBehaviour
 
     private void Start()
     {
+        _environmentId = environmentID;
         InitializeServices().Forget();
     }
 
@@ -41,18 +43,18 @@ public class UnityService : MonoBehaviour
             
             if (UnityServices.State == ServicesInitializationState.Initialized)
             {
-                Debug.Log("[UGS] ✅ Unity Services initialized successfully.");
+                Debug.Log("[UGS] Unity Services initialized successfully.");
                 Debug.Log($"[UGS] Environment: {environment}");
                 OnServicesReady();
             }
             else
             {
-                Debug.LogWarning($"[UGS] ⚠️ Unexpected state after init: {UnityServices.State}");
+                Debug.LogWarning($"[UGS] Unexpected state after init: {UnityServices.State}");
             }
         }
         catch (Exception e)
         {
-            Debug.LogError($"[UGS] ❌ Initialization failed: {e.Message}");
+            Debug.LogError($"[UGS] Initialization failed: {e.Message}");
             Debug.LogException(e);
             OnServicesFailed(e);
         }
@@ -67,7 +69,9 @@ public class UnityService : MonoBehaviour
         _playerAuthenticationService = new PlayerAuthenticationService();
         
         _unityRemoteConfigService = new UnityRemoteConfigService();
-        _unityRemoteConfigService.InitializeAndFetchAsync(environmentID).Forget();
+        _unityRemoteConfigService.InitializeAndFetchAsync(_environmentId).Forget();
+        _unityRemoteConfigService.OnConfigFetched += () =>
+            Debug.Log("[UGS] Remote Config fetched on login scene.");
         
         _gameAnalyticsService = new GameAnalyticsService();
         _gameAnalyticsService.InitAnalytics();

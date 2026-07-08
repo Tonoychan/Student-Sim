@@ -13,6 +13,7 @@ public class SubjectInteractionService
     private readonly PlayerSaveService _saveService;
     private readonly ExamService _examService;
     private readonly SubjectService _subjectService;
+    private readonly int _dailySubjectCount;
     
     public SubjectInteractionService(
         PlayerStateService playerState,
@@ -20,7 +21,8 @@ public class SubjectInteractionService
         SubjectSelectionService selectionService,
         PlayerSaveService saveService,
         ExamService examService,
-        SubjectService subjectService)
+        SubjectService subjectService,
+        int dailySubjectCount)
     {
         _playerState = playerState;
         _dayCycleService = dayCycleService;
@@ -28,6 +30,7 @@ public class SubjectInteractionService
         _saveService = saveService;
         _examService = examService;
         _subjectService = subjectService;
+        _dailySubjectCount = dailySubjectCount;
     }
     public bool TryPerformSubject(SubjectDisplayData selection)
     {
@@ -85,7 +88,7 @@ public class SubjectInteractionService
     }
     private void RefreshSubjectButtons()
     {
-        var newSubjects = _selectionService.RefreshSubjects(4);
+        var newSubjects = _selectionService.RefreshSubjects(_dailySubjectCount);
         GameEvents.RaiseDailySubjectsReady(newSubjects);
     }
 }

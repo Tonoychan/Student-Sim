@@ -8,23 +8,48 @@ public class SubjectDataLoader : ISubjectDataLoader
     
     private List<SubjectData> _cachedData;
     private bool _isLoaded;
+    private readonly UnityRemoteConfigService _remoteConfig;
 
     private SubjectsDataSingle _localFallbackData;
     
-    public SubjectDataLoader(GameEnums.MainSubjects subject, SubjectsDataSingle localFallbackData)
+    public SubjectDataLoader(
+        GameEnums.MainSubjects subject,
+        SubjectsDataSingle localFallbackData,
+        UnityRemoteConfigService remoteConfig)
     {
         Subject = subject;
         _localFallbackData = localFallbackData;
+        _remoteConfig = remoteConfig;
     }
 
     public async UniTask LoadAsync()
     {
-        //Check for cloud fetch
-        
-        //If could fetch fails load from the local SO
+        string key = RemoteConfigKeys.GetSubjectKey(Subject);
+        if (_remoteConfig != null && _remoteConfig.IsInitialized && !string.IsNullOrEmpty(key) && _remoteConfig.HasKey(key))
+        {
+            string json = _remoteConfig.GetJsonString(key);
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                Debug.LogWarning($"[RemoteConfig][DEBUG] {Subject}: key '{key}' exists but JSON is empty.");
+            }
+            else
+            {
+                Debug.Log($"[RemoteConfig][DEBUG] {Subject}: JSON length={json.Length}, starts with={json.TrimStart().Substring(0, System.Math.Min(20, json.TrimStart().Length))}");
+            }
+            SubjectData[] parsed = RemoteConfigJsonHelper.TryParseSubjectLevels(json);
+            if (parsed != null)
+            {
+                _cachedData = new List<SubjectData>(parsed);
+                _isLoaded = true;
+                Debug.Log($"[RemoteConfig] Loaded {_cachedData.Count} level(s) for {Subject}.");
+                await UniTask.Yield();
+                return;
+            }
+        }
+        //(fallback)
         _cachedData = new List<SubjectData>(_localFallbackData.Data);
         _isLoaded = true;
-
+        Debug.Log($"[RemoteConfig] Using local SO fallback for {Subject}.");
         await UniTask.Yield();
     }
 

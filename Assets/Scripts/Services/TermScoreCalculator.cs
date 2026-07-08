@@ -13,7 +13,7 @@ public static class TermScoreCalculator
         GameEnums.MainSubjects.Computer,
     };
     
-    public static TermResultData Build(PlayerStateService player, GameConfigSO config)
+    public static TermResultData Build(PlayerStateService player, GameConfigSO config, float examScoreMultiplier)
     {
         int academicBase = 0;
         var breakdown = new List<SubjectScoreEntry>();
@@ -26,7 +26,7 @@ public static class TermScoreCalculator
         
         int totalExamCorrect = player.TotalExamCorrect;
         int maxExamCorrect = config.MaxPossibleExamCorrect;
-        float multiplier = 1f + 0.5f * totalExamCorrect / maxExamCorrect;
+        float multiplier = 1f + examScoreMultiplier * totalExamCorrect / maxExamCorrect;
         int finalScore = Mathf.RoundToInt(academicBase * multiplier);
         return new TermResultData
         {

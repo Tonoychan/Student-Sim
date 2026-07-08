@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class PlayerStateService
 {
-    public int CurrentStamina { get; private set; } = 100;
-    public int MaxStamina { get; } = 100;
+    public int CurrentStamina { get; private set; } = RemoteConfigDefaults.MaxStamina;
+    public int MaxStamina { get; private set; } = RemoteConfigDefaults.MaxStamina;
     public int InteractionsUsed { get; private set; }
-    public int MaxInteractions { get; } = 12;
+    public int MaxInteractions { get; private set; } = RemoteConfigDefaults.MaxInteractions;
     
     private readonly Dictionary<GameEnums.MainSubjects, int> _subjectScores = new();
     private readonly Dictionary<GameEnums.MainSubjects, int> _subjectLevels = new();
@@ -43,6 +43,20 @@ public class PlayerStateService
     {
         return InteractionsUsed + interactionCost <= MaxInteractions;
     }
+    
+    /// <summary>
+    /// Apply tuning from Remote Config at term start.
+    /// Call before StartDay on a new game; safe to call on continue (clamps stamina).
+    /// </summary>
+    public void ApplyGameplaySettings(GameplaySettings settings)
+    {
+        if (settings == null)
+            return;
+        MaxStamina = settings.MaxStamina;
+        MaxInteractions = settings.MaxInteractions;
+        CurrentStamina = Mathf.Clamp(CurrentStamina, 0, MaxStamina);
+    }
+    
     public void ApplyStaminaChange(int deducted, int restored)
     {
         CurrentStamina -= deducted;

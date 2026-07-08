@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Services\PlayerAccountService.cs" />
     <Compile Include="Assets\Scripts\Services\PlayerCurrencyService.cs" />
+    <Compile Include="Assets\Scripts\UGS\RemoteConfigKeys.cs" />
     <Compile Include="Assets\Scripts\Saving\CloudSaveProvider.cs" />
     <Compile Include="Assets\Scripts\DataLoader\SubjectDataLoader.cs" />
     <Compile Include="Assets\Scripts\UGS\PlayerAuthenticationService.cs" />
@@ -69,7 +70,9 @@
     <Compile Include="Assets\Scripts\Services\TermScheduleBuilder.cs" />
     <Compile Include="Assets\Scripts\GameEvents.cs" />
     <Compile Include="Assets\Scripts\UGS\TermLeaderboardIds.cs" />
+    <Compile Include="Assets\Scripts\UGS\GameplaySettings.cs" />
     <Compile Include="Assets\Scripts\UI\TermResultUI.cs" />
+    <Compile Include="Assets\Scripts\UGS\RemoteConfigJsonHelper.cs" />
     <Compile Include="Assets\Scripts\UGS\UnityRemoteConfigService.cs" />
     <Compile Include="Assets\Scripts\Services\TermScoreCalculator.cs" />
     <Compile Include="Assets\UltimateSafeArea\Scripts\SafeArea.cs" />
@@ -84,6 +87,7 @@
     <Compile Include="Assets\Scripts\Services\PlayerStateService.cs" />
     <Compile Include="Assets\Scripts\Services\PlayerSaveService.cs" />
     <Compile Include="Assets\Scripts\Interface\ISubjectDataLoader.cs" />
+    <Compile Include="Assets\Scripts\UGS\RemoteConfigQuestLoader.cs" />
     <Compile Include="Assets\Scripts\UGS\GameAnalyticsService.cs" />
     <Compile Include="Assets\Scripts\Saving\SaveContinueHelper.cs" />
     <Compile Include="Assets\Scripts\GameEnums.cs" />
@@ -94,9 +98,11 @@
     <Compile Include="Assets\Scripts\Services\SubjectService.cs" />
     <Compile Include="Assets\Scripts\Services\DayCycleService.cs" />
     <Compile Include="Assets\Scripts\UI\SubjectScoreUI.cs" />
+    <Compile Include="Assets\Scripts\UGS\RemoteConfigDefaults.cs" />
     <Compile Include="Assets\Scripts\UI\LeaderboardItemView.cs" />
     <Compile Include="Assets\Scripts\Controller\GameController.cs" />
     <Compile Include="Assets\Scripts\Services\SubjectSelectionService.cs" />
+    <Compile Include="Assets\Scripts\UGS\ExamDataRepository.cs" />
     <Compile Include="Assets\TestScripts\AnalyticsManager.cs" />
     <Compile Include="Assets\Scripts\Services\ExamService.cs" />
     <Compile Include="Assets\Scripts\UI\SubjectButtonView.cs" />
