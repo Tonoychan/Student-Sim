@@ -9,4 +9,5 @@ public static class CloudSaveKeys
     //Add — reserved for Phase 2b (full game data)
     public const string TermSave = "term_save_v1";
     public const string AccountSave = "account_save_v1";
+    public const string Wallet = "wallet_v1";
 }

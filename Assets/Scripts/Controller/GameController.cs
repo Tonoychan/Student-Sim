@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class GameController : MonoBehaviour
     private PlayerCurrencyService _currencyService;
     private QuestService _questService;
     private PlayerCloudSaveService _cloudSave;
+    private CloudCurrencyService _cloudCurrency;
 
     private void OnEnable()
     {
@@ -116,6 +118,7 @@ public class GameController : MonoBehaviour
         _subjectService = new SubjectService();
         _playerState = new PlayerStateService();
         _playerState.ApplyGameplaySettings(gameplaySettings); 
+        _cloudCurrency = new CloudCurrencyService();
 
         _currencyService = new PlayerCurrencyService();
         _selectionService = new SubjectSelectionService(
@@ -128,7 +131,7 @@ public class GameController : MonoBehaviour
         
         // create services with RC data
         _examService = new ExamService(examRepository, _playerState, _gameConfig);
-        _questService = new QuestService(quests, _playerState, _currencyService);
+        _questService = new QuestService(quests, _playerState, _currencyService,_cloudCurrency);
         _dayCycleService = new DayCycleService(
             _playerState,
             _selectionService,
@@ -214,4 +217,78 @@ public class GameController : MonoBehaviour
     {
         _saveService?.Save(forceCloudFlush: true);
     }
+    
+    #if UNITY_EDITOR || DEVELOPMENT_BUILD
+    //Add — debug cloud gold test keys
+    private const int DebugGoldAmount = 20;
+    private bool _debugGoldBusy;
+
+    void Update()
+    {
+        if (_debugGoldBusy || _cloudCurrency == null || _currencyService == null)
+            return;
+
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard == null)
+            return;
+
+        if (keyboard.jKey.wasPressedThisFrame)
+            DebugGrantGoldAsync().Forget();
+
+        if (keyboard.kKey.wasPressedThisFrame)
+            DebugSpendGoldAsync().Forget();
+    }
+
+    async UniTaskVoid DebugGrantGoldAsync()
+    {
+        _debugGoldBusy = true;
+        try
+        {
+            // Unique questId each press — GrantGold blocks duplicate questIds
+            string debugQuestId = $"debug_grant_{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
+            CloudGrantGoldResponse result = await _cloudCurrency.GrantGoldAsync(
+                debugQuestId,
+                DebugGoldAmount);
+
+            if (result.success)
+            {
+                _currencyService.SetBalance(GameEnums.CurrencyType.Gold, result.gold);
+                Debug.Log($"[Debug] J pressed — GrantGold +{DebugGoldAmount}. Server gold={result.gold}");
+            }
+            else
+            {
+                Debug.LogWarning($"[Debug] GrantGold failed: {result.error}");
+            }
+        }
+        finally
+        {
+            _debugGoldBusy = false;
+        }
+    }
+
+    async UniTaskVoid DebugSpendGoldAsync()
+    {
+        _debugGoldBusy = true;
+        try
+        {
+            CloudSpendGoldResponse result = await _cloudCurrency.SpendGoldAsync(
+                DebugGoldAmount,
+                "debug_test");
+
+            if (result.success)
+            {
+                _currencyService.SetBalance(GameEnums.CurrencyType.Gold, result.gold);
+                Debug.Log($"[Debug] K pressed — SpendGold -{DebugGoldAmount}. Server gold={result.gold}");
+            }
+            else
+            {
+                Debug.LogWarning($"[Debug] SpendGold failed: {result.error}");
+            }
+        }
+        finally
+        {
+            _debugGoldBusy = false;
+        }
+    }
+#endif
 }

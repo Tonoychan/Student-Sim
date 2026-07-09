@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class QuestService
@@ -6,6 +7,7 @@ public class QuestService
     private readonly QuestEntry[] _quests;
     private readonly PlayerStateService _playerState;
     private readonly PlayerCurrencyService _currency;
+    private readonly CloudCurrencyService _cloudCurrency;
    
     
     private int _activeQuestIndex;
@@ -17,11 +19,13 @@ public class QuestService
     public QuestService(
         QuestEntry[] quests,
         PlayerStateService playerState,
-        PlayerCurrencyService currency)
+        PlayerCurrencyService currency,
+        CloudCurrencyService cloudCurrency) 
     {
         _quests = quests ?? System.Array.Empty<QuestEntry>();
         _playerState = playerState;
         _currency = currency;
+        _cloudCurrency = cloudCurrency;  
     }
     
     public void Initialize()
@@ -48,9 +52,32 @@ public class QuestService
     
     private void CompleteQuest(QuestEntry quest)
     {
-        _currency.Add(GameEnums.CurrencyType.Gold, quest.goldReward);
-        Debug.Log($"[Quest] Completed '{quest.questId}'. Gold +{quest.goldReward}");
-        GameEvents.RaiseQuestCompleted(quest, quest.goldReward);
+        CompleteQuestAsync(quest).Forget();
+    }
+    
+    async UniTaskVoid CompleteQuestAsync(QuestEntry quest)
+    {
+        if (_cloudCurrency == null || !_cloudCurrency.CanUseCloudCode)
+        {
+            Debug.LogWarning($"[Quest] Offline — cannot grant gold for '{quest.questId}'. Quest still advances.");
+            GameEvents.RaiseQuestCompleted(quest, 0);
+            AdvanceToNextQuest();
+            return;
+        }
+        CloudGrantGoldResponse result = await _cloudCurrency.GrantGoldAsync(
+            quest.questId,
+            quest.goldReward);
+        if (!result.success)
+        {
+            Debug.LogWarning($"[Quest] GrantGold failed for '{quest.questId}': {result.error}");
+            // Still advance — player earned the quest; gold may already be claimed server-side
+            GameEvents.RaiseQuestCompleted(quest, 0);
+            AdvanceToNextQuest();
+            return;
+        }
+        _currency.SetBalance(GameEnums.CurrencyType.Gold, result.gold);
+        Debug.Log($"[Quest] Completed '{quest.questId}'. Server gold={result.gold} (+{result.granted})");
+        GameEvents.RaiseQuestCompleted(quest, result.granted);
         AdvanceToNextQuest();
     }
     
