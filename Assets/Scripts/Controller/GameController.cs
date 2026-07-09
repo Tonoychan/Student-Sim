@@ -37,6 +37,7 @@ public class GameController : MonoBehaviour
     private ExamService _examService;
     private PlayerCurrencyService _currencyService;
     private QuestService _questService;
+    private PlayerCloudSaveService _cloudSave;
 
     private void OnEnable()
     {
@@ -45,6 +46,7 @@ public class GameController : MonoBehaviour
         GameEvents.OnExamAnswerSubmitted += HandleExamAnswerSubmitted;
         GameEvents.OnExamCompleted += HandleExamCompleted;
         GameEvents.OnCurrencyChanged += HandleCurrencyChanged;
+        GameEvents.OnDayEnded += HandleDayEnded;
     }
 
     private void OnDisable()
@@ -54,6 +56,7 @@ public class GameController : MonoBehaviour
         GameEvents.OnExamAnswerSubmitted -= HandleExamAnswerSubmitted;
         GameEvents.OnExamCompleted -= HandleExamCompleted;
         GameEvents.OnCurrencyChanged -= HandleCurrencyChanged;
+        GameEvents.OnDayEnded -= HandleDayEnded;
     }
 
     void Start()
@@ -75,12 +78,12 @@ public class GameController : MonoBehaviour
         if (_gameConfig.IsFinalDay(_dayCycleService.CurrentDay))
         {
             _dayCycleService.CompleteTerm(_playerState);
-            _saveService.Save();
+            _saveService.Save(forceCloudFlush: true);
             return;
         }
 
         _dayCycleService.CompleteExamDay();
-        _saveService.Save();
+        _saveService.Save(forceCloudFlush: true);
     }
 
     private async UniTask InitializeDataAsync(CancellationToken ct)
@@ -134,8 +137,9 @@ public class GameController : MonoBehaviour
             _gameConfig,
             gameplaySettings.DailySubjectCount,
             gameplaySettings.ExamScoreMultiplier);
+        _cloudSave = PlayerCloudSaveService.Instance;
         _saveService = new PlayerSaveService(
-            saveProvider, _playerState, _dayCycleService, _questService, _currencyService);
+            saveProvider, _playerState, _dayCycleService, _questService, _currencyService,_cloudSave);
         _saveService.SyncAccount(_currencyService);
         _interactionService = new SubjectInteractionService(
             _playerState,
@@ -185,24 +189,29 @@ public class GameController : MonoBehaviour
 
     private void OnApplicationPause(bool paused)
     {
-        if (paused) _saveService?.Save();
+        if (paused)  _saveService.Save(forceCloudFlush: true);
     }
 
     private void OnApplicationQuit()
     {
-        _saveService?.Save();
+        _saveService.Save(forceCloudFlush: true);
     }
 
     private void HandleContinueToNextDay()
     {
         _dayCycleService.ContinueToNextDay();
-        _saveService.Save();
+        _saveService.Save(forceCloudFlush: true);
     }
 
     private void HandleCurrencyChanged(GameEnums.CurrencyType type, int balance)
     {
         if (type != GameEnums.CurrencyType.Gold || _saveService == null)
             return;
-        _saveService.SaveAccount();
+        _saveService.SaveAccount(forceCloudFlush: false);
+    }
+    
+    private void HandleDayEnded()
+    {
+        _saveService?.Save(forceCloudFlush: true);
     }
 }

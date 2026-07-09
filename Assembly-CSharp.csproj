@@ -56,6 +56,7 @@
     <Compile Include="Assets\Scripts\UGS\RemoteConfigKeys.cs" />
     <Compile Include="Assets\Scripts\Saving\CloudSaveProvider.cs" />
     <Compile Include="Assets\Scripts\DataLoader\SubjectDataLoader.cs" />
+    <Compile Include="Assets\Scripts\UGS\PlayerCloudSaveService.cs" />
     <Compile Include="Assets\Scripts\UGS\PlayerAuthenticationService.cs" />
     <Compile Include="Assets\Scripts\UI\SelectionSceneUI.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjectScripts\GameConfigSO.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Assets\Scripts\UGS\GameplaySettings.cs" />
     <Compile Include="Assets\Scripts\UI\TermResultUI.cs" />
     <Compile Include="Assets\Scripts\UGS\RemoteConfigJsonHelper.cs" />
+    <Compile Include="Assets\Scripts\UGS\CloudSaveKeys.cs" />
     <Compile Include="Assets\Scripts\UGS\UnityRemoteConfigService.cs" />
     <Compile Include="Assets\Scripts\Services\TermScoreCalculator.cs" />
     <Compile Include="Assets\UltimateSafeArea\Scripts\SafeArea.cs" />
@@ -1055,6 +1057,9 @@
     <Reference Include="Unity.Burst.Editor">
       <HintPath>D:\UnityProjects\Student-Sim\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Services.CloudSave.Editor">
+      <HintPath>D:\UnityProjects\Student-Sim\Library\ScriptAssemblies\Unity.Services.CloudSave.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.Core">
       <HintPath>D:\UnityProjects\Student-Sim\Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
     </Reference>
@@ -1126,6 +1131,9 @@
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
       <HintPath>D:\UnityProjects\Student-Sim\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.CloudSave">
+      <HintPath>D:\UnityProjects\Student-Sim\Library\ScriptAssemblies\Unity.Services.CloudSave.dll</HintPath>
     </Reference>
     <Reference Include="Unity.SurfaceCache.Runtime">
       <HintPath>D:\UnityProjects\Student-Sim\Library\ScriptAssemblies\Unity.SurfaceCache.Runtime.dll</HintPath>

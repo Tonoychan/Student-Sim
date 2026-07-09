@@ -9,6 +9,7 @@ public class PlayerSaveData
     public int totalExamCorrect = 0;
     public bool termCompleted = false; 
     public int maxDays = 30;
+    public long lastSavedUtc;
     public List<CurrencyEntry> currencies = new();
     public QuestSaveData questProgress = new();
     public List<SubjectProgressEntry> subjectProgress = new();

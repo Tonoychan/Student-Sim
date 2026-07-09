@@ -5,5 +5,6 @@ using System.Collections.Generic;
 public class PlayerAccountData
 {
     public string playerId = "";
+    public long lastSavedUtc;
     public List<CurrencyEntry> currencies = new();
 }

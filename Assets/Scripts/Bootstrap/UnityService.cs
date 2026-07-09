@@ -23,6 +23,7 @@ public class UnityService : MonoBehaviour
     private UnityRemoteConfigService _unityRemoteConfigService;
     private GameAnalyticsService _gameAnalyticsService;
     private TermLeaderboardService _leaderboardService;
+    private PlayerCloudSaveService _playerCloudSaveService;
 
     private void Start()
     {
@@ -138,6 +139,10 @@ public class UnityService : MonoBehaviour
         bool lbReady = await _leaderboardService.EnsureServiceLoadedAsync();
         if (!lbReady)
             Debug.LogWarning("[Leaderboard] Not ready at login; will retry when opening panel or submitting score.");
+        //create cloud service + sync 
+        _playerCloudSaveService = new PlayerCloudSaveService();
+        await _playerCloudSaveService.SyncCloudToLocalAsync();
+        
     }
     
     private void SendAuthenticatedAnalytics()
