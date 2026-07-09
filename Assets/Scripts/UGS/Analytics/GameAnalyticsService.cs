@@ -4,8 +4,10 @@ using Cysharp.Threading.Tasks;
 using Unity.Services.Analytics;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
-using UnityEngine;
 
+/// <summary>
+/// Sends custom analytics events to Unity Gaming Services.
+/// </summary>
 public class GameAnalyticsService
 {
     public event Action OnInitialized;
@@ -13,18 +15,14 @@ public class GameAnalyticsService
     
     public bool IsInitialized { get; private set; }
     
+    /// <summary>Starts data collection. Safe to call once per session.</summary>
     public void InitAnalytics()
     {
         if (IsInitialized)
-        {
-            Debug.Log("[Analytics] Already initialized. Skipping.");
             return;
-        }
         
-        AnalyticsService.Instance.StartDataCollection(); // <-- this is critical
-        Debug.Log("[Analytics] Data collection started.");
+        AnalyticsService.Instance.StartDataCollection();
         IsInitialized = true;
-        Debug.Log("[Analytics] Ready.");
         OnInitialized?.Invoke();
     }
     
@@ -33,13 +31,11 @@ public class GameAnalyticsService
         SendEvent(eventName, null);
     }
 
+    /// <summary>Records a named event with optional parameters.</summary>
     public void SendEvent(string eventName, Dictionary<string, object> parameters)
     {
         if (string.IsNullOrWhiteSpace(eventName))
-        {
-            Debug.LogError("[Analytics] Event name cannot be null or empty.");
             return;
-        }
 
         try
         {
@@ -50,11 +46,7 @@ public class GameAnalyticsService
                 foreach (var kvp in parameters)
                 {
                     if (kvp.Value == null)
-                    {
-                        Debug.LogWarning(
-                            $"[Analytics] Skipping null value for parameter '{kvp.Key}' in event '{eventName}'.");
                         continue;
-                    }
 
                     switch (kvp.Value)
                     {
@@ -66,25 +58,21 @@ public class GameAnalyticsService
                         case double v: analyticsEvent.Add(kvp.Key, v); break;
                         default:
                             analyticsEvent.Add(kvp.Key, kvp.Value.ToString());
-                            Debug.LogWarning(
-                                $"[Analytics] Parameter '{kvp.Key}' has unsupported type '{kvp.Value.GetType().Name}'. Serialized to string.");
                             break;
                     }
                 }
             }
 
             AnalyticsService.Instance.RecordEvent(analyticsEvent);
-            Debug.Log($"[Analytics] Event recorded: '{eventName}' with {parameters?.Count ?? 0} parameter(s).");
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Debug.LogError($"[Analytics] Failed to record event '{eventName}': {ex.Message}");
         }
     }
     
+    /// <summary>Sends all queued events to the server immediately.</summary>
     public void Flush()
     {
         AnalyticsService.Instance.Flush();
-        Debug.Log("[Analytics] Flushed all queued events.");
     }
 }

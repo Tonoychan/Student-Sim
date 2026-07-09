@@ -1,6 +1,9 @@
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Shows the current quest goal, deadline, and gold reward.
+/// </summary>
 public class QuestUI : MonoBehaviour
 {
     [Header("Panel")]

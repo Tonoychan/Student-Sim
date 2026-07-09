@@ -26,10 +26,7 @@ public class GameplaySettings
     public static GameplaySettings FromRemoteConfig(UnityRemoteConfigService remoteConfig)
     {
         if (remoteConfig == null || !remoteConfig.IsInitialized)
-        {
-            Debug.Log("[GameplaySettings] Remote Config not ready — using defaults.");
             return FromDefaults();
-        }
 
         return new GameplaySettings(
             remoteConfig.GetInt(RemoteConfigKeys.MaxStamina, RemoteConfigDefaults.MaxStamina),

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Local fallback exam questions per subject (used when Remote Config is unavailable).
+/// </summary>
 [CreateAssetMenu(fileName = "MainExam", menuName = "Advance Flow/MainExam")]
 public class MainExam : ScriptableObject
 {
@@ -10,6 +13,7 @@ public class MainExam : ScriptableObject
     public QuestionsAnswerModel[] GeographyQuestions;
     public QuestionsAnswerModel[] ComputerQuestions;
     
+    /// <summary>Finds the question for a subject at the given level.</summary>
     public QuestionsAnswerModel GetQuestionFor(GameEnums.MainSubjects subject, int subjectLevel)
     {
         QuestionsAnswerModel[] pool = subject switch
@@ -31,7 +35,6 @@ public class MainExam : ScriptableObject
             if (question != null && question.questionLevel == subjectLevel)
                 return question;
         }
-        Debug.LogWarning($"No exam question found for {subject} at level {subjectLevel}");
         return null;
     }
     

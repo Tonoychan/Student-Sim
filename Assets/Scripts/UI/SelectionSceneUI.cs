@@ -1,10 +1,14 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Selection scene menu: continue saved game, start new term, or view leaderboards.
+/// </summary>
 public class SelectionSceneUI : MonoBehaviour
 {
-    private const string GameSceneName = "SampleScene";
+    
+    private bool _isLoadingScene;
     
     [SerializeField] private Button _continueButton;
     [SerializeField] private Button _day5Button;
@@ -19,7 +23,6 @@ public class SelectionSceneUI : MonoBehaviour
     
     private void Start()
     {
-        
         RefreshContinueButton();
         _continueButton.onClick.AddListener(OnContinueClicked);
         _day5Button.onClick.AddListener(() => OnNewGameClicked(5));
@@ -31,6 +34,7 @@ public class SelectionSceneUI : MonoBehaviour
         _day120Button.interactable = false;
         _day360Button.interactable = false;
     }
+    /// <summary>Shows or hides the Continue button based on save data.</summary>
     private void RefreshContinueButton()
     {
         _continueButton.gameObject.SetActive(SaveContinueHelper.CanContinue(_saveProvider));
@@ -38,12 +42,37 @@ public class SelectionSceneUI : MonoBehaviour
     private void OnContinueClicked()
     {
         GameSessionContext.ContinueGame();
-        SceneManager.LoadScene(GameSceneName);
+        LoadGameSceneAsync().Forget();
     }
     private void OnNewGameClicked(int maxDays)
     {
         GameSessionContext.StartNewGame(maxDays);
-        SceneManager.LoadScene(GameSceneName);
+        LoadGameSceneAsync().Forget();
+    }
+    
+    async UniTaskVoid LoadGameSceneAsync()
+    {
+        if (_isLoadingScene)
+            return;
+        _isLoadingScene = true;
+        SetButtonsInteractable(false);
+        bool ok = await AddressableSceneLoader.LoadGameSceneAsync();
+        if (!ok)
+        {
+            Debug.LogError("[SelectionScene] Addressable scene load failed.");
+            SetButtonsInteractable(true);
+            _isLoadingScene = false;
+        }
+        // On success, this scene unloads — no need to reset flag
+    }
+//Add
+    void SetButtonsInteractable(bool value)
+    {
+        if (_continueButton != null) _continueButton.interactable = value;
+        if (_day5Button != null) _day5Button.interactable = value;
+        if (_day30Button != null) _day30Button.interactable = value;
+        if (_day120Button != null) _day120Button.interactable = value;
+        if (_day360Button != null) _day360Button.interactable = value;
     }
     
     private void OnViewLeaderboardsClicked()

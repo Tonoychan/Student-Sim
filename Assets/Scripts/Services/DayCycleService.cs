@@ -2,8 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 /// <summary>
-/// Day Cycle service will be responsible checking if the current day has ended
-/// then communicate with other responsibilities like UI , Helper Func
+/// Controls the day loop: start day, end day, exams, and term completion.
 /// </summary>
 public class DayCycleService
 {
@@ -37,23 +36,17 @@ public class DayCycleService
         _dailySubjectCount = dailySubjectCount;
         _examScoreMultiplier = examScoreMultiplier;
     }
-    /// <summary>
-    /// Called when player uses all daily interactions (12/12).
-    /// </summary>
+    /// <summary>Ends the day because the player used all interactions.</summary>
     public void OnDayInteractionsCompleted()
     {
         EndDay("Interactions completed");
     }
-    /// <summary>
-    /// Called when stamina reaches 0.
-    /// </summary>
+    /// <summary>Ends the day because stamina ran out.</summary>
     public void OnStaminaDepleted()
     {
         EndDay("Stamina depleted");
     }
-    /// <summary>
-    /// Starts the current day: reset daily stats and show 4 subjects.
-    /// </summary>
+    /// <summary>Begins a new day — resets daily stats and shows subjects or an exam.</summary>
     public void StartDay(bool resetDailyStats = true)
     {
         if (resetDailyStats)
@@ -83,13 +76,13 @@ public class DayCycleService
         
         _questService.EvaluateActiveQuestAtDayEnd(CurrentDay);
        
-        Debug.Log($"Day {CurrentDay} ended: {reason}");
         GameEvents.RaiseDayEnded();
         
         DaySummaryData summary = _playerState.BuildDaySummary(CurrentDay,reason);
         GameEvents.RaiseDaySummaryReady(summary);
     }
     
+    /// <summary>Moves to the next day after the day summary is dismissed.</summary>
     public void ContinueToNextDay()
     {
         if (_gameConfig.IsFinalDay(CurrentDay))
@@ -101,11 +94,13 @@ public class DayCycleService
         GameEvents.RaiseDaySummaryClosed();
     }
     
+    /// <summary>Restores the current day number from save data.</summary>
     public void SetCurrentDay(int day)
     {
         CurrentDay = day;
     }
     
+    /// <summary>Called when an exam day finishes (not the final day).</summary>
     public void CompleteExamDay()
     {
         GameEvents.RaiseExamClosed();
@@ -114,6 +109,7 @@ public class DayCycleService
         StartDay(resetDailyStats: true);
     }
     
+    /// <summary>Called on the last day — shows term results and submits to leaderboard.</summary>
     public void CompleteTerm(PlayerStateService playerState)
     {
         GameEvents.RaiseExamClosed();

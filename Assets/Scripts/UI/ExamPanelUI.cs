@@ -2,6 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Exam day UI: shows questions, answer options, and submit button.
+/// </summary>
 public class ExamPanelUI : MonoBehaviour
 {
    [SerializeField] private GameObject _examPanel;           // MainQuestionPanel

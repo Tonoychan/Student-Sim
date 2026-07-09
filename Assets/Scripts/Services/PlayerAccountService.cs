@@ -1,10 +1,14 @@
 using Unity.Services.Authentication;
-using UnityEngine;
 
+/// <summary>
+/// Keeps wallet data tied to the current player ID.
+/// Resets the wallet if a different player signs in.
+/// </summary>
 public class PlayerAccountService
 {
     private readonly PlayerAccountSaveProvider _provider = new();
     
+    /// <summary>Loads account save and applies wallet to the currency service.</summary>
     public void SyncAndApply(PlayerCurrencyService currency)
     {
         string currentPlayerId = AuthenticationService.Instance.IsSignedIn
@@ -18,7 +22,6 @@ public class PlayerAccountService
         }
         if (account.playerId != currentPlayerId)
         {
-            Debug.Log($"[Account] New player ID. Resetting wallet. Old={account.playerId}, New={currentPlayerId}");
             account = new PlayerAccountData { playerId = currentPlayerId };
             _provider.Save(account);
             currency.ApplySaveEntries(account.currencies);
@@ -27,6 +30,7 @@ public class PlayerAccountService
         currency.ApplySaveEntries(account.currencies);
     }
     
+    /// <summary>Writes current wallet to account save.</summary>
     public void SaveFrom(PlayerCurrencyService currency)
     {
         string currentPlayerId = AuthenticationService.Instance.IsSignedIn

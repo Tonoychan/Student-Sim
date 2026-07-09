@@ -5,6 +5,10 @@ using Cysharp.Threading.Tasks;
 using Unity.Services.RemoteConfig;
 using UnityEngine;
 
+/// <summary>
+/// Fetches game tuning values from Unity Remote Config and caches them in memory.
+/// Falls back to defaults if a key is missing.
+/// </summary>
 public class UnityRemoteConfigService
 {
     public static UnityRemoteConfigService Instance { get; private set; }
@@ -25,21 +29,14 @@ public class UnityRemoteConfigService
         Instance = this;
     }
 
-    // --- Public read API ---
-
+    /// <summary>Reads a cached value, or returns the default if missing.</summary>
     public T GetValue<T>(string key, T defaultValue = default)
     {
         if (!IsInitialized)
-        {
-            Debug.LogWarning($"[RemoteConfig] Not initialized. Using default for '{key}'.");
             return defaultValue;
-        }
 
         if (!_cache.TryGetValue(key, out object raw) || raw == null)
-        {
-            Debug.LogWarning($"[RemoteConfig] Key '{key}' missing. Using default.");
             return defaultValue;
-        }
 
         try
         {
@@ -48,9 +45,8 @@ public class UnityRemoteConfigService
 
             return (T)Convert.ChangeType(raw, typeof(T));
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Debug.LogWarning($"[RemoteConfig] Cast failed for '{key}': {ex.Message}. Using default.");
             return defaultValue;
         }
     }
@@ -78,26 +74,16 @@ public class UnityRemoteConfigService
     public IReadOnlyDictionary<string, object> GetAllValues()
         => _cache;
 
-    // --- Init / fetch ---
-
     public async UniTask InitRemoteConfig(string environmentId)
     {
         await InitializeAndFetchAsync(environmentId);
     }
 
+    /// <summary>Downloads config from the server for the first time.</summary>
     public async UniTask InitializeAndFetchAsync(string environmentId)
     {
-        if (IsInitialized)
-        {
-            Debug.Log("[RemoteConfig] Already initialized. Skipping.");
+        if (IsInitialized || IsFetching)
             return;
-        }
-
-        if (IsFetching)
-        {
-            Debug.Log("[RemoteConfig] Fetch already in progress.");
-            return;
-        }
 
         IsFetching = true;
 
@@ -117,6 +103,7 @@ public class UnityRemoteConfigService
         }
     }
 
+    /// <summary>Re-downloads config (clears cache first).</summary>
     public async UniTask RefreshAsync(string environmentId)
     {
         if (IsFetching)
@@ -142,9 +129,7 @@ public class UnityRemoteConfigService
         }
     }
 
-    /// <summary>
-    /// Wait until config is ready, or timeout — whichever comes first.
-    /// </summary>
+    /// <summary>Waits until config is ready or the timeout is reached.</summary>
     public async UniTask WaitUntilReadyAsync(int timeoutMs, CancellationToken ct)
     {
         if (IsInitialized)
@@ -158,27 +143,16 @@ public class UnityRemoteConfigService
             await UniTask.Delay(stepMs, cancellationToken: ct);
             elapsed += stepMs;
         }
-
-        if (!IsInitialized)
-            Debug.LogWarning("[RemoteConfig] Timed out waiting for config. Defaults will be used.");
     }
-
-    // --- Callbacks ---
 
     private void OnFetchCompleted(ConfigResponse response)
     {
         RemoteConfigService.Instance.FetchCompleted -= OnFetchCompleted;
         IsFetching = false;
 
-        if (response.requestOrigin == ConfigOrigin.Default)
-            Debug.LogWarning("[RemoteConfig] No config on server. Using SDK defaults.");
-
         PopulateCache();
 
         IsInitialized = true;
-        Debug.Log($"[RemoteConfig] Ready. {_cache.Count} key(s). Origin: {response.requestOrigin}");
-        DebugDumpAllKeys();
-        DebugAuditExpectedKeys();
         OnConfigFetched?.Invoke();
     }
 
@@ -198,7 +172,6 @@ public class UnityRemoteConfigService
             string json = config.GetJson(key, "");
             if (!string.IsNullOrWhiteSpace(json) && json != "{}")
                 return json;
-            Debug.LogWarning($"[RemoteConfig] JSON key '{key}' returned empty from GetJson().");
             return "";
         }
         
@@ -223,6 +196,7 @@ public class UnityRemoteConfigService
     public float GetFloat(string key, float defaultValue)
         => GetValue(key, defaultValue);
     
+    /// <summary>Returns raw JSON for a config key (subjects, exams, quests, etc.).</summary>
     public string GetJsonString(string key)
     {
         if (!IsInitialized)
@@ -231,66 +205,7 @@ public class UnityRemoteConfigService
         string json = RemoteConfigService.Instance.appConfig.GetJson(key, "");
         if (!string.IsNullOrWhiteSpace(json) && json != "{}")
             return json;
-       
-        Debug.LogWarning($"[RemoteConfig] GetJsonString('{key}') empty — check dashboard publish + JSON content.");
+
         return null;
-    }
-    
-    public void DebugDumpAllKeys()
-    {
-        if (!IsInitialized)
-        {
-            Debug.LogWarning("[RemoteConfig][DEBUG] Not initialized — cache empty.");
-            return;
-        }
-        var sb = new System.Text.StringBuilder();
-        sb.AppendLine($"[RemoteConfig][DEBUG] ===== {_cache.Count} key(s) in cache =====");
-        foreach (var kvp in _cache)
-        {
-            string typeName = kvp.Value?.GetType().Name ?? "null";
-            string preview = kvp.Value?.ToString() ?? "null";
-            // Truncate long JSON so console stays readable
-            if (preview.Length > 200)
-                preview = preview.Substring(0, 200) + "... (truncated)";
-            sb.AppendLine($"  [{typeName}] {kvp.Key} = {preview}");
-        }
-        Debug.Log(sb.ToString());
-    }
-    
-    public void DebugAuditExpectedKeys()
-    {
-        string[] expectedKeys =
-        {
-            RemoteConfigKeys.MaxStamina,
-            RemoteConfigKeys.MaxInteractions,
-            RemoteConfigKeys.DailySubjectCount,
-            RemoteConfigKeys.ExamDays5,
-            RemoteConfigKeys.ExamDays30,
-            RemoteConfigKeys.ExamDays120,
-            RemoteConfigKeys.ExamDays360,
-            RemoteConfigKeys.ExamScoreMultiplier,
-            RemoteConfigKeys.QuestsConfig,
-            RemoteConfigKeys.SubjectMath,
-            RemoteConfigKeys.SubjectScience,
-            RemoteConfigKeys.SubjectHistory,
-            RemoteConfigKeys.SubjectGeography,
-            RemoteConfigKeys.SubjectArts,
-            RemoteConfigKeys.SubjectComputer,
-            RemoteConfigKeys.SubjectRest,
-            RemoteConfigKeys.ExamMath,
-            RemoteConfigKeys.ExamScience,
-            RemoteConfigKeys.ExamHistory,
-            RemoteConfigKeys.ExamGeography,
-            RemoteConfigKeys.ExamArts,
-            RemoteConfigKeys.ExamComputer,
-        };
-        var sb = new System.Text.StringBuilder();
-        sb.AppendLine("[RemoteConfig][DEBUG] ===== Expected key audit =====");
-        foreach (string key in expectedKeys)
-        {
-            bool present = HasKey(key);
-            sb.AppendLine($"  {(present ? "OK  " : "MISS")}  {key}");
-        }
-        Debug.Log(sb.ToString());
     }
 }

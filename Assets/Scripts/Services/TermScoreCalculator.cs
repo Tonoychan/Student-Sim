@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Calculates the final term score from subject scores and exam results.
+/// </summary>
 public static class TermScoreCalculator
 {
     static readonly GameEnums.MainSubjects[] Subjects =
@@ -13,6 +16,7 @@ public static class TermScoreCalculator
         GameEnums.MainSubjects.Computer,
     };
     
+    /// <summary>Builds the term result screen data and final leaderboard score.</summary>
     public static TermResultData Build(PlayerStateService player, GameConfigSO config, float examScoreMultiplier)
     {
         int academicBase = 0;

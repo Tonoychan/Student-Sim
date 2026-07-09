@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Holds all player stats: stamina, interactions, subject scores and levels.
+/// </summary>
 public class PlayerStateService
 {
     public int CurrentStamina { get; private set; } = RemoteConfigDefaults.MaxStamina;
@@ -44,10 +47,7 @@ public class PlayerStateService
         return InteractionsUsed + interactionCost <= MaxInteractions;
     }
     
-    /// <summary>
-    /// Apply tuning from Remote Config at term start.
-    /// Call before StartDay on a new game; safe to call on continue (clamps stamina).
-    /// </summary>
+    /// <summary>Applies max stamina/interactions from Remote Config.</summary>
     public void ApplyGameplaySettings(GameplaySettings settings)
     {
         if (settings == null)
@@ -78,6 +78,7 @@ public class PlayerStateService
         InteractionsUsed += count;
     }
     
+    /// <summary>Resets stamina and interactions at the start of each day.</summary>
     public void ResetForNewDay()
     {
         CurrentStamina = MaxStamina;
@@ -86,6 +87,7 @@ public class PlayerStateService
         // Keep _subjectScores across days unless you want a full reset
     }
     
+    /// <summary>Builds a save snapshot from current state.</summary>
     public PlayerSaveData ToSaveData(int currentDay)
     {
         var data = new PlayerSaveData
@@ -112,6 +114,7 @@ public class PlayerStateService
         }
         return data;
     }
+    /// <summary>Restores state from a save file.</summary>
     public void ApplySaveData(PlayerSaveData data)
     {
         if (data == null)
@@ -145,6 +148,7 @@ public class PlayerStateService
         GameEnums.MainSubjects.Arts,
         GameEnums.MainSubjects.Computer,
     };
+    /// <summary>Builds the end-of-day summary shown to the player.</summary>
     public DaySummaryData BuildDaySummary(int completedDay, string reason)
     {
         var summary = new DaySummaryData
@@ -165,9 +169,7 @@ public class PlayerStateService
         return summary;
     }
     
-    /// <summary>
-    /// Call after each successful subject click. Returns true if level increased.
-    /// </summary>
+    /// <summary>Counts one subject tap toward the next level. Returns true if level went up.</summary>
     public bool RegisterSubjectInteraction(
         GameEnums.MainSubjects subject,
         int interactionsRequiredForNextLevel,
@@ -195,6 +197,7 @@ public class PlayerStateService
         _termCompleted = completed;
     }
     
+    /// <summary>Clears all term progress for a new game.</summary>
     public void ResetTermProgress()
     {
         _totalExamCorrect = 0;

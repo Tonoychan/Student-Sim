@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>Data shown on the end-of-day summary popup.</summary>
 [System.Serializable]
 public class DaySummaryData
 {
@@ -9,6 +10,7 @@ public class DaySummaryData
     public List<SubjectDayGainEntry> subjectGains = new();
 }
 
+/// <summary>How much score one subject gained today.</summary>
 [System.Serializable]
 public class SubjectDayGainEntry
 {

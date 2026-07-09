@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
+/// <summary>
+/// Main game brain. Wires up all services, loads save data,
+/// and reacts to game events (subjects, exams, day end, etc.).
+/// </summary>
 public class GameController : MonoBehaviour
 {
     [SerializeField] private MainExam _mainExamData;
     [SerializeField] private GameConfigSO _gameConfig;
     [SerializeField] private QuestData _questData;
 
-    /// <summary>
-    /// Lets think this class contains Data Holder for Subject and its SO Data for development / Failsafe
-    /// </summary>
+    /// <summary>Links each subject enum to its local ScriptableObject fallback data.</summary>
     [Serializable]
     public class SubjectAssetEntry
     {
@@ -76,7 +77,6 @@ public class GameController : MonoBehaviour
     {
         _playerState.AddExamResult(correctCount);
         await UniTask.Delay(500);
-        Debug.Log($"Exam finished. Correct: {correctCount}/6"); // internal only, no UI
         if (_gameConfig.IsFinalDay(_dayCycleService.CurrentDay))
         {
             _dayCycleService.CompleteTerm(_playerState);
@@ -88,14 +88,13 @@ public class GameController : MonoBehaviour
         _saveService.Save(forceCloudFlush: true);
     }
 
+    /// <summary>Loads remote config, builds services, and starts or continues the term.</summary>
     private async UniTask InitializeDataAsync(CancellationToken ct)
     {
         // 1. Wait for Remote Config (from LoginScene) with timeout
         UnityRemoteConfigService remoteConfig = UnityRemoteConfigService.Instance;
         if (remoteConfig != null)
             await remoteConfig.WaitUntilReadyAsync(timeoutMs: 3000, ct);
-        else
-            Debug.LogWarning("[GameController] No Remote Config service — using defaults.");
 
         // 2. Build gameplay settings snapshot
         GameplaySettings gameplaySettings = GameplaySettings.FromRemoteConfig(remoteConfig);
@@ -116,6 +115,9 @@ public class GameController : MonoBehaviour
 
         // 4. Create services
         _subjectService = new SubjectService();
+        var subjectVisualService = new SubjectVisualService();
+        _subjectService.SetVisualService(subjectVisualService);
+        await subjectVisualService.LoadAllAsync().AttachExternalCancellation(ct);
         _playerState = new PlayerStateService();
         _playerState.ApplyGameplaySettings(gameplaySettings); 
         _cloudCurrency = new CloudCurrencyService();
@@ -176,6 +178,7 @@ public class GameController : MonoBehaviour
        
     }
 
+    /// <summary>Pushes all subject scores to the UI on startup.</summary>
     private void RaiseAllSubjectScores()
     {
         foreach (GameEnums.MainSubjects subject in Enum.GetValues(typeof(GameEnums.MainSubjects)))
@@ -217,78 +220,4 @@ public class GameController : MonoBehaviour
     {
         _saveService?.Save(forceCloudFlush: true);
     }
-    
-    #if UNITY_EDITOR || DEVELOPMENT_BUILD
-    //Add — debug cloud gold test keys
-    private const int DebugGoldAmount = 20;
-    private bool _debugGoldBusy;
-
-    void Update()
-    {
-        if (_debugGoldBusy || _cloudCurrency == null || _currencyService == null)
-            return;
-
-        Keyboard keyboard = Keyboard.current;
-        if (keyboard == null)
-            return;
-
-        if (keyboard.jKey.wasPressedThisFrame)
-            DebugGrantGoldAsync().Forget();
-
-        if (keyboard.kKey.wasPressedThisFrame)
-            DebugSpendGoldAsync().Forget();
-    }
-
-    async UniTaskVoid DebugGrantGoldAsync()
-    {
-        _debugGoldBusy = true;
-        try
-        {
-            // Unique questId each press — GrantGold blocks duplicate questIds
-            string debugQuestId = $"debug_grant_{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
-            CloudGrantGoldResponse result = await _cloudCurrency.GrantGoldAsync(
-                debugQuestId,
-                DebugGoldAmount);
-
-            if (result.success)
-            {
-                _currencyService.SetBalance(GameEnums.CurrencyType.Gold, result.gold);
-                Debug.Log($"[Debug] J pressed — GrantGold +{DebugGoldAmount}. Server gold={result.gold}");
-            }
-            else
-            {
-                Debug.LogWarning($"[Debug] GrantGold failed: {result.error}");
-            }
-        }
-        finally
-        {
-            _debugGoldBusy = false;
-        }
-    }
-
-    async UniTaskVoid DebugSpendGoldAsync()
-    {
-        _debugGoldBusy = true;
-        try
-        {
-            CloudSpendGoldResponse result = await _cloudCurrency.SpendGoldAsync(
-                DebugGoldAmount,
-                "debug_test");
-
-            if (result.success)
-            {
-                _currencyService.SetBalance(GameEnums.CurrencyType.Gold, result.gold);
-                Debug.Log($"[Debug] K pressed — SpendGold -{DebugGoldAmount}. Server gold={result.gold}");
-            }
-            else
-            {
-                Debug.LogWarning($"[Debug] SpendGold failed: {result.error}");
-            }
-        }
-        finally
-        {
-            _debugGoldBusy = false;
-        }
-    }
-#endif
 }

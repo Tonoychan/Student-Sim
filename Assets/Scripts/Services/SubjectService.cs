@@ -2,18 +2,30 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
+/// <summary>
+/// Loads subject level data and provides names, icons, and level info.
+/// </summary>
 public class SubjectService
 {
-
+    private SubjectVisualService _visualService;
+    
+    /// <summary>Connects the addressable icon loader.</summary>
+    public void SetVisualService(SubjectVisualService visualService)
+    {
+        _visualService = visualService;
+    }
+    
     #region Subjects Data Loading
 
     private readonly Dictionary<GameEnums.MainSubjects, SubjectDataLoader> _loaders = new Dictionary<GameEnums.MainSubjects, SubjectDataLoader>();
 
+    /// <summary>Registers a data loader for one subject (remote config + local fallback).</summary>
     public void RegisterLoader(SubjectDataLoader loader)
     {
         _loaders[loader.Subject] = loader;
     }
 
+    /// <summary>Loads all registered subjects in parallel.</summary>
     public async UniTask InitializeAsync()
     {
         var loadTasks = new List<UniTask>(_loaders.Count);
@@ -46,7 +58,9 @@ public class SubjectService
     }
     public Sprite GetSubjectIcon(GameEnums.MainSubjects subject)
     {
-        return _loaders[subject].Icon; // or from a visual config dictionary
+        if (_visualService != null && _visualService.IsLoaded)
+            return _visualService.GetIcon(subject);
+        return null;
     }
     
     public int GetMaxLevel(GameEnums.MainSubjects subject)

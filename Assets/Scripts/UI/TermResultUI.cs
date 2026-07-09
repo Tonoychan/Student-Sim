@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// End-of-term results screen with score breakdown and play-again button.
+/// </summary>
 public class TermResultUI : MonoBehaviour
 {
     [SerializeField] private LeaderboardPanelUI _leaderboardPanel;

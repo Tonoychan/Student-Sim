@@ -6,6 +6,9 @@ using Unity.Services.Leaderboards.Models;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Leaderboard popup with tabs for different term lengths (5, 30, 120, 360 days).
+/// </summary>
 public class LeaderboardPanelUI : MonoBehaviour
 {
     [System.Serializable]

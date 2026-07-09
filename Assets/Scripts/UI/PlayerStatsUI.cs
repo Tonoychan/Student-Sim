@@ -2,6 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Top HUD: day, stamina bar, interaction dots, and gold.
+/// </summary>
 public class PlayerStatsUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _goldText;

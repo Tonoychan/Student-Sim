@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+
+/// <summary>All data saved for one term (day, scores, stamina, quests, etc.).</summary>
 [Serializable]
 public class PlayerSaveData
 {
@@ -14,6 +16,7 @@ public class PlayerSaveData
     public QuestSaveData questProgress = new();
     public List<SubjectProgressEntry> subjectProgress = new();
 }
+/// <summary>Score and level for one subject inside the save file.</summary>
 [Serializable]
 public class SubjectProgressEntry
 {
@@ -23,6 +26,7 @@ public class SubjectProgressEntry
     public int interactionsAtCurrentLevel;
 }
 
+/// <summary>One currency type and its amount in the save file.</summary>
 [Serializable]
 public class CurrencyEntry
 {
@@ -30,6 +34,7 @@ public class CurrencyEntry
     public int amount;
 }
 
+/// <summary>Which quest the player is currently on.</summary>
 [Serializable]
 public class QuestSaveData
 {

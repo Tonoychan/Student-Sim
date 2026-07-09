@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// Placeholder save provider for future direct cloud-only saves.
+/// Currently unused — PlayerCloudSaveService handles cloud sync.
+/// </summary>
 public class CloudSaveProvider : ISaveProvider
 {
     public void Save(PlayerSaveData data)

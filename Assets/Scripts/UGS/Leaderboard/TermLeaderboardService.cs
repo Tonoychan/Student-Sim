@@ -5,12 +5,15 @@ using Unity.Services.Core;
 using Unity.Services.Leaderboards;
 using Unity.Services.Leaderboards.Exceptions;
 using Unity.Services.Leaderboards.Models;
-using UnityEngine;
 
+/// <summary>
+/// Submits term scores and fetches leaderboard rankings from Unity Gaming Services.
+/// </summary>
 public class TermLeaderboardService
 {
     static readonly Dictionary<string, LeaderboardScoresPage> ScoreCache = new();
     
+    /// <summary>Clears cached scores so the next fetch gets fresh data.</summary>
     public static void InvalidateCache(string leaderboardId = null)
     {
         if (string.IsNullOrEmpty(leaderboardId))
@@ -42,18 +45,13 @@ public class TermLeaderboardService
         }
     }
     
+    /// <summary>Checks that the leaderboard service is ready to use.</summary>
     public UniTask<bool> EnsureServiceLoadedAsync()
     {
-        ILeaderboardsService service = GetLeaderboards();
-        if (service == null)
-        {
-            Debug.LogError("[Leaderboard] Leaderboards not available from UGS registry.");
-            return UniTask.FromResult(false);
-        }
-        Debug.Log("[Leaderboard] Service ready.");
-        return UniTask.FromResult(true);
+        return UniTask.FromResult(GetLeaderboards() != null);
     }
     
+    /// <summary>Sets the player's display name to their ID (for leaderboard entries).</summary>
     public async UniTask<bool> EnsurePlayerNameIsIdAsync()
     {
         if (!AuthenticationService.Instance.IsSignedIn)
@@ -64,31 +62,22 @@ public class TermLeaderboardService
             await AuthenticationService.Instance.UpdatePlayerNameAsync(playerId);
             return true;
         }
-        catch (AuthenticationException ex)
+        catch (AuthenticationException)
         {
-            Debug.LogException(ex);
             return false;
         }
-        catch (RequestFailedException ex)
+        catch (RequestFailedException)
         {
-            Debug.LogException(ex);
             return false;
         }
     }
     
+    /// <summary>Posts the final term score to the leaderboard for that term length.</summary>
     public async UniTask<bool> SubmitScoreAsync(int maxDays, int finalScore)
     {
         string leaderboardId = TermLeaderboardIds.GetForMaxDays(maxDays);
-        if (string.IsNullOrEmpty(leaderboardId))
-        {
-            Debug.LogWarning($"[Leaderboard] No board for {maxDays}-day mode.");
+        if (string.IsNullOrEmpty(leaderboardId) || !CanUseLeaderboards)
             return false;
-        }
-        if (!CanUseLeaderboards)
-        {
-            Debug.LogError("[Leaderboard] Not ready or player not signed in.");
-            return false;
-        }
         try
         {
             if (!await EnsureServiceLoadedAsync())
@@ -98,27 +87,22 @@ public class TermLeaderboardService
             if (leaderboards == null)
                 return false;
             await leaderboards.AddPlayerScoreAsync(leaderboardId, finalScore);
-            Debug.Log($"[Leaderboard] Submitted {finalScore} to {leaderboardId}");
             
             InvalidateCache(leaderboardId);  
             return true;
         }
-        catch (LeaderboardsException ex)
+        catch (LeaderboardsException)
         {
-            if (ex.Message.Contains("could not be found"))
-                Debug.LogWarning($"[Leaderboard] Board '{leaderboardId}' not found in dashboard (development env).");
-            else
-                Debug.LogException(ex);
             return false;
         }
-        catch (RequestFailedException ex)
+        catch (RequestFailedException)
         {
-            Debug.LogException(ex);
             return false;
         }
         
     }
     
+    /// <summary>Fetches top scores for a leaderboard. Uses cache unless forceRefresh is true.</summary>
     public async UniTask<LeaderboardScoresPage> GetScoresAsync(
         string leaderboardId,
         int limit = 20,
@@ -147,14 +131,12 @@ public class TermLeaderboardService
                 ScoreCache[leaderboardId] = page;
             return page;
         }
-        catch (LeaderboardsException ex)
+        catch (LeaderboardsException)
         {
-            Debug.LogException(ex);
             return null;
         }
-        catch (RequestFailedException ex)
+        catch (RequestFailedException)
         {
-            Debug.LogException(ex);
             return null;
         }
     }

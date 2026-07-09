@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Tracks gold and other currencies in memory during a play session.
+/// </summary>
 public class PlayerCurrencyService
 {
     private readonly Dictionary<GameEnums.CurrencyType, int> _balances = new();
@@ -11,6 +14,7 @@ public class PlayerCurrencyService
     public bool CanAfford(GameEnums.CurrencyType type, int amount)
         => GetBalance(type) >= amount;
     
+    /// <summary>Spends currency if the player has enough. Returns false otherwise.</summary>
     public bool TrySpend(GameEnums.CurrencyType type, int amount)
     {
         if (!CanAfford(type, amount)) return false;
@@ -25,7 +29,8 @@ public class PlayerCurrencyService
         _balances[type] = GetBalance(type) + amount;
         GameEvents.RaiseCurrencyChanged(type, _balances[type]);
     }
-    
+
+    /// <summary>Sets balance directly (used when syncing from server).</summary>
     public void SetBalance(GameEnums.CurrencyType type, int amount)
     {
         amount = Mathf.Max(0, amount);
@@ -33,6 +38,7 @@ public class PlayerCurrencyService
         GameEvents.RaiseCurrencyChanged(type, amount);
     }
 
+    /// <summary>Converts balances to a list for saving.</summary>
     public List<CurrencyEntry> ToSaveEntries()
     {
         var entries = new List<CurrencyEntry>();
@@ -47,6 +53,7 @@ public class PlayerCurrencyService
         return entries;
     }
 
+    /// <summary>Restores balances from save data.</summary>
     public void ApplySaveEntries(List<CurrencyEntry> entries)
     {
         _balances.Clear();

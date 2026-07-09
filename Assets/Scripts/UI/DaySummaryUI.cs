@@ -3,6 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// End-of-day popup showing score gains per subject.
+/// </summary>
 public class DaySummaryUI : MonoBehaviour
 {
     [Serializable]

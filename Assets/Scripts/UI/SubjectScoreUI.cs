@@ -2,6 +2,9 @@ using System;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Side panel showing each subject's total score.
+/// </summary>
 public class SubjectScoreUI : MonoBehaviour
 {
     [Serializable]

@@ -1,16 +1,17 @@
 using System;
-using UnityEngine;
 
+/// <summary>
+/// Applies term length and exam day schedule to the game config SO.
+/// </summary>
 public static class GameConfigLoader
 {
+    /// <summary>Sets max days and exam days from Remote Config or defaults.</summary>
     public static void ApplyTerm(GameConfigSO config, int maxDays)
     {
         int[] examDays = TryGetExamDaysFromRemoteConfig(maxDays)
                          ?? RemoteConfigDefaults.GetExamDays(maxDays);
 
         config.ApplyTerm(maxDays, examDays);
-
-        Debug.Log($"[GameConfig] Term {maxDays} days. Exam days: {string.Join(", ", examDays)}");
     }
 
     static int[] TryGetExamDaysFromRemoteConfig(int maxDays)
@@ -24,10 +25,7 @@ public static class GameConfigLoader
             return null;
 
         if (!rc.HasKey(key))
-        {
-            Debug.LogWarning($"[GameConfig] RC key '{key}' not found for {maxDays}-day term.");
             return null;
-        }
 
         string raw = rc.GetString(key, string.Empty);
         if (string.IsNullOrWhiteSpace(raw))
@@ -44,16 +42,10 @@ public static class GameConfigLoader
         foreach (string part in parts)
         {
             if (!int.TryParse(part.Trim(), out int day))
-            {
-                Debug.LogWarning($"[GameConfig] Invalid exam day '{part}' in RC. Skipping.");
                 continue;
-            }
 
             if (day < 1 || day > maxDays)
-            {
-                Debug.LogWarning($"[GameConfig] Exam day {day} out of range 1..{maxDays}. Skipping.");
                 continue;
-            }
 
             if (!days.Contains(day))
                 days.Add(day);
@@ -62,10 +54,7 @@ public static class GameConfigLoader
         days.Sort();
 
         if (days.Count == 0)
-        {
-            Debug.LogWarning("[GameConfig] RC exam days parsed to empty. Using defaults.");
             return null;
-        }
 
         return days.ToArray();
     }

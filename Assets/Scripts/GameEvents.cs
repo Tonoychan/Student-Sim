@@ -2,30 +2,29 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// Keeping this class as a Global Holder for Game Events to keep Organized
-/// Why? Because I found this Arch better and I saw this in different other client projects
+/// Central event bus. Services raise events here; UI scripts listen and update the screen.
 /// </summary>
 public class GameEvents
 {
-    // -------------- DAY SUBJECT SELECTION -------------
+    // ---------- DAY SUBJECT SELECTION ----------
     public static event Action<IReadOnlyList<SubjectDisplayData>> OnDailySubjectsReady;
     public static event Action<SubjectDisplayData> OnSubjectSelected;
     
-    // ---------- PLAYER STATS----------------
+    // ---------- PLAYER STATS ----------
     public static event Action<int, int> OnStaminaChanged;        
     public static event Action<int, int> OnInteractionsChanged;   
     public static event Action<GameEnums.MainSubjects, int> OnSubjectScoreChanged;
     
-    // -------------- DAY CYCLE------------ ---
+    // ---------- DAY CYCLE ----------
     public static event Action OnDayEnded;
     public static event Action<int> OnDayChanged;
     
-    //---------DAY SUMMARY--------
+    // ---------- DAY SUMMARY ----------
     public static event Action<DaySummaryData> OnDaySummaryReady;
     public static event Action OnContinueToNextDay;
     public static event Action OnDaySummaryClosed;
     
-    //-------------EXAMS----------------
+    // ---------- EXAMS ----------
     
     public static event Action OnExamStarted;
     public static event Action<ExamQuestionDisplayData> OnExamQuestionReady;
@@ -34,15 +33,15 @@ public class GameEvents
     public static event Action OnExamClosed;
     public static event Action<int> OnExamAnswerSubmitted;
     
-    //------------------QUESTS------------------------------
+    // ---------- QUESTS ----------
     public static event Action<QuestEntry> OnActiveQuestChanged;
     public static event Action<QuestEntry, int> OnQuestCompleted;  // quest + gold earned
     public static event Action<QuestEntry> OnQuestFailed;
     
-    //------------------CURRENCY------------------------
+    // ---------- CURRENCY ----------
     public static event Action<GameEnums.CurrencyType, int> OnCurrencyChanged;
     
-    //------------------------SUBJECT LEVELS------------------
+    // ---------- SUBJECT LEVELS ----------
     public static event Action<GameEnums.MainSubjects, int> OnSubjectLevelChanged;
     
     // ---------- TERM RESULTS ----------
@@ -105,6 +104,7 @@ public class GameEvents
     public static void RaiseTermResultsReady(TermResultData result)
         => OnTermResultsReady?.Invoke(result);
 
+    /// <summary>Clears static events when entering Play Mode (avoids duplicate listeners).</summary>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStaticState()
     {

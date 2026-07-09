@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Unity.Services.Authentication;
 using Cysharp.Threading.Tasks;
+using Unity.Services.Authentication;
 using UnityEngine;
 
+/// <summary>
+/// Handles saving and loading term progress to PlayerPrefs and the cloud.
+/// </summary>
 public class PlayerSaveService
 {
     private readonly ISaveProvider _saveProvider;
@@ -30,6 +33,7 @@ public class PlayerSaveService
         _cloudSave = cloudSave;
     }
     
+    /// <summary>Loads existing save into all services, or starts with empty data.</summary>
     public void LoadOrCreateNew()
     {
         PlayerSaveData data = _saveProvider.HasSave()
@@ -42,21 +46,21 @@ public class PlayerSaveService
         _questService.Initialize();
     }
     
+    /// <summary>Saves term progress locally and queues a cloud upload.</summary>
     public void Save(bool forceCloudFlush = false)
     {
         PlayerSaveData data = _playerState.ToSaveData(_dayCycleService.CurrentDay);
         data.currencies = _currencyService.ToSaveEntries();
         data.questProgress = _questService.ToSaveData();
-        //Add
         data.lastSavedUtc = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         _saveProvider.Save(data);
-        //Add — queue cloud term key
         _cloudSave?.QueueTermSave(data);
         SaveAccountInternal();
-        //Add
         if (forceCloudFlush)
             _cloudSave?.ForceFlushAsync().Forget();
     }
+
+    /// <summary>Wipes old save and starts a brand-new term.</summary>
     public void StartFresh(int maxDays)
     {
         _playerState.ResetTermProgress();
@@ -75,10 +79,13 @@ public class PlayerSaveService
         Save(forceCloudFlush: true);
     }
     
+    /// <summary>Loads wallet from account save on game start.</summary>
     public void SyncAccount(PlayerCurrencyService currency)
     {
         _accountService.SyncAndApply(currency);
     }
+
+    /// <summary>Saves wallet to account save and optionally flushes to cloud.</summary>
     public void SaveAccount(bool forceCloudFlush = false)
     {
         SaveAccountInternal();
@@ -93,7 +100,7 @@ public class PlayerSaveService
             return;
         var account = new PlayerAccountData
         {
-            playerId = Unity.Services.Authentication.AuthenticationService.Instance.PlayerId,
+            playerId = AuthenticationService.Instance.PlayerId,
             currencies = _currencyService.ToSaveEntries(),
             lastSavedUtc = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
         };

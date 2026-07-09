@@ -7,80 +7,32 @@ using Unity.Services.CloudSave;
 using Unity.Services.CloudSave.Models;
 using UnityEngine;
 
+/// <summary>
+/// Saves and loads player data to Unity Cloud Save.
+/// Keeps a local copy in PlayerPrefs and syncs in the background.
+/// </summary>
 public class PlayerCloudSaveService
 {
-    //Add — singleton (same pattern as UnityRemoteConfigService)
     public static PlayerCloudSaveService Instance { get; private set; }
-    //Add
+
     private const int DebounceDelayMs = 35_000;
-    //Add
+
     private bool _termDirty;
     private bool _accountDirty;
     private string _pendingTermJson;
     private string _pendingAccountJson;
     private CancellationTokenSource _debounceCts;
-    //Add
+
     public PlayerCloudSaveService()
     {
         Instance = this;
     }
+
+    /// <summary>True when the player is signed in and cloud save can be used.</summary>
     public bool CanUseCloudSave =>
         AuthenticationService.Instance.IsSignedIn;
 
-    /// <summary>
-    /// Phase 2a: save + load one test key to verify dashboard + auth.
-    /// </summary>
-    public async UniTask<bool> RunConnectivityTestAsync()
-    {
-        if (!CanUseCloudSave)
-        {
-            Debug.LogWarning("[CloudSave] Player not signed in — skipping test.");
-            return false;
-        }
-
-        string playerId = AuthenticationService.Instance.PlayerId;
-        string testValue = $"StudentSim ping @ {DateTime.UtcNow:O}";
-
-        try
-        {
-            //Add — SAVE test key
-            var saveData = new Dictionary<string, object>
-            {
-                { CloudSaveKeys.TestPing, testValue }
-            };
-
-            await CloudSaveService.Instance.Data.Player.SaveAsync(saveData);
-            Debug.Log($"[CloudSave] TEST SAVE OK. key={CloudSaveKeys.TestPing}, value={testValue}, playerId={playerId}");
-
-            //Add — LOAD same key back
-            var keys = new HashSet<string> { CloudSaveKeys.TestPing };
-            var loaded = await CloudSaveService.Instance.Data.Player.LoadAsync(keys);
-
-            if (loaded.TryGetValue(CloudSaveKeys.TestPing, out Item item))
-            {
-                string readBack = item.Value.GetAsString();
-                Debug.Log($"[CloudSave] TEST LOAD OK. readBack={readBack}");
-                return readBack == testValue;
-            }
-
-            Debug.LogWarning("[CloudSave] TEST LOAD: key not found in response.");
-            return false;
-        }
-        catch (CloudSaveException ex)
-        {
-            Debug.LogError($"[CloudSave] CloudSaveException: {ex.Message}");
-            Debug.LogException(ex);
-            return false;
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"[CloudSave] Unexpected error: {ex.Message}");
-            Debug.LogException(ex);
-            return false;
-        }
-    }
-
-    //Add — generic helpers for Phase 2b
+    /// <summary>Uploads one or more key-value pairs to the cloud.</summary>
     public async UniTask SaveKeysAsync(Dictionary<string, object> data)
     {
         if (!CanUseCloudSave || data == null || data.Count == 0)
@@ -89,15 +41,48 @@ public class PlayerCloudSaveService
         await CloudSaveService.Instance.Data.Player.SaveAsync(data);
     }
 
+    /// <summary>Downloads the given keys from the cloud. Loads one key at a time for safety.</summary>
     public async UniTask<Dictionary<string, Item>> LoadKeysAsync(ISet<string> keys)
     {
         if (!CanUseCloudSave || keys == null || keys.Count == 0)
             return new Dictionary<string, Item>();
 
-        return await CloudSaveService.Instance.Data.Player.LoadAsync(keys);
+        var result = new Dictionary<string, Item>();
+        foreach (string key in keys)
+        {
+            try
+            {
+                var singleKey = new HashSet<string> { key };
+                var loaded = await CloudSaveService.Instance.Data.Player.LoadAsync(singleKey);
+                if (loaded.TryGetValue(key, out Item item))
+                    result[key] = item;
+            }
+            catch (CloudSaveException)
+            {
+                await TryDeleteCorruptKeyAsync(key);
+            }
+            catch (Exception)
+            {
+                await TryDeleteCorruptKeyAsync(key);
+            }
+        }
+
+        return result;
     }
-    
-    //Add — queue term blob (debounced cloud upload)
+
+    /// <summary>Removes a broken cloud entry so local data can take over.</summary>
+    async UniTask TryDeleteCorruptKeyAsync(string key)
+    {
+        try
+        {
+            await CloudSaveService.Instance.Data.Player.DeleteAsync(key);
+        }
+        catch (Exception)
+        {
+        }
+    }
+
+    /// <summary>Marks term progress dirty and schedules an upload.</summary>
     public void QueueTermSave(PlayerSaveData data)
     {
         if (!CanUseCloudSave || data == null)
@@ -107,7 +92,8 @@ public class PlayerCloudSaveService
         _termDirty = true;
         ScheduleDebouncedFlush().Forget();
     }
-    //Add
+
+    /// <summary>Marks account/wallet data dirty and schedules an upload.</summary>
     public void QueueAccountSave(PlayerAccountData data)
     {
         if (!CanUseCloudSave || data == null)
@@ -117,7 +103,8 @@ public class PlayerCloudSaveService
         _accountDirty = true;
         ScheduleDebouncedFlush().Forget();
     }
-    //Add
+
+    /// <summary>Waits 35 seconds then uploads any pending changes.</summary>
     async UniTaskVoid ScheduleDebouncedFlush()
     {
         _debounceCts?.Cancel();
@@ -131,16 +118,17 @@ public class PlayerCloudSaveService
         }
         catch (OperationCanceledException)
         {
-            // reset by newer save — expected
         }
     }
-    //Add — upload only dirty keys
+
+    /// <summary>Uploads pending changes right away (used on app pause/quit).</summary>
     public async UniTask ForceFlushAsync()
     {
         _debounceCts?.Cancel();
         await FlushDirtyKeysAsync();
     }
-    //Add
+
+    /// <summary>Uploads only the keys that changed since last flush.</summary>
     async UniTask FlushDirtyKeysAsync()
     {
         if (!CanUseCloudSave)
@@ -155,34 +143,44 @@ public class PlayerCloudSaveService
         await SaveKeysAsync(payload);
         if (_termDirty) _termDirty = false;
         if (_accountDirty) _accountDirty = false;
-        Debug.Log($"[CloudSave] Flushed {payload.Count} key(s) to cloud.");
     }
-    //Add — read JSON string from cloud Item
+
     static string GetJsonFromItem(Item item)
     {
         if (item == null || item.Value == null)
             return null;
         return item.Value.GetAsString();
     }
-    //Add — login merge: cloud ↔ PlayerPrefs
+
+    /// <summary>
+    /// Called at login. Picks the newer copy (cloud or local) for each save key
+    /// and uploads anything that only exists locally.
+    /// </summary>
     public async UniTask SyncCloudToLocalAsync()
     {
         if (!CanUseCloudSave)
             return;
-        var localTermProvider = new PlayerPrefsSaveProvider();
-        var localAccountProvider = new PlayerAccountSaveProvider();
-        var keys = new HashSet<string>
+
+        try
         {
-            CloudSaveKeys.TermSave,
-            CloudSaveKeys.AccountSave
-        };
-        var loaded = await LoadKeysAsync(keys);
-        SyncTermKey(loaded, localTermProvider);
-        SyncAccountKey(loaded, localAccountProvider);
-        // push any pending dirty data immediately after migration
-        await FlushDirtyKeysAsync();
+            var localTermProvider = new PlayerPrefsSaveProvider();
+            var localAccountProvider = new PlayerAccountSaveProvider();
+            var keys = new HashSet<string>
+            {
+                CloudSaveKeys.TermSave,
+                CloudSaveKeys.AccountSave
+            };
+            var loaded = await LoadKeysAsync(keys);
+            SyncTermKey(loaded, localTermProvider);
+            SyncAccountKey(loaded, localAccountProvider);
+            await FlushDirtyKeysAsync();
+        }
+        catch (Exception)
+        {
+        }
     }
-    //Add
+
+    /// <summary>Merges cloud term save with local PlayerPrefs.</summary>
     void SyncTermKey(Dictionary<string, Item> loaded, PlayerPrefsSaveProvider local)
     {
         bool hasCloud = loaded.TryGetValue(CloudSaveKeys.TermSave, out Item cloudItem);
@@ -195,28 +193,21 @@ public class PlayerCloudSaveService
         if (cloudData != null && hasLocal)
         {
             if (cloudData.lastSavedUtc >= localData.lastSavedUtc)
-            {
                 local.Save(cloudData);
-                Debug.Log("[CloudSave] Term: cloud newer → copied to PlayerPrefs.");
-            }
             else
-            {
                 QueueTermSave(localData);
-                Debug.Log("[CloudSave] Term: local newer → queued upload.");
-            }
         }
         else if (cloudData != null)
         {
             local.Save(cloudData);
-            Debug.Log("[CloudSave] Term: local empty → restored from cloud.");
         }
         else if (hasLocal && localData != null && !localData.termCompleted)
         {
             QueueTermSave(localData);
-            Debug.Log("[CloudSave] Term: cloud empty → migrating local to cloud.");
         }
     }
-    //Add
+
+    /// <summary>Merges cloud account save with local PlayerPrefs.</summary>
     void SyncAccountKey(Dictionary<string, Item> loaded, PlayerAccountSaveProvider local)
     {
         bool hasCloud = loaded.TryGetValue(CloudSaveKeys.AccountSave, out Item cloudItem);
@@ -230,38 +221,30 @@ public class PlayerCloudSaveService
         if (cloudData != null && hasLocal)
         {
             if (cloudData.lastSavedUtc >= localData.lastSavedUtc)
-            {
                 local.Save(cloudData);
-                Debug.Log("[CloudSave] Account: cloud newer → copied to PlayerPrefs.");
-            }
             else
             {
                 localData.playerId = playerId;
                 QueueAccountSave(localData);
-                Debug.Log("[CloudSave] Account: local newer → queued upload.");
             }
         }
         else if (cloudData != null)
         {
             local.Save(cloudData);
-            Debug.Log("[CloudSave] Account: local empty → restored from cloud.");
         }
         else if (hasLocal && localData != null)
         {
             localData.playerId = playerId;
             QueueAccountSave(localData);
-            Debug.Log("[CloudSave] Account: cloud empty → migrating local to cloud.");
         }
     }
-    //Add — delete cloud keys on new game (optional but recommended)
+
+    /// <summary>Deletes cloud keys (used when starting a new game).</summary>
     public async UniTask DeleteCloudKeysAsync(ISet<string> keys)
     {
         if (!CanUseCloudSave || keys == null || keys.Count == 0)
             return;
         foreach (string key in keys)
-        {
             await CloudSaveService.Instance.Data.Player.DeleteAsync(key);
-        }
-        Debug.Log($"[CloudSave] Deleted {keys.Count} cloud key(s).");
     }
 }

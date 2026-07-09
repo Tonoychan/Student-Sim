@@ -1,6 +1,8 @@
 using System;
-using UnityEngine;
 
+/// <summary>
+/// Parses JSON strings from Remote Config into game data arrays.
+/// </summary>
 public static class RemoteConfigJsonHelper
 {
     [Serializable]
@@ -21,13 +23,11 @@ public static class RemoteConfigJsonHelper
         public QuestionsAnswerModel[] questions;
     }
 
+    /// <summary>Parses subject level JSON (wrapped object or raw array).</summary>
     public static SubjectData[] TryParseSubjectLevels(string json)
     {
         if (string.IsNullOrWhiteSpace(json))
-        {
-            Debug.LogWarning("[RemoteConfig] TryParse received empty JSON string.");
             return null;
-        }
 
         string trimmed = json.Trim();
         if (trimmed.StartsWith("["))
@@ -39,9 +39,8 @@ public static class RemoteConfigJsonHelper
                 if (rootWrapper?.Data != null && rootWrapper.Data.Length > 0)
                     return rootWrapper.Data;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Debug.LogWarning($"[RemoteConfig] Subject root-array parse failed: {ex.Message}");
             }
         }
 
@@ -51,21 +50,18 @@ public static class RemoteConfigJsonHelper
             if (wrapper?.Data != null && wrapper.Data.Length > 0)
                 return wrapper.Data;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Debug.LogWarning($"[RemoteConfig] Subject JSON parse failed: {ex.Message}");
         }
 
         return null;
     }
 
+    /// <summary>Parses quest list JSON (wrapped object or raw array).</summary>
     public static QuestEntry[] TryParseQuests(string json)
     {
         if (string.IsNullOrWhiteSpace(json))
-        {
-            Debug.LogWarning("[RemoteConfig] TryParse received empty JSON string.");
             return null;
-        }
 
         string trimmed = json.Trim();
         if (trimmed.StartsWith("["))
@@ -77,9 +73,8 @@ public static class RemoteConfigJsonHelper
                 if (rootWrapper?.quests != null && rootWrapper.quests.Length > 0)
                     return rootWrapper.quests;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Debug.LogWarning($"[RemoteConfig] Quest root-array parse failed: {ex.Message}");
             }
         }
 
@@ -89,21 +84,18 @@ public static class RemoteConfigJsonHelper
             if (wrapper?.quests != null && wrapper.quests.Length > 0)
                 return wrapper.quests;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Debug.LogWarning($"[RemoteConfig] Quest JSON parse failed: {ex.Message}");
         }
 
         return null;
     }
 
+    /// <summary>Parses exam question JSON (wrapped object or raw array).</summary>
     public static QuestionsAnswerModel[] TryParseExamQuestions(string json)
     {
         if (string.IsNullOrWhiteSpace(json))
-        {
-            Debug.LogWarning("[RemoteConfig] TryParse received empty JSON string.");
             return null;
-        }
 
         string trimmed = json.Trim();
         if (trimmed.StartsWith("["))
@@ -115,9 +107,8 @@ public static class RemoteConfigJsonHelper
                 if (rootWrapper?.questions != null && rootWrapper.questions.Length > 0)
                     return rootWrapper.questions;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Debug.LogWarning($"[RemoteConfig] Exam root-array parse failed: {ex.Message}");
             }
         }
 
@@ -127,9 +118,8 @@ public static class RemoteConfigJsonHelper
             if (wrapper?.questions != null && wrapper.questions.Length > 0)
                 return wrapper.questions;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Debug.LogWarning($"[RemoteConfig] Exam JSON parse failed: {ex.Message}");
         }
 
         return null;

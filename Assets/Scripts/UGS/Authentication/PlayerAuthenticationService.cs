@@ -1,20 +1,27 @@
 using Cysharp.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
-using UnityEngine;
 
+/// <summary>
+/// Signs the player in anonymously (guest login) and restores saved sessions.
+/// </summary>
 public class PlayerAuthenticationService
 {
+    /// <summary>True if a session token is stored on this device.</summary>
     public bool HasStoredSession =>
         AuthenticationService.Instance.SessionTokenExists;
+
+    /// <summary>True if the player is currently signed in.</summary>
     public bool IsSignedIn =>
         AuthenticationService.Instance.IsSignedIn;
     
+    /// <summary>Starts guest login (fire-and-forget).</summary>
     public void GuestLogin()
     {
         SignUpAnonymouslyAsync().Forget();
     }
     
+    /// <summary>Tries to sign in using the stored session token.</summary>
     public async UniTask<bool> TryRestoreSessionAsync()
     {
         if (!AuthenticationService.Instance.SessionTokenExists)
@@ -22,25 +29,20 @@ public class PlayerAuthenticationService
         return await SignInAnonymouslyAsync();
     }
     
+    /// <summary>Creates or resumes an anonymous account.</summary>
     public async UniTask<bool> SignInAnonymouslyAsync()
     {
         try
         {
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
-            Debug.Log(AuthenticationService.Instance.SessionTokenExists
-                ? "Resumed existing session."
-                : "Created new anonymous account.");
-            Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
             return AuthenticationService.Instance.IsSignedIn;
         }
-        catch (AuthenticationException ex)
+        catch (AuthenticationException)
         {
-            Debug.LogException(ex);
             return false;
         }
-        catch (RequestFailedException ex)
+        catch (RequestFailedException)
         {
-            Debug.LogException(ex);
             return false;
         }
     }
@@ -49,36 +51,17 @@ public class PlayerAuthenticationService
     {
         try
         {
-            if (AuthenticationService.Instance.SessionTokenExists)
-            {
-                await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                Debug.Log("Resumed existing session.");
-            }
-            else
-            {
-                // First time — create a new anonymous account
-                await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                Debug.Log("Created new anonymous account.");
-            }
-
-            // Shows how to get the playerID
-            Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
-
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
-        catch (AuthenticationException ex)
+        catch (AuthenticationException)
         {
-            // Compare error code to AuthenticationErrorCodes
-            // Notify the player with the proper error message
-            Debug.LogException(ex);
         }
-        catch (RequestFailedException ex)
+        catch (RequestFailedException)
         {
-            // Compare error code to CommonErrorCodes
-            // Notify the player with the proper error message
-            Debug.LogException(ex);
         }
     }
     
+    /// <summary>Returns the current player ID, or empty if not signed in.</summary>
     public string GetPlayerID()
     {
         return AuthenticationService.Instance.IsSignedIn

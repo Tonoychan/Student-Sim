@@ -1,13 +1,14 @@
 /// <summary>
-/// Cloud Save player-data keys. Add game keys here as you split saves into KVP.
+/// String keys used when saving data to Unity Cloud Save.
 /// </summary>
 public static class CloudSaveKeys
 {
-    //Add — connectivity test (Phase 2a)
-    public const string TestPing = "cloud_save_test_v1";
-
-    //Add — reserved for Phase 2b (full game data)
+    /// <summary>Full term progress (day, scores, quests, etc.).</summary>
     public const string TermSave = "term_save_v1";
+
+    /// <summary>Account data tied to the player (wallet, player ID).</summary>
     public const string AccountSave = "account_save_v1";
+
+    /// <summary>Reserved for future server-side wallet sync.</summary>
     public const string Wallet = "wallet_v1";
 }

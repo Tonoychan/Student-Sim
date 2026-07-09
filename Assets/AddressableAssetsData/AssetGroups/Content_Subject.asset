@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Content_Subject
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Content_Subject
+  m_GUID: 56ad08d3d51b71b4b86c4453dc997c73
+  m_SerializeEntries:
+  - m_GUID: 1f4e6d52cf806f641865a6946c207d61
+    m_Address: icon_subject_rest
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ae6e95383969fa46a74eef97bcd2034
+    m_Address: icon_subject_computer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 45e151b5f51c3734c94c046e68ec5d61
+    m_Address: icon_subject_math
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f71e0a5cabda8949b52105219a342ce
+    m_Address: icon_subject_history
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 73da12ee364b5fc4886c12d31b7a63cb
+    m_Address: icon_subject_arts
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8354f990f7e98a649aed36a0b651568e
+    m_Address: icon_subject_work
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e73b93ec97141a46b3e75d70a5ff31c
+    m_Address: icon_subject_geography
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e937d03c5ad88f34ea52028f0b517f3a
+    m_Address: icon_subject_science
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ffa046a6ad476824bacccbac844e08a0
+    m_Address: icon_subject_exercise
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 81422849052d40c449f5d6b158c0c186, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: f9829e4a8b8eae9448e7f04a7043e16e, type: 2}
+    - {fileID: 11400000, guid: 371f85e2d19d1384dad6aa19e119b0f5, type: 2}

@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Picks random subjects to show on each normal day.
+/// </summary>
 public class SubjectSelectionService
 {
     private readonly SubjectService _subjectService;
@@ -28,6 +31,7 @@ public class SubjectSelectionService
         _dailySubjectCount = Mathf.Max(1, dailySubjectCount);
     }
     
+    /// <summary>Randomly picks subjects for today and builds display data for the UI.</summary>
     public IReadOnlyList<SubjectDisplayData> PickSubjects(int count = -1)
     {
         if (count <= 0)
@@ -78,6 +82,7 @@ public class SubjectSelectionService
         return _playerState.GetSubjectLevel(subject);
     }
     
+    /// <summary>Re-rolls subjects after a tap (same logic as PickSubjects).</summary>
     public IReadOnlyList<SubjectDisplayData> RefreshSubjects(int count = -1)
     {
         return PickSubjects(count); // same logic, clearer name

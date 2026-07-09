@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.CloudCode;
-using UnityEngine;
 
+/// <summary>
+/// Talks to Cloud Code endpoints for server-side gold (wallet, grant, spend).
+/// The server is the source of truth for currency.
+/// </summary>
 public class CloudCurrencyService
 {
-    // singleton 
     public static CloudCurrencyService Instance { get; private set; }
 
     public CloudCurrencyService()
@@ -18,16 +20,11 @@ public class CloudCurrencyService
     public bool CanUseCloudCode =>
         AuthenticationService.Instance.IsSignedIn;
 
-    /// <summary>
-    /// Pull authoritative gold from server and apply to local currency service.
-    /// </summary>
+    /// <summary>Pulls the player's gold from the server and updates local balance.</summary>
     public async UniTask<bool> SyncWalletAsync(PlayerCurrencyService currency)
     {
         if (!CanUseCloudCode || currency == null)
-        {
-            Debug.LogWarning("[CloudCurrency] Cannot sync wallet — not signed in.");
             return false;
-        }
 
         try
         {
@@ -35,27 +32,22 @@ public class CloudCurrencyService
                 .CallEndpointAsync<CloudWalletResponse>(CloudCodeEndpoints.GetWallet, null);
 
             if (response == null || !response.success)
-            {
-                Debug.LogWarning($"[CloudCurrency] GetWallet failed: {response?.error}");
                 return false;
-            }
 
             currency.SetBalance(GameEnums.CurrencyType.Gold, response.gold);
-            Debug.Log($"[CloudCurrency] Wallet synced. gold={response.gold}");
             return true;
         }
-        catch (CloudCodeException ex)
+        catch (CloudCodeException)
         {
-            Debug.LogError($"[CloudCurrency] GetWallet CloudCodeException: {ex.Message}");
             return false;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Debug.LogError($"[CloudCurrency] GetWallet error: {ex.Message}");
             return false;
         }
     }
 
+    /// <summary>Asks the server to grant gold (e.g. quest reward). Blocks duplicate quest IDs.</summary>
     public async UniTask<CloudGrantGoldResponse> GrantGoldAsync(string questId, int goldReward)
     {
         if (!CanUseCloudCode)
@@ -76,23 +68,19 @@ public class CloudCurrencyService
             if (response == null)
                 return FailGrant("NULL_RESPONSE");
 
-            if (!response.success)
-                Debug.LogWarning($"[CloudCurrency] GrantGold rejected: {response.error}");
-
             return response;
         }
         catch (CloudCodeException ex)
         {
-            Debug.LogError($"[CloudCurrency] GrantGold CloudCodeException: {ex.Message}");
             return FailGrant(ex.Message);
         }
         catch (Exception ex)
         {
-            Debug.LogError($"[CloudCurrency] GrantGold error: {ex.Message}");
             return FailGrant(ex.Message);
         }
     }
 
+    /// <summary>Asks the server to spend gold (e.g. store purchase).</summary>
     public async UniTask<CloudSpendGoldResponse> SpendGoldAsync(int amount, string reason = "store_purchase")
     {
         if (!CanUseCloudCode)
@@ -113,19 +101,14 @@ public class CloudCurrencyService
             if (response == null)
                 return FailSpend("NULL_RESPONSE");
 
-            if (!response.success)
-                Debug.LogWarning($"[CloudCurrency] SpendGold rejected: {response.error}");
-
             return response;
         }
         catch (CloudCodeException ex)
         {
-            Debug.LogError($"[CloudCurrency] SpendGold CloudCodeException: {ex.Message}");
             return FailSpend(ex.Message);
         }
         catch (Exception ex)
         {
-            Debug.LogError($"[CloudCurrency] SpendGold error: {ex.Message}");
             return FailSpend(ex.Message);
         }
     }

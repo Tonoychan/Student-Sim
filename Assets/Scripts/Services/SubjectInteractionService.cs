@@ -1,9 +1,7 @@
 using UnityEngine;
 /// <summary>
-/// This service will be responsible for the Interaction(tap on the button)
-/// It checks stamina and number of available interactions
-/// Adds score, stamina, interactions
-/// Future: Add the Event inside the function responsible doing the change
+/// Handles what happens when the player taps a subject button
+/// (stamina, score, interactions, level-up, day end).
 /// </summary>
 public class SubjectInteractionService
 {
@@ -32,6 +30,7 @@ public class SubjectInteractionService
         _subjectService = subjectService;
         _dailySubjectCount = dailySubjectCount;
     }
+    /// <summary>Tries to do a subject action. Returns false if blocked (no stamina, exam, etc.).</summary>
     public bool TryPerformSubject(SubjectDisplayData selection)
     {
         if (_dayCycleService.IsEndingDay)

@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
+/// <summary>
+/// Tracks the active quest and checks pass/fail at the end of each day.
+/// Grants gold through the server when a quest is completed.
+/// </summary>
 public class QuestService
 {
     private readonly QuestEntry[] _quests;
@@ -9,7 +12,6 @@ public class QuestService
     private readonly PlayerCurrencyService _currency;
     private readonly CloudCurrencyService _cloudCurrency;
    
-    
     private int _activeQuestIndex;
     
     public QuestEntry ActiveQuest => GetQuestAt(_activeQuestIndex);
@@ -28,19 +30,19 @@ public class QuestService
         _cloudCurrency = cloudCurrency;  
     }
     
+    /// <summary>Notifies the UI of the current quest on load.</summary>
     public void Initialize()
     {
         ClampIndex();
         RaiseQuestUpdated();
     }
     
-    /// Call when a day ends (same moment legacy called CheckGoalAchieved)
+    /// <summary>Checks if the active quest passed or failed when a day ends.</summary>
     public void EvaluateActiveQuestAtDayEnd(int currentDay)
     {
         QuestEntry quest = ActiveQuest;
         if (quest == null)
             return;
-        // Not past deadline yet — keep showing same quest
         if (currentDay < quest.deadlineDay)
             return;
         int score = _playerState.GetSubjectScore(quest.subject);
@@ -59,7 +61,6 @@ public class QuestService
     {
         if (_cloudCurrency == null || !_cloudCurrency.CanUseCloudCode)
         {
-            Debug.LogWarning($"[Quest] Offline — cannot grant gold for '{quest.questId}'. Quest still advances.");
             GameEvents.RaiseQuestCompleted(quest, 0);
             AdvanceToNextQuest();
             return;
@@ -69,23 +70,19 @@ public class QuestService
             quest.goldReward);
         if (!result.success)
         {
-            Debug.LogWarning($"[Quest] GrantGold failed for '{quest.questId}': {result.error}");
-            // Still advance — player earned the quest; gold may already be claimed server-side
             GameEvents.RaiseQuestCompleted(quest, 0);
             AdvanceToNextQuest();
             return;
         }
         _currency.SetBalance(GameEnums.CurrencyType.Gold, result.gold);
-        Debug.Log($"[Quest] Completed '{quest.questId}'. Server gold={result.gold} (+{result.granted})");
         GameEvents.RaiseQuestCompleted(quest, result.granted);
         AdvanceToNextQuest();
     }
     
     private void FailQuest(QuestEntry quest)
     {
-        Debug.Log($"[Quest] Failed '{quest.questId}'. Required {quest.requiredScore}");
         GameEvents.RaiseQuestFailed(quest);
-        AdvanceToNextQuest();  // same advance, no gold
+        AdvanceToNextQuest();
     }
     
     private void AdvanceToNextQuest()
@@ -118,11 +115,13 @@ public class QuestService
         return _quests[index];
     }
    
-    // ---------- SAVE ----------
+    /// <summary>Saves which quest the player is on.</summary>
     public QuestSaveData ToSaveData()
     {
         return new QuestSaveData { activeQuestIndex = _activeQuestIndex };
     }
+
+    /// <summary>Restores quest progress from save data.</summary>
     public void ApplySaveData(QuestSaveData data)
     {
         _activeQuestIndex = data?.activeQuestIndex ?? 0;

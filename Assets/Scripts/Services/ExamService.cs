@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Runs exam days: shows questions one by one and tracks correct answers.
+/// </summary>
 public class ExamService
 {
     private static readonly GameEnums.MainSubjects[] ExamSubjects =
@@ -30,8 +33,10 @@ public class ExamService
     public int CorrectAnswerCount => _correctAnswerCount;
     public bool IsExamActive => _isExamActive;
     
+    /// <summary>True if this day number is an exam day.</summary>
     public bool IsExamDay(int day) => _gameConfig.IsExamDay(day);
     
+    /// <summary>Begins the exam and shows the first question.</summary>
     public void StartExam()
     {
         _currentQuestionIndex = 0;
@@ -42,6 +47,7 @@ public class ExamService
         ShowCurrentQuestion();
     }
     
+    /// <summary>Highlights the player's chosen answer (1–4).</summary>
     public void SelectAnswer(int optionIndex) // 1-4
     {
         if (!_isExamActive) return;
@@ -49,6 +55,7 @@ public class ExamService
         GameEvents.RaiseExamAnswerSelected(optionIndex);
     }
     
+    /// <summary>Checks the answer and moves to the next question or finishes.</summary>
     public void SubmitAnswer()
     {
         if (!_isExamActive || _selectedOption <= 0) return;
@@ -89,6 +96,7 @@ public class ExamService
     }
 }
 
+/// <summary>Data passed to the exam UI for one question.</summary>
 [System.Serializable]
 public class ExamQuestionDisplayData
 {

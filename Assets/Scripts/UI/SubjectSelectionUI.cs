@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Shows the daily subject buttons and forwards taps to the game.
+/// </summary>
 public class SubjectSelectionUI : MonoBehaviour
 {
     [SerializeField] private SubjectButtonView[] _subjectButtons;
@@ -19,6 +22,7 @@ public class SubjectSelectionUI : MonoBehaviour
         GameEvents.OnDaySummaryClosed -= () => SetButtonsInteractable(true);
     }
 
+    /// <summary>Fills buttons with today's subject choices.</summary>
     public void Show(IReadOnlyList<SubjectDisplayData> subjects)
     {
         for (int i = 0; i < _subjectButtons.Length; i++)
