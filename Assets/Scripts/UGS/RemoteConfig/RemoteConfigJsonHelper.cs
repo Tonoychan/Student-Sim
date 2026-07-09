@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 /// <summary>
 /// Parses JSON strings from Remote Config into game data arrays.
