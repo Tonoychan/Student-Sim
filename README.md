@@ -11,7 +11,13 @@
 ![URP](https://img.shields.io/badge/Render-URP-FF6B35?style=for-the-badge&logo=unity&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-In%20Development-yellow?style=for-the-badge)
 
-### 🎮 [Play in Browser](https://play.unity.com/en/games/0cc2ac5f-1f8f-4d27-8252-b06e62443b78/student-sim)
+### 🎮 [Play in Browser](https://play.unity.com/en/games/c555b4c1-d7ed-4d86-946a-c982a99ff998/webgl-builds)
+
+<br/>
+
+<video src="docs/clips/Simple%20Play.mp4" width="80%" controls>
+  <a href="https://play.unity.com/en/games/c555b4c1-d7ed-4d86-946a-c982a99ff998/webgl-builds">Play Student Sim in your browser</a>
+</video>
 
 </div>
 
@@ -426,10 +432,6 @@ A closer look at how a few of the trickier systems actually work, in plain langu
 
 <br/>
 
-<video src="docs/clips/addressables-demo.mp4" width="100%" controls>
-  <a href="docs/clips/addressables-demo.mp4">Download Addressables demo clip</a>
-</video>
-
 **What it does:** subject artwork and popup images are packaged as Addressable assets and hosted on Unity Cloud Content Delivery (CCD) instead of being baked into the app.
 
 - Assets are tagged with Addressable keys instead of being dragged into scenes directly.
@@ -444,8 +446,8 @@ A closer look at how a few of the trickier systems actually work, in plain langu
 
 <br/>
 
-<video src="docs/clips/cloud-code-demo.mp4" width="100%" controls>
-  <a href="docs/clips/cloud-code-demo.mp4">Download Cloud Code demo clip</a>
+<video src="docs/clips/cloudcode.mp4" width="100%" controls>
+  <a href="docs/clips/cloudcode.mp4">Download Cloud Code demo clip</a>
 </video>
 
 **What it does:** stops the gold currency from being something a player could edit locally (via save-file tampering or memory editing) by moving the "add gold" logic to a server-side script.
