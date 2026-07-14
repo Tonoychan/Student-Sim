@@ -15,9 +15,7 @@
 
 <br/>
 
-<video src="docs/clips/Simple%20Play.mp4" width="80%" controls>
-  <a href="https://play.unity.com/en/games/c555b4c1-d7ed-4d86-946a-c982a99ff998/webgl-builds">Play Student Sim in your browser</a>
-</video>
+### ▶️ [Watch Gameplay Preview](https://drive.google.com/file/d/17Ae1bv8JNVvdv5dcIjguqqMtz6KvPako/view?usp=sharing)
 
 </div>
 
@@ -128,7 +126,7 @@ Assets/
 
 </div>
 
-This section is the technical companion to the feature table above. Each system covers **what it does**, **how it is wired in code**, **the reasoning behind the approach**, **trade-offs**, and **planned improvements**.
+This section is the technical companion to the feature table above. Each system covers **what it does**, **how it is wired in code**, **the reasoning behind the approach**, **trade-offs**, and **planned improvements for future**.
 
 ---
 
@@ -143,7 +141,7 @@ Runs the daily loop: subject selection, stamina/interaction spending, exam days,
 - UI never calls services directly; it raises/listens to static events on `GameEvents` (`OnSubjectSelected`, `OnDayEnded`, `OnExamCompleted`, …).
 - Content comes from a **hybrid layer**: Remote Config JSON at runtime, ScriptableObject assets as offline fallback.
 
-**Design thinking**
+**Thinking**
 A simulation game has many interacting rules (stamina, quests, exams, saves). Putting all of that in one MonoBehaviour would make changes risky and testing painful. Services keep each rule isolated; `GameController` only wires them. The event bus avoids UI ↔ logic circular dependencies — presenters react to state changes without the services knowing about Canvas or TextMeshPro.
 
 **Advantages & disadvantages**
@@ -167,7 +165,7 @@ A simulation game has many interacting rules (stamina, quests, exams, saves). Pu
 ![Remote Config demo](docs/gifs/RemoteConfig.gif)
 
 **What it does**
-Pulls tuning values and content JSON from the Unity Dashboard at login — stamina caps, daily interaction count, exam schedules, quest lists, and per-subject level data.
+Pulls tuning values and content JSON from the Unity Dashboard at login — stamina caps, daily interaction count, exam schedules, quest lists, per-subject level data, exam data.
 
 **How it is implemented**
 - `UnityService` kicks off `UnityRemoteConfigService.InitializeAndFetchAsync()` immediately after UGS init (fire-and-forget).
@@ -179,7 +177,7 @@ Pulls tuning values and content JSON from the Unity Dashboard at login — stami
   - `RemoteConfigQuestLoader` → `quests_config`
   - `GameConfigLoader` → `exam_days_5/30/120/360`
 
-**Design thinking**
+**Thinking**
 Shipping a balance tweak through app stores is slow. Remote Config moves numbers and even JSON content to the cloud so designers can iterate from the dashboard. The 3-second timeout and ScriptableObject fallbacks ensure the game **never soft-locks** on a failed fetch — a deliberate "offline-first resilience" choice for a portfolio/demo project that must always be playable.
 
 **Advantages & disadvantages**
@@ -188,12 +186,10 @@ Shipping a balance tweak through app stores is slow. Remote Config moves numbers
 |---|---|
 | Balance changes without rebuild or store review | Only fetched once at login — no mid-session refresh |
 | Graceful fallback to local ScriptableObjects | `JsonUtility` parsing is rigid (no polymorphic arrays) |
-| Session snapshot prevents mid-term rule changes | Reserved keys (`ads_enabled`, `store_catalog_json`) exist but are unused |
+| Session snapshot prevents mid-term rule changes | Reserved keys for future (`ads_enabled`, `store_catalog_json`) exist but are unused |
 | Designers can iterate independently of code | 3s wait adds startup latency when RC is slow |
 
 **Future improvements**
-- Add a manual "Refresh config" path for returning players
-- Migrate JSON parsing to `Newtonsoft.Json` or source-generated serializers for complex quest/exam schemas
 - Wire reserved economy keys when store/IAP lands in the sibling project
 - Environment-specific overrides (dev vs production) with visible in-game debug panel
 
@@ -211,22 +207,22 @@ Loads the main game scene and subject icon sprites through Unity Addressables in
 - Asset groups: **Local_core** (game scene) and **Content_Subject** (9 icon sprites).
 - `Content_Subject` uses `ContentUpdateGroupSchema` with `m_StaticContent: 0` — prepared for live content updates.
 
-**Design thinking**
+**Thinking**
 Subject art is visual content that changes more often than code. Addressables decouple "what ships in v1.0" from "what we add next week." Even with local bundles today, the pipeline is CCD-ready: flip remote load paths and enable CCD without rewriting runtime code. Scene loading through Addressables also keeps the initial login/selection scenes lightweight.
 
 **Advantages & disadvantages**
 
 | ✅ Advantages | ⚠️ Disadvantages |
 |---|---|
-| Smaller initial download; assets load on demand | CCD is **prepared but not enabled** — still local bundles |
+| Smaller initial download; assets load on demand | CCD is **prepared but not enabled** — still local bundles need card details to enable in dashboard |
 | New art can ship without a full app update (once CCD is on) | Icon load failures are silently swallowed — no user-facing retry |
 | Clean handle lifecycle via `SubjectVisualService.Release()` | Only icons + scene use Addressables; gameplay data stays RC/SO |
-| Parallel preload keeps first subject tap responsive | Remote catalog build is disabled (`m_BuildRemoteCatalog: 0`) |
+| Parallel preload keeps first subject tap responsive | Remote catalog build is disabled (`m_BuildRemoteCatalog: 0`) can do via Jenkins CLI for future |
 
 **Future improvements**
-- Enable CCD remote paths and remote catalog for `Content_Subject`
+- Enable CCD remote paths and remote catalogue for `Content_Subject`
 - Add placeholder/spinner UI state while icons stream (partially planned in docs assets)
-- Extend Addressables to popup images and seasonal UI themes
+- Extend Addressables to pop-up images and seasonal UI themes
 - Surface load errors in a non-blocking toast instead of failing silently
 
 ---
@@ -242,14 +238,14 @@ Moves gold currency grants to a server-side script so players cannot inflate the
 - Server deduplicates grants by `questId`; response includes updated `gold` and `completedQuestIds`.
 - Client updates `PlayerCurrencyService` cache only from server responses — never trusts local increments for rewards.
 
-**Design thinking**
+**Thinking**
 Local-only currency works for single-player prototypes, but any reward tied to effort (quests) is trivially exploitable. Cloud Code is the smallest UGS surface that still gives **real server authority** — no dedicated backend to host. Quest completion is the first integration point because it has a clear, verifiable trigger (deadline + score target met).
 
 **Advantages & disadvantages**
 
 | ✅ Advantages | ⚠️ Disadvantages |
 |---|---|
-| Gold grants cannot be faked client-side | `SyncWalletAsync` exists but is **never called at startup** |
+| Gold grants cannot be faked client-side | `SyncWalletAsync` exists but is **never called at startup** not required here |
 | Server-side quest dedup prevents double-claiming | If Cloud Code fails, quest completes with **0 gold** — no local fallback |
 | Same pattern used in production live-service games | `SpendGoldAsync` is implemented but unused (store descoped) |
 | Minimal infra — scripts live in Unity Dashboard | Server scripts are not in this repo (dashboard-only) |
@@ -277,7 +273,7 @@ Syncs term progress and account data to Unity Cloud Save so a player can continu
 - **During play:** `PlayerSaveService.Save()` writes PlayerPrefs immediately, then queues debounced cloud upload (35s) or force-flushes on pause/quit/term end.
 - `ISaveProvider` / `CloudSaveProvider` abstraction exists; active logic lives in `PlayerCloudSaveService`.
 
-**Design thinking**
+**Thinking**
 Cloud Save adds latency and failure modes. Making PlayerPrefs the **source of truth during gameplay** means taps and day transitions never await a network round-trip. Cloud sync is async and debounced — good enough for a turn-based daily loop, bad for real-time multiplayer. Last-write-wins merge is simple and predictable for a single-player save; conflict resolution UI would be over-engineering at this scale.
 
 **Advantages & disadvantages**
@@ -311,7 +307,7 @@ Submits each player's final term score to a Unity Leaderboard and displays top e
 - `LeaderboardPanelUI` fetches top 20 with an in-memory cache; `InvalidateCache` on submit.
 - Login sets display name to player ID via `EnsurePlayerNameIsIdAsync()`.
 
-**Design thinking**
+**Thinking**
 Leaderboards need authenticated identities — guest auth via UGS was already required for Cloud Save, so leaderboard submission adds almost no new friction. Separate boards per term length keep comparisons fair (a 30-day grind shouldn't compete with a 5-day sprint). Fire-and-forget submit avoids blocking the term result screen on network failure.
 
 **Advantages & disadvantages**
@@ -343,7 +339,7 @@ Sends custom events to Unity Analytics so game starts, authentication, and key m
 - Custom events include `Game_Started` (on UGS init) and `Game_Authenticated` (after guest login or session restore).
 - Events are flushed immediately after send so they appear in the dashboard without waiting for batch upload.
 
-**Design thinking**
+**Thinking**
 Analytics is the cheapest UGS feature to integrate and the most valuable for a portfolio project — it proves the live-service pipeline works end-to-end. Custom events were kept minimal (start + auth) to avoid noise; richer funnel events (day completed, term ended, quest failed) are natural next steps once balance stabilises.
 
 **Advantages & disadvantages**
@@ -373,7 +369,7 @@ Initialises Unity Gaming Services on the login scene: anonymous auth, analytics,
 - On auth success: analytics event, cloud save sync, leaderboard name setup, then load `SelectionScene`.
 - On init failure: guest button loads selection scene in **offline mode** — no cloud features, local play still works.
 
-**Design thinking**
+**Thinking**
 UGS should enhance the game, not gate it. A portfolio WebGL build must load even when services are down or blocked. Failing open to offline mode demonstrates production awareness: always define what happens when the network doesn't cooperate.
 
 **Advantages & disadvantages**
@@ -446,9 +442,7 @@ A closer look at how a few of the trickier systems actually work, in plain langu
 
 <br/>
 
-<video src="docs/clips/cloudcode.mp4" width="100%" controls>
-  <a href="docs/clips/cloudcode.mp4">Download Cloud Code demo clip</a>
-</video>
+**▶️ [Watch Cloud Code demo on Google Drive](https://drive.google.com/file/d/1-BnSlypRs4VDiNEgmjwCW_siCEHjgGmn/view?usp=sharing)**
 
 **What it does:** stops the gold currency from being something a player could edit locally (via save-file tampering or memory editing) by moving the "add gold" logic to a server-side script.
 
