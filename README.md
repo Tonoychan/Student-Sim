@@ -229,6 +229,8 @@ Subject art is visual content that changes more often than code. Addressables de
 
 ### 🔒 Cloud Code — Server-Authoritative Gold
 
+### ▶️ [Watch Cloud code Preview](https://drive.google.com/file/d/1-BnSlypRs4VDiNEgmjwCW_siCEHjgGmn/view?usp=sharing)
+
 **What it does**
 Moves gold currency grants to a server-side script so players cannot inflate their balance via save editing or memory tools.
 
